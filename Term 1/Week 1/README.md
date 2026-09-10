@@ -23,31 +23,31 @@ _List the files, or link to them. Notebook exports, screenshots, scripts._
 > Your tool and your SDG for this hackathon are announced at the **start of Friday's class**.
 > Write them down here once you know them.
 
-**Project title:** Operation Resilient Classroom: Offline & Off-Grid Learning Innovation 
+**Project title:** Operation Resilient Classroom: LearnBridge  
 
 **My pair partner:** Arbër Deda
 
-**Tool we had to use:**
+**Tool we had to use:** https://bolt.new  
 
 **SDG we had to address:** SDG 4
 
 **What problem does it solve, and for whom?**
-_Name a real, specific user. "Everyone" is not a user._
+LearnBridge is designed for students who have limited or unreliable access to education and the internet. For example, a secondary-school student living in a conflict-affected, disaster-affected, displaced, or remote area may only have internet access for a short period of time. LearnBridge allows these students to access educational material when they are connected and continue learning when their internet connection is unavailable. 
 
 **What did you build?**
-_Two or three sentences. What can a user actually do with it?_
+We built an educational web app where teachers can publish lessons, videos, learning materials, and homework for students. Students can browse available lessons, view homework and learning materials, and download content so they can continue studying with limited or no internet access. The application has separate student and teacher sections so that each type of user has access to the features they need.
 
 **Link to the live thing (if any):**
 _Deployed URL, workflow export, video demo - whatever proves it works._
 
 **How do I run it?**
-_Short instructions so someone else can start it._
+Open the deployed website using the link above in a web browser. From the homepage, users can choose the student or teacher area. Students can browse lessons and learning materials, while teachers can access the tools for creating and publishing educational content. 
 
 **Who did what?**
-_Be honest about the split of work between you and your partner._
+We developed the idea for LearnBridge together and discussed which problems related to SDG 4 we wanted to address. Sofiia worked with the AI app-building tool Emergent and used AI prompts to create and develop the application. I worked on the project documentation, including answering and organizing the required hackathon questions. We both contributed ideas for the features, target users, design, and purpose of the application, and these ideas were incorporated into the final app. 
 
 **Ethical reflection - what are the risks of your tool? Who could it harm?**
-_Every hackathon requires this. One honest paragraph beats three vague ones._
+LearnBridge can improve access to education, but it still assumes that students have access to a smartphone, electricity, enough storage space, and at least occasional internet access. Students without these resources could therefore still be excluded. There are also privacy and safety concerns because the platform may be used by children. Personal account information and educational data need to be stored securely. Teachers could also upload incorrect, inappropriate, biased, or copyrighted educational material, so a real version of the platform would need teacher verification and content moderation. Finally, large videos and files could use significant mobile data and storage, which may create another barrier for the students the platform is intended to help. 
 
 ### Checklist
 - [ ] Prototype code (or export / workflow file) is in `hackathon/`
