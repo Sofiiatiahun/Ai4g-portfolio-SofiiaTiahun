@@ -37,7 +37,7 @@ _List the files, or link to them. Notebook exports, screenshots, scripts._
 
 **Project title:** LearnBridge
 
-**My pair partner:** Sofiia
+**My pair partner:** Arbër 
 
 **Tool we had to use:** Bolt.new
 
