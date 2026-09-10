@@ -38,7 +38,7 @@ LearnBridge is designed for students who have limited or unreliable access to ed
 We built an educational web app where teachers can publish lessons, videos, learning materials, and homework for students. Students can browse available lessons, view homework and learning materials, and download content so they can continue studying with limited or no internet access. The application has separate student and teacher sections so that each type of user has access to the features they need.
 
 **Link to the live thing (if any):**
-_Deployed URL, workflow export, video demo - whatever proves it works._
+https://learnbridge-auth-and-lvi6.bolt.host 
 
 **How do I run it?**
 Open the deployed website using the link above in a web browser. From the homepage, users can choose the student or teacher area. Students can browse lessons and learning materials, while teachers can access the tools for creating and publishing educational content. 
