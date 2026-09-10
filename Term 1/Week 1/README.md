@@ -72,6 +72,7 @@ LearnBridge can improve access to education, but it still assumes that students 
 ## 4. Reflection
 
 **What is the most important thing I learned this week?**
+The most important thing i learned this week was in overall clear understanding about pros of AI and how it can be implemented to daily life and innovationts 
 
 **Where does this connect to "AI for Good"?**
-_One concrete link to ethics, sustainability or social impact._
+The connection is how everyday AI innovations can democratize access to education and professional skills, though it requires ethical implementation to ensure the algorithms don't perpetuate existing biases.
