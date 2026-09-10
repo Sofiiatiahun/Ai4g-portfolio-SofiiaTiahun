@@ -29,7 +29,7 @@ _List the files, or link to them. Notebook exports, screenshots, scripts._
 
 **Tool we had to use:**
 
-**SDG we had to address:**
+**SDG we had to address:** SDG 4
 
 **What problem does it solve, and for whom?**
 _Name a real, specific user. "Everyone" is not a user._
