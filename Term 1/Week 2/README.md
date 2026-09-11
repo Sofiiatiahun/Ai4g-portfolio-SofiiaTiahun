@@ -25,14 +25,15 @@ _List the files, or link to them. Notebook exports, screenshots, scripts._
 
 **Project title:**
 
-**My pair partner:**
+**My pair partner:** Sofiia, Lucas, Majed
 
-**Tool we had to use:**
 
-**SDG we had to address:**
+**Tool we had to use:** N8N 
+
+**SDG we had to address:**  SDG 3 — Good Health & Well-being
 
 **What problem does it solve, and for whom?**
-_Name a real, specific user. "Everyone" is not a user._
+The target is a person who struggles with anxiety, overwhelming and other mental health problems and cannot form a habit of calming themselves down, taking prescripted pills, listening to meditations etc. 
 
 **What did you build?**
 _Two or three sentences. What can a user actually do with it?_
