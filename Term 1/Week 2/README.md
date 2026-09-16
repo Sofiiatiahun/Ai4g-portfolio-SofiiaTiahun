@@ -23,10 +23,9 @@ _List the files, or link to them. Notebook exports, screenshots, scripts._
 > Your tool and your SDG for this hackathon are announced at the **start of Friday's class**.
 > Write them down here once you know them.
 
-**Project title:**
+**Project title:**  Steady : a habit-building app
 
 **My pair partner:** Sofiia, Lucas, Majed
-
 
 **Tool we had to use:** N8N 
 
@@ -36,25 +35,29 @@ _List the files, or link to them. Notebook exports, screenshots, scripts._
 The target is a person who struggles with anxiety, overwhelming and other mental health problems and cannot form a habit of calming themselves down, taking prescripted pills, listening to meditations etc. 
 
 **What did you build?**
-_Two or three sentences. What can a user actually do with it?_
+ An app is helping people to form a habit of calming down, developing a personal routine to minimize risks of panic attacks and anxiety. 
 
 **Link to the live thing (if any):**
 _Deployed URL, workflow export, video demo - whatever proves it works._
 
 **How do I run it?**
-_Short instructions so someone else can start it._
+Import the provided workflow export file into your local or cloud N8N instance.
+Authenticate your Calendar credentials (e.g., Google Calendar) in the designated nodes so the app can read your schedule and add events.
+Authenticate your Email credentials so the workflow can send you the approval requests.
+Activate the workflow to start analyzing your daily schedule.
 
 **Who did what?**
-_Be honest about the split of work between you and your partner._
+Lucas developed the technical N8N workflow and integrations. Sofiia handled the conceptualization, project descriptions, and setup workflows, while Majed was doing  presentation design and testing. 
 
 **Ethical reflection - what are the risks of your tool? Who could it harm?**
-_Every hackathon requires this. One honest paragraph beats three vague ones._
+Our biggest ethical concern is data privacy, since Steady needs full access to a user's calendar to function. If that data leaks, it's a huge problem. There’s also the risk of the app making a mistake if it misreads a chaotic day as calm and skips suggesting breaks, it could accidentally trigger the exact overwhelm we're trying to prevent. We need to make sure users know Steady is just a supportive habit-builder, not a replacement for therapy or their own judgment.
+
 
 ### Checklist
 - [ ] Prototype code (or export / workflow file) is in `hackathon/`
 - [ ] This week's slides are in `hackathon/`
-- [ ] The prototype actually runs, and I wrote down how to run it
-- [ ] Ethical reflection written above
+- [x] The prototype actually runs, and I wrote down how to run it
+- [x] Ethical reflection written above
 
 ---
 
