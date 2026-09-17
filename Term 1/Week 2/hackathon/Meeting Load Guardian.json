@@ -1,0 +1,739 @@
+{
+  "name": "Meeting Load Guardian",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "triggerAtHour": 7,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "id": "e27bddb6-75ea-4578-8335-12908f70b3c1",
+      "name": "Weekday 07:30",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -144,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "p1",
+              "name": "timezone",
+              "type": "string",
+              "value": "Europe/Amsterdam"
+            },
+            {
+              "id": "p2",
+              "name": "lunch_start_hour",
+              "type": "number",
+              "value": 12
+            },
+            {
+              "id": "p3",
+              "name": "lunch_end_hour",
+              "type": "number",
+              "value": 14
+            },
+            {
+              "id": "p4",
+              "name": "lunch_min_minutes",
+              "type": "number",
+              "value": 30
+            },
+            {
+              "id": "p5",
+              "name": "back_to_back_gap_minutes",
+              "type": "number",
+              "value": 5
+            },
+            {
+              "id": "p6",
+              "name": "long_streak_minutes",
+              "type": "number",
+              "value": 180
+            },
+            {
+              "id": "p7",
+              "name": "overload_minutes",
+              "type": "number",
+              "value": 360
+            },
+            {
+              "id": "p8",
+              "name": "moderate_minutes",
+              "type": "number",
+              "value": 240
+            },
+            {
+              "id": "p9",
+              "name": "max_breaks",
+              "type": "number",
+              "value": 2
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4f1f3f2a-9ac5-42ae-abf1-acaabd186b9c",
+      "name": "Set Preferences",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        64,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "includeRecurringInstances": true,
+        "startDateTime": "={{ $now.startOf('day').toUTC().toISO() }}",
+        "endDateTime": "={{ $now.endOf('day').toUTC().toISO() }}",
+        "returnAll": true,
+        "output": "fields",
+        "fields": [
+          "subject",
+          "start",
+          "end",
+          "isCancelled",
+          "showAs"
+        ]
+      },
+      "id": "22b35d6a-f700-4b1c-b078-9b16c2320d33",
+      "name": "Get Today Events",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        272,
+        0
+      ],
+      "webhookId": "9d7c4011-18ff-4d66-bd58-a407b8485881",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "pxZ9gciMFYWjlwxi",
+          "name": "Microsoft Outlook account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "events",
+        "options": {}
+      },
+      "id": "6bad7218-661f-40cc-a5bd-29849041993a",
+      "name": "Aggregate Events",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        464,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const pref = $('Set Preferences').first().json;\nconst tz = pref.timezone || 'Europe/Amsterdam';\nconst agg = $input.first().json;\nconst raw = Array.isArray(agg.events) ? agg.events : [];\n\nfunction parseGraph(dt){ if(!dt) return null; let s=String(dt).trim(); if(!/[zZ]|[+\\-]\\d\\d:?\\d\\d$/.test(s)) s+='Z'; const d=new Date(s); return isNaN(d.getTime())?null:d; }\nfunction localMinOfDay(d){ const p=new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d); let h=0,m=0; for(const x of p){ if(x.type==='hour')h=+x.value; if(x.type==='minute')m=+x.value; } return h*60+m; }\n\nlet meetings = raw\n  .filter(e=>e && e.start && e.end && e.subject)\n  .filter(e=>!e.isCancelled)\n  .filter(e=>String(e.showAs||'busy').toLowerCase()!=='free')\n  .map(e=>({ s:parseGraph(e.start.dateTime||e.start), e:parseGraph(e.end.dateTime||e.end) }))\n  .filter(e=>e.s && e.e && e.e>e.s)\n  .sort((a,b)=>a.s-b.s);\n\nconst gap = Number(pref.back_to_back_gap_minutes ?? 5);\nconst meeting_count = meetings.length;\nlet total_meeting_minutes = 0;\nfor(const m of meetings) total_meeting_minutes += Math.round((m.e-m.s)/60000);\n\nlet back_to_back_count=0, longest_streak_minutes=0;\nif(meetings.length){\n  let streakStart=meetings[0].s, streakEnd=meetings[0].e;\n  for(let i=1;i<meetings.length;i++){\n    const g=(meetings[i].s-meetings[i-1].e)/60000;\n    if(g<=gap){ back_to_back_count++; streakEnd = meetings[i].e>streakEnd?meetings[i].e:streakEnd; }\n    else { longest_streak_minutes=Math.max(longest_streak_minutes, Math.round((streakEnd-streakStart)/60000)); streakStart=meetings[i].s; streakEnd=meetings[i].e; }\n  }\n  longest_streak_minutes=Math.max(longest_streak_minutes, Math.round((streakEnd-streakStart)/60000));\n}\n\nconst lunchStart=Number(pref.lunch_start_hour??12)*60;\nconst lunchEnd=Number(pref.lunch_end_hour??14)*60;\nconst lunchMin=Number(pref.lunch_min_minutes??30);\nconst busy = meetings.map(m=>[localMinOfDay(m.s), localMinOfDay(m.e)]);\nfunction freeGapInWindow(ws,we){\n  const ints=busy.map(b=>[Math.max(b[0],ws),Math.min(b[1],we)]).filter(b=>b[1]>b[0]).sort((a,b)=>a[0]-b[0]);\n  let cursor=ws, best=0, bestStart=ws;\n  for(const b of ints){ if(b[0]>cursor && b[0]-cursor>best){ best=b[0]-cursor; bestStart=cursor; } cursor=Math.max(cursor,b[1]); }\n  if(we-cursor>best){ best=we-cursor; bestStart=cursor; }\n  return {len:best,start:bestStart};\n}\nconst lunchFree=freeGapInWindow(lunchStart,lunchEnd);\nconst no_lunch_break = meeting_count>0 && lunchFree.len < lunchMin;\n\nconst overloadMin=Number(pref.overload_minutes??360);\nconst moderateMin=Number(pref.moderate_minutes??240);\nconst longStreak=Number(pref.long_streak_minutes??180);\nlet workload_level='Light', overload_flag=false;\nif(total_meeting_minutes>=overloadMin || back_to_back_count>=4 || longest_streak_minutes>=longStreak){\n  workload_level='High'; overload_flag = total_meeting_minutes>=overloadMin || back_to_back_count>=4;\n} else if(total_meeting_minutes>=moderateMin){ workload_level='Moderate'; }\n\nfunction localDateStr(d){ return new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).format(d); }\nconst refDate = localDateStr(meetings.length?meetings[0].s:new Date());\nfunction localMinToUTCISO(minOfDay){\n  const hh=String(Math.floor(minOfDay/60)).padStart(2,'0');\n  const mm=String(minOfDay%60).padStart(2,'0');\n  const guess=new Date(refDate+'T'+hh+':'+mm+':00Z');\n  const diff=minOfDay-localMinOfDay(guess);\n  return new Date(guess.getTime()+diff*60000).toISOString();\n}\n\nconst maxBreaks=Number(pref.max_breaks??2);\nlet proposed=[];\nif(meeting_count>0){\n  if(no_lunch_break){\n    const start=Math.max(lunchFree.start, lunchStart);\n    proposed.push({ subject:'Lunch break (protected)', startMin:start, endMin:start+lunchMin });\n  }\n  if(longest_streak_minutes>=longStreak){\n    const endLocal=localMinOfDay(meetings[meetings.length-1].e);\n    proposed.push({ subject:'Recovery break', startMin:endLocal, endMin:endLocal+15 });\n  }\n}\nproposed = proposed.slice(0,maxBreaks).map(p=>({ subject:p.subject, start:localMinToUTCISO(p.startMin), end:localMinToUTCISO(p.endMin) }));\n\nconst day_of_week=new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'long'}).format(new Date());\nconst fallback_headline = workload_level==='High' ? 'Heads up: a heavy meeting day ahead'\n  : workload_level==='Moderate' ? 'A moderately busy day ahead'\n  : (meeting_count===0 ? 'A clear day — enjoy the focus time' : 'A light meeting day ahead');\nconst fallback_summary = 'You have '+meeting_count+' meeting(s) totalling '+total_meeting_minutes+' min, '+back_to_back_count+' back-to-back, longest stretch '+longest_streak_minutes+' min.'+(no_lunch_break?' No lunch break is currently protected.':'');\nconst metrics_text = 'Meeting count: '+meeting_count+'\\nTotal meeting minutes: '+total_meeting_minutes+'\\nBack-to-back transitions: '+back_to_back_count+'\\nLongest continuous stretch (min): '+longest_streak_minutes+'\\nLunch break protected: '+(no_lunch_break?'no':'yes')+'\\nWorkload level: '+workload_level+'\\nOverload flag: '+overload_flag+'\\nProposed breaks: '+proposed.length;\n\nreturn [{ json: {\n  run_date: refDate, day_of_week, meeting_count, total_meeting_minutes, longest_streak_minutes,\n  back_to_back_count, no_lunch_break, workload_level, overload_flag,\n  breaks_proposed_count: proposed.length, proposed_breaks: proposed,\n  fallback_headline, fallback_summary, metrics_text\n} }];"
+      },
+      "id": "2731f029-2329-44be-8a15-b6a09a5233c4",
+      "name": "Metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here are today's aggregate workload metrics (no meeting content):\n\n{{ $json.metrics_text }}\n\nProposed breaks the system may add to the calendar: {{ $json.breaks_proposed_count }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a supportive well-being assistant. Using ONLY the aggregate metrics provided, write an encouraging, non-judgemental daily plan. Do NOT diagnose overload or invent numbers — the numbers and the workload level are already decided by rules. Keep it warm and brief. If the metrics suggest possible loneliness or limited social connection, gently suggest an optional, low-pressure activity such as messaging someone the user trusts, meeting a friend for coffee, taking a walk together, or having lunch with a colleague. Do not present loneliness as a diagnosis or automatically contact anyone. Provide: a short headline, a 1-2 sentence summary, 2-4 concrete supportive recommendations, and a single clear approvalQuestion asking whether to add the proposed break(s) to the calendar."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "id": "536cdea2-d85b-406b-8c02-c658caded6ec",
+      "name": "Phrase Plan",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1408,
+        0
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"headline\": { \"type\": \"string\" },\n    \"summary\": { \"type\": \"string\" },\n    \"recommendations\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } },\n    \"approvalQuestion\": { \"type\": \"string\" }\n  },\n  \"required\": [\"headline\", \"summary\", \"recommendations\", \"approvalQuestion\"]\n}"
+      },
+      "id": "e9ad1d46-735b-4b70-883b-8a4ceb52bb79",
+      "name": "Plan Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1552,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f0",
+              "name": "ai_used",
+              "type": "boolean",
+              "value": "={{ !!($json.output && $json.output.headline) }}"
+            },
+            {
+              "id": "f1",
+              "name": "headline",
+              "type": "string",
+              "value": "={{ $json.output?.headline || $('Metrics').item.json.fallback_headline }}"
+            },
+            {
+              "id": "f2",
+              "name": "summary",
+              "type": "string",
+              "value": "={{ $json.output?.summary || $('Metrics').item.json.fallback_summary }}"
+            },
+            {
+              "id": "f3",
+              "name": "recommendations_text",
+              "type": "string",
+              "value": "={{ ($json.output?.recommendations || []).map(r => '• ' + r).join('\\n') }}"
+            },
+            {
+              "id": "f4",
+              "name": "approval_question",
+              "type": "string",
+              "value": "={{ $json.output?.approvalQuestion || 'Shall I add the proposed break(s) to your calendar?' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0cbebac3-50d9-48bb-aa51-44e31494ed89",
+      "name": "Finalize",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1632,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a1",
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8510f96c-4462-4327-8a15-d570326ab4d4",
+      "name": "Approved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2272,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1",
+              "name": "proposed_breaks",
+              "type": "array",
+              "value": "={{ $('Metrics').item.json.proposed_breaks }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ff8791ec-97ec-4eac-875d-31d217c01623",
+      "name": "Prep Breaks",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2464,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "proposed_breaks",
+        "options": {}
+      },
+      "id": "1bcbaa8f-d435-432a-9049-92fced133793",
+      "name": "Split Breaks",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2672,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "operation": "create",
+        "calendarId": {
+          "__rl": true,
+          "value": "AQMkADAwATZiZmYAZC0zYzI3LTRlMTktMDACLTAwCgBGAAAD65-Q6RqjJECRcv9HaCCKyQcAakp8KvcWukqEpj84FFT-XQAAAgEGAAAAakp8KvcWukqEpj84FFT-XQAAAhzqAAAA",
+          "mode": "list",
+          "cachedResultName": "Calendar"
+        },
+        "subject": "={{ $json.subject || 'Recovery break' }}",
+        "startDateTime": "={{ $json.start.replace(/\\.\\d{3}Z$/, '') }}",
+        "endDateTime": "={{ $json.end.replace(/\\.\\d{3}Z$/, '') }}",
+        "additionalFields": {
+          "body": "Auto-scheduled by Meeting Load Guardian to protect your well-being.",
+          "showAs": "free",
+          "timeZone": "UTC"
+        }
+      },
+      "id": "6ad52850-7022-406b-84f3-1b77e7bff889",
+      "name": "Create Break Event",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        2864,
+        -224
+      ],
+      "webhookId": "ae91a360-adbf-4665-a63a-c6a5ae316bbd",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "pxZ9gciMFYWjlwxi",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "PPsXvp9y7Ia77rDV",
+          "cachedResultName": "Meeting Load Log"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "run_date": "={{ $('Metrics').item.json.run_date }}",
+            "day_of_week": "={{ $('Metrics').item.json.day_of_week }}",
+            "meeting_count": "={{ $('Metrics').item.json.meeting_count }}",
+            "total_meeting_minutes": "={{ $('Metrics').item.json.total_meeting_minutes }}",
+            "longest_streak_minutes": "={{ $('Metrics').item.json.longest_streak_minutes }}",
+            "back_to_back_count": "={{ $('Metrics').item.json.back_to_back_count }}",
+            "no_lunch_break": "={{ $('Metrics').item.json.no_lunch_break }}",
+            "workload_level": "={{ $('Metrics').item.json.workload_level }}",
+            "overload_flag": "={{ $('Metrics').item.json.overload_flag }}",
+            "breaks_proposed": "={{ $('Metrics').item.json.breaks_proposed_count }}",
+            "breaks_approved": "=false",
+            "breaks_created": "=0",
+            "ai_used": "={{ $('Finalize').item.json.ai_used }}",
+            "headline": "={{ $('Finalize').item.json.headline }}",
+            "summary": "={{ $('Finalize').item.json.summary }}"
+          },
+          "schema": [
+            {
+              "id": "run_date",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "run_date",
+              "defaultMatch": false
+            },
+            {
+              "id": "day_of_week",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "day_of_week",
+              "defaultMatch": false
+            },
+            {
+              "id": "meeting_count",
+              "type": "number",
+              "display": true,
+              "required": false,
+              "displayName": "meeting_count",
+              "defaultMatch": false
+            },
+            {
+              "id": "total_meeting_minutes",
+              "type": "number",
+              "display": true,
+              "required": false,
+              "displayName": "total_meeting_minutes",
+              "defaultMatch": false
+            },
+            {
+              "id": "longest_streak_minutes",
+              "type": "number",
+              "display": true,
+              "required": false,
+              "displayName": "longest_streak_minutes",
+              "defaultMatch": false
+            },
+            {
+              "id": "back_to_back_count",
+              "type": "number",
+              "display": true,
+              "required": false,
+              "displayName": "back_to_back_count",
+              "defaultMatch": false
+            },
+            {
+              "id": "no_lunch_break",
+              "type": "boolean",
+              "display": true,
+              "required": false,
+              "displayName": "no_lunch_break",
+              "defaultMatch": false
+            },
+            {
+              "id": "workload_level",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "workload_level",
+              "defaultMatch": false
+            },
+            {
+              "id": "overload_flag",
+              "type": "boolean",
+              "display": true,
+              "required": false,
+              "displayName": "overload_flag",
+              "defaultMatch": false
+            },
+            {
+              "id": "breaks_proposed",
+              "type": "number",
+              "display": true,
+              "required": false,
+              "displayName": "breaks_proposed",
+              "defaultMatch": false
+            },
+            {
+              "id": "breaks_approved",
+              "type": "boolean",
+              "display": true,
+              "required": false,
+              "displayName": "breaks_approved",
+              "defaultMatch": false
+            },
+            {
+              "id": "breaks_created",
+              "type": "number",
+              "display": true,
+              "required": false,
+              "displayName": "breaks_created",
+              "defaultMatch": false
+            },
+            {
+              "id": "ai_used",
+              "type": "boolean",
+              "display": true,
+              "required": false,
+              "displayName": "ai_used",
+              "defaultMatch": false
+            },
+            {
+              "id": "headline",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "headline",
+              "defaultMatch": false
+            },
+            {
+              "id": "summary",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "summary",
+              "defaultMatch": false
+            }
+          ],
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "23756aff-a43e-4388-94dc-2d7172968ced",
+      "name": "Log (Declined)",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2464,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-sonnet-4-6",
+          "mode": "list",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.6,
+      "position": [
+        1408,
+        192
+      ],
+      "id": "ec6a6006-7390-4950-a559-8c46bd672765",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "ltl7g6xL6lv4Pa1D",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "toRecipients": "hop_lucas@hotmail.com",
+        "subject": "=your Daily schedule {{ $json.headline }}",
+        "message": "={{ $json.summary }}\n\n{{ $json.recommendations_text }}\n\n{{ $json.approval_question }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        2048,
+        -112
+      ],
+      "id": "eff2bffd-a073-41a7-8ddb-2a88fe4111f3",
+      "name": "Send message and wait for response",
+      "webhookId": "21c641dc-f04c-4d6e-847a-86ec8be388f5",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "pxZ9gciMFYWjlwxi",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Weekday 07:30": {
+      "main": [
+        [
+          {
+            "node": "Set Preferences",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Preferences": {
+      "main": [
+        [
+          {
+            "node": "Get Today Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Today Events": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Events": {
+      "main": [
+        [
+          {
+            "node": "Metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Metrics": {
+      "main": [
+        [
+          {
+            "node": "Phrase Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phrase Plan": {
+      "main": [
+        [
+          {
+            "node": "Finalize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plan Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Phrase Plan",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finalize": {
+      "main": [
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approved?": {
+      "main": [
+        [
+          {
+            "node": "Prep Breaks",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log (Declined)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Breaks": {
+      "main": [
+        [
+          {
+            "node": "Split Breaks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Breaks": {
+      "main": [
+        [
+          {
+            "node": "Create Break Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Break Event": {
+      "main": [
+        []
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Phrase Plan",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response": {
+      "main": [
+        [
+          {
+            "node": "Approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "bf6523f4-93a9-457d-92ec-e54de6ae3613",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a7969434af86dbd773677eb9976c940bfead00c6f52fda0aeb1e410f3b53604b"
+  },
+  "nodeGroups": [],
+  "id": "OVOOsr3PcUetHs2o",
+  "tags": []
+}
