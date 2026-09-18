@@ -12,8 +12,8 @@ _List the files, or link to them. Notebook exports, screenshots, scripts._
 **What did I find difficult, and how did I solve it?**
 
 ### Checklist
-- [ ] My workshop / homework files are in `homework/`
-- [ ] Everything runs without errors, or I explained what does not and why
+- [x] My workshop / homework files are in `homework/`
+- [x] Everything runs without errors, or I explained what does not and why
 
 ---
 
