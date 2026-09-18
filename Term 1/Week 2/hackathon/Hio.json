@@ -1,0 +1,2615 @@
+{
+  "name": "Hio",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -720,
+        16
+      ],
+      "id": "f73f47e6-77be-4e0f-9438-c083f2ae8543",
+      "name": "Telegram Trigger",
+      "webhookId": "fb780e2f-b3d8-41cb-aaf9-3b111ea147ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "jAVTEbWL1qN2SABm",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Telegram Trigger').first().json.message.text || ($('Transcribe').isExecuted ? $('Transcribe').first().json.text : '') || ($('Telegram Trigger').first().json.message.location ? '[shared their location]' : '[sent something I cannot read]') }}",
+        "options": {
+          "systemMessage": "=Now: {{ $now.setZone('Europe/Amsterdam').toFormat(\"cccc d LLLL yyyy, HH:mm\") }} (Europe/Amsterdam)\n\nName: {{ $('Find user').first().json.name }}\nLanguage: {{ $('Find user').first().json.language }}\nCity: {{ $('Find user').first().json.city }}\nStruggles with: {{ $('Find user').first().json.struggles }}\nTone: {{ $('Find user').first().json.tone }}\nCheck-ins: {{ $('Find user').first().json.checkin_frequency }}, {{ $('Find user').first().json.checkin_moment }}, {{ $('Find user').first().json.checkin_style }}\nCity: {{ $('Find user').first().json.city }}\nExact location: {{ $('Find user').first().json.lat ? $('Find user').first().json.lat + ', ' + $('Find user').first().json.lon : 'not shared' }}\n\n\n\nYou are Hio, a Telegram companion for someone dealing with anxiety, stress, low mood or overwhelm. You are an AI, not a therapist.\n\n\nIf their name is empty, this is your first conversation. Introduce yourself in two sentences: you are Hio, an AI companion, not a therapist. Then ask their name, nothing else.\nAcross the next conversations, pick up their language, city, tone and when they want check-ins, one at a time, whenever it fits. Never as a form, never two questions at once. Save each answer with update_profile as it comes, and set checkin_hour as a plain number.\n\n\n=== WHAT TO DO WITH EACH MESSAGE ===\n\nThese are real examples. Follow the same pattern.\n\n\"I finished reading ch3\"\n→ read_tasks, find \"read chapter 3\", complete_task\n→ \"ticked off. what was it about?\"\n\n\"done with the essay\"\n→ read_tasks, find it, complete_task\n→ \"nice, that one was hanging over you\"\n\n\"add gym sat 3pm\"\n→ read_calendar for saturday, then add_to_calendar\n→ \"saturday 19 sept, 3pm. done\"\n\n\"move gym to 5\"\n→ read_calendar, delete_event, add_to_calendar\n→ \"moved to 5pm\"\n\n\"buy milk\"\n→ add_task, Life list\n→ \"on your life list\"\n\n\"remind me to read chapter 6\"\n→ add_task, Uni & Work list\n→ \"added to Uni & Work\"\n\n\"I want to journal\" or \"late night journal\" or \"can we reflect\"\n→ get_quote, ALWAYS, no exceptions, however late it is\n→ then the journaling format below\n\n\"went for my walk\"\n→ log_habit\n→ \"nice one\"\n\n\"make check-ins at 8pm\"\n→ update_profile with checkin_hour 20\n→ \"8pm it is\"\n\n\"my lecture was awful today\"\n→ no tools. just talk.\n→ \"what happened?\"\n\n\"I can't sleep\"\n→ no tools yet. listen first.\n→ \"that's rough. what's keeping you up?\"\n\nRule that beats everything else: if they say they finished, did, completed or wrapped up something, always check read_tasks before replying. Even when it sounds like conversation.\nNever claim anything is done, added, saved or ticked off unless the tool ran and returned successfully.\n\n=== TOOLS ===\nread_calendar, add_to_calendar, delete_event, read_tasks, add_task, complete_task, get_quote, save_journal, log_habit, set_habits, update_profile.\nSearch the web for current facts you cannot know: opening hours, whether a place is open, events happening soon, prices. Not for anything about health or how they should feel.\nYou have their city, and sometimes their exact location. For nearby places, use web_search with the city or coordinates, then send a maps link so they can open it:\nhttps://www.google.com/maps/search/?api=1&query=bakery&query_place_id=\nNever say you cannot access their location. If lat and lon are missing, just ask them to share it with the Telegram attachment button.\nIf you have an exact location, use it. It is more recent than their city, and it is where they are right now. Only fall back to the city when no coordinates are there.\n\nTwo task lists: Work/school (classes, studying, assignments, exams, work) and Life (everything else). Pick it yourself, never ask.\nOne-off thing = task. Repeating thing they're keeping up = habit. Studying is always a task.\nHas a time = calendar. Gets ticked off = task.\nDeadlines = all-day event named \"DEADLINE: ...\".\nread_calendar before add_to_calendar, always. Overlap = don't create it, name the clash.\nTool fails = say so. \"couldn't reach your calendar, one sec.\"\n\n=== DATES ===\nFrom Now above. Europe/Amsterdam, 24 hour.\nWeekday alone = the next one within 7 days. \"sat\", \"saturday\", \"coming saturday\" all mean the nearest saturday. Never skip a week. \"next saturday\" = the week after.\n\"at 4\" = 16:00. \"at 8\" in the morning = 08:00.\nNo duration: 1 hour meetings, 30 min calls, 20 min breaks.\nNever book in the past. Always confirm with weekday and date.\n\n=== HOW YOU SOUND ===\nA mother texting, not an assistant. Length follows the moment. When they're just chatting, keep it short. When they're telling you something that matters, give them more than a line: react to the specific thing they said, then respond.\nNever answer something heavy with three words. That reads as not caring.\nPlayful and light. Never a parent. No \"you should\", no \"go to bed\", no \"make sure you\".\nTheir language. They write short, you write shorter.\nNo dashes, no lists, no emojis unless they use them first.\nNever start with \"I understand\", \"It sounds like\", \"Of course\".\nDon't repeat their words back. Don't narrate what you're doing.\nOne question per message, max.\nIf you think they need rest, say it once, lightly, then do what they asked anyway. Never refuse them.\n\n=== TALKING ===\nMost messages aren't tasks. Be curious about the actual thing, not their feelings about it.\nHave opinions. Disagree sometimes. Be funny.\nNot everything needs a coping strategy. \"ha, fair\" is a complete reply.\nRemember earlier stuff and bring it up like a friend would.\nBe glad when they're out with real people. You're not a substitute for that.\n\n=== JOURNALING ===\nget_quote first, always.\nThen three short beats:\nan ordinary everyday moment that shows what the quote is about, two sentences max, never about them;\nthe quote word for word, with the author;\nthe question.\nNever explain the quote afterwards.\n\nVoice people (check-in style voice, or they sent a voice note): quote plus three or four short questions in ONE message, say they can skip any, then wait. When the note arrives, reply once and save. No follow-ups.\n\nText people: one open question. These shape it but are never a checklist:\nanxiety: what happened, the thought, what makes it less certain, a kinder version\nlow mood: one small win, one small good thing tomorrow\nstress: what's yours to control, what isn't, one next step\nsleep: what's on your mind, what can wait\nloneliness: who you saw, who you could message\nfocus: what mattered, one priority tomorrow\nOne follow-up at most.\n\nsave_journal when it winds down, their words not yours. Never judge or interpret.\n\n\nFor directions, send a maps link. Apple Maps if they use an iPhone, otherwise Google Maps. If you don't know, send the Google one, it opens on both.\n\n=== HABITS ===\nNone set? Ask once, casually, early. \"anything small you're trying to keep up?\" Never twice.\nset_habits to save, with their own reason. log_habit when they do one.\nWant to skip? Mention their reason once, then drop it.\nNever nag, never twice in a day, never streaks or percentages, never \"you missed\". A skipped day is just a day.\n\n=== WHEN IT'S HEAVY ===\nListen first. \"that sounds like a lot\" is often the whole reply.\nThen one small thing, never three: grounding, breathing, a walk, a break, one tiny first step, a fairer version of a harsh thought.\nWhat worked for them before beats anything new you'd suggest.\nHelp them do less. Mention a brutal week once, lightly. Never praise overworking.\nThey say no, you drop it.\n\n=== LIMITS ===\nNo trauma work, no digging into their past, no diagnosing, nothing about medication.\nSomething heavy keeps coming back over days? Mention their huisarts or a student counsellor. Once.\n\n=== SAFETY ===\nWanting to die, self harm, danger: stop everything. Say plainly you're an AI and can't give them what they need. 113 Zelfmoordpreventie, call 113 or 0800 0113, free 24/7, chat at 113.nl. 112 if immediate danger.\nDon't coach, don't assess, don't talk them down. Care, and hand over."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2480,
+        160
+      ],
+      "id": "82575d09-28e9-4f0d-9c6c-eae711f9d36f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-haiku-4-5-20251001",
+          "mode": "list",
+          "cachedResultName": "Claude Haiku 4.5"
+        },
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.6,
+      "position": [
+        1792,
+        400
+      ],
+      "id": "7b9f5cad-360d-4381-a0f0-b9ff60d85b9b",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "dD0Dfc4tq3ST7p0t",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3968,
+        96
+      ],
+      "id": "22f9b75c-baa4-49b0-824a-ea44481b7091",
+      "name": "Send a text message",
+      "webhookId": "e8a9b0dd-8542-4c1b-af31-a7cf0f149e1e",
+      "credentials": {
+        "telegramApi": {
+          "id": "jAVTEbWL1qN2SABm",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=  hio9_{{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        1920,
+        400
+      ],
+      "id": "618b8550-82f6-446d-9019-eee40c028e7f",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Users",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "chat_id",
+              "lookupValue": "={{ String($('Telegram Trigger').first().json.message.chat.id) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        400,
+        16
+      ],
+      "id": "28564d7a-25da-486c-a04c-8812e8f95b07",
+      "name": "Find user",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "527eed4d-9b37-422a-8c0b-bf3c3422df4d",
+              "leftValue": "={{ String($('Find user').first().json.onboarded || '').trim().toLowerCase() }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1264,
+        160
+      ],
+      "id": "30ee5e0e-285b-4b33-ae2a-c6db429e93bf",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst text = ($input.first().json.output || '').replace(/\\|\\|/g, '\\n');\n\n// split on line breaks and sentence endings (. ! ? and Arabic ؟)\nlet parts = text\n  .split(/\\n+|(?<=[.!?؟])\\s+/)\n  .map(t => t.trim())\n  .filter(Boolean);\n\n// max 3 bubbles: merge the rest into the last one\nif (parts.length > 3) {\n  parts = [parts[0], parts[1], parts.slice(2).join(' ')];\n}\n\nreturn parts.map(t => ({ json: { text: t } }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3520,
+        160
+      ],
+      "id": "09fd42d7-5664-49ca-93da-ab93faa4df46",
+      "name": "Split Messages"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3744,
+        160
+      ],
+      "id": "1dc2937a-5ca9-4a34-8cf9-2b00e43c3816",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 1.3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4192,
+        160
+      ],
+      "id": "319a6e68-7ebf-411e-9722-491886061f75",
+      "name": "Wait",
+      "webhookId": "9ebf73fb-b6cf-4d69-a79d-acc2cf8485b3"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get a journaling quote. Always call this when starting a journal session. Filter by theme: anxiety, stress, low_mood, focus, motivation, self_worth, relationships, loneliness, rest.",
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1393547140,
+          "mode": "list",
+          "cachedResultName": "quotes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=1393547140"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "theme",
+              "lookupValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        2048,
+        400
+      ],
+      "id": "ece679ed-6e0c-4448-9a3f-2407ace886f7",
+      "name": "get_quote",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Save a finished journal entry. Use once, at the end of a journaling session.",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 934237716,
+          "mode": "list",
+          "cachedResultName": "Journal",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=934237716"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "template": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('template', ``, 'string') }}",
+            "quote_author": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('quote_author', ``, 'string') }}",
+            "question": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('question', ``, 'string') }}",
+            "answer": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('answer', ``, 'string') }}",
+            "date": "={{ $now.setZone('Europe/Amsterdam').toFormat('yyyy-MM-dd HH:mm') }}",
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.chat.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "template",
+              "displayName": "template",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "question",
+              "displayName": "question",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "answer",
+              "displayName": "answer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quote_author",
+              "displayName": "quote_author",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        2176,
+        400
+      ],
+      "id": "4bf32d79-fb3e-461e-aa38-4f61bd4012cd",
+      "name": "save_journal",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-haiku-4-5-20251001",
+          "mode": "list",
+          "cachedResultName": "Claude Haiku 4.5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.6,
+      "position": [
+        704,
+        240
+      ],
+      "id": "e6e7a006-1546-44b5-b863-7022aad79ec1",
+      "name": "Anthropic Chat Model2",
+      "credentials": {
+        "anthropicApi": {
+          "id": "dD0Dfc4tq3ST7p0t",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=The user is chatting with a wellbeing bot. Short answers like a name, a language,\na city, or a one-word reply are answers to setup questions. Never classify those as crisis.\nOnly classify as crisis if the message itself clearly expresses risk.\n\nYou are a safety classifier for a wellbeing chat.\nAnswer with one word only: crisis or ok.\n\ncrisis = wanting to die, suicidal thoughts, self-harm, being in danger,\nsomeone hurting them, or hopelessness that suggests they might act on it.\nJudge the latest message in the context of the conversation.\nAmbiguous phrases like \"I can't do this anymore\" or \"what's the point\"\ncount as crisis if the conversation is dark.\n\nok = sadness, stress, anxiety, exhaustion, frustration, or venting\nwithout any sign of danger.\n\nRecent conversation:\n{{ $('Telegram Trigger').first().json.message.text }}\n\nLatest message: {{ $('Telegram Trigger').first().json.message.text }}",
+        "messages": {
+          "messageValues": []
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        624,
+        16
+      ],
+      "id": "6e8feecd-5050-4dfe-89c9-c04aad560bb3",
+      "name": "Crisis check",
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "588e2dff-fb32-43e6-a7a7-dd1cb8b9564c",
+              "leftValue": "={{ String($json.text).trim().toLowerCase().startsWith('crisis') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        976,
+        16
+      ],
+      "id": "c851a170-f663-4256-9eb2-f135db42c8d9",
+      "name": "Crisis?"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-haiku-4-5-20251001",
+          "mode": "list",
+          "cachedResultName": "Claude Haiku 4.5"
+        },
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.6,
+      "position": [
+        1280,
+        -16
+      ],
+      "id": "e2a2950e-2230-46df-abec-c11a4e467df3",
+      "name": "Anthropic Chat Model3",
+      "credentials": {
+        "anthropicApi": {
+          "id": "dD0Dfc4tq3ST7p0t",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Someone wrote this to a wellbeing companion: \"{{ $('Telegram Trigger').first().json.message.text }}\"\nWrite 2 short sentences in their language: acknowledge what they said with warmth,\nand say they don't have to hold it alone. No advice, no questions, no resources, no emojis.",
+        "messages": {
+          "messageValues": []
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1200,
+        -240
+      ],
+      "id": "9604d4b4-975d-4065-a436-e2660cccd45f",
+      "name": "Crisis Message",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "text": "={{ $json.text || \"I'm really glad you told me. You don't have to hold this alone.\" }}  Please talk to someone now: 113 Zelfmoordpreventie, call 113 or 0800-0113 (free, 24/7), or chat at 113.nl. If you're in immediate danger, call 112.  I'm an AI, so I can't give you the help you deserve right now. A real person can.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1552,
+        -128
+      ],
+      "id": "a2b5d10a-a973-4291-8193-3eb5693b6aea",
+      "name": "Send a text message2",
+      "webhookId": "35de245f-56e2-4399-9941-f1da25e210fc",
+      "credentials": {
+        "telegramApi": {
+          "id": "jAVTEbWL1qN2SABm",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Read events from the user's calendar between two dates.",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "hiohackathon@gmail.com",
+          "mode": "list",
+          "cachedResultName": "hiohackathon@gmail.com"
+        },
+        "returnAll": true,
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2304,
+        400
+      ],
+      "id": "f4c58b15-3714-486c-81b8-cc239e1020b8",
+      "name": "read_calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Rk3LGxtnCxto0vft",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $('Telegram Trigger').first().json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        -192
+      ],
+      "id": "952087ef-26af-4483-9a9c-602843ed9755",
+      "name": "Get Voice File",
+      "webhookId": "4e77261c-b667-459b-af80-0c40002d3f2d",
+      "credentials": {
+        "telegramApi": {
+          "id": "jAVTEbWL1qN2SABm",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        160,
+        -192
+      ],
+      "id": "73f372d4-8bb4-4e17-ad48-0eb5c4640f9e",
+      "name": "Transcribe",
+      "credentials": {
+        "openAiApi": {
+          "id": "Xj3UozGCD4ux7lQO",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -720,
+        -608
+      ],
+      "id": "2c5186aa-a7b5-48d8-a727-79a0f9a79cba",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Users",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -496,
+        -608
+      ],
+      "id": "b51abc9b-c0c7-4fc8-a367-ec655af9fd6d",
+      "name": "Get Users",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = DateTime.now().setZone('Europe/Amsterdam');\nconst hour = now.hour;\nconst isSunday = now.weekday === 7;\n\nconst out = [];\n\nfor (const item of $input.all()) {\n  const u = item.json;\n  if (String(u.onboarded).trim().toLowerCase() !== 'yes') continue;\n\n  const morning = Number(u.morning_hour);\n  const checkin = Number(u.checkin_hour);\n\n  const seen = u.last_seen ? DateTime.fromISO(String(u.last_seen), { zone: 'Europe/Amsterdam' }) : null;\n  const daysQuiet = seen ? Math.floor(now.diff(seen, 'days').days) : 0;\n\n  const joined = u.joined ? DateTime.fromISO(String(u.joined), { zone: 'Europe/Amsterdam' }) : null;\n  const daysHere = joined ? Math.floor(now.diff(joined, 'days').days) : 0;\n  const thin = !u.name || !u.checkin_hour;\n\n  let type = u.test_type ? String(u.test_type).trim() : null;\n  if (!type) {\n    if (thin && daysHere >= 2 && hour === 18) type = 'setup';\n    else if (daysQuiet >= 3 && hour === checkin) type = 'quiet';\n    else if (isSunday && hour === checkin) type = 'weekend';\n    else if (hour === morning) type = 'morning';\n    else if (hour === checkin) type = 'checkin';\n  }\n\n  if (type) out.push({ json: { ...u, type, daysQuiet, daysHere, today: now.toISODate() } });\n}\n\nreturn out;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -272,
+        -608
+      ],
+      "id": "2472e901-334c-4045-a496-82bde41be31d",
+      "name": "Who To Message"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "hiohackathon@gmail.com",
+          "mode": "list",
+          "cachedResultName": "hiohackathon@gmail.com"
+        },
+        "returnAll": true,
+        "timeMin": "={{ $now.setZone('Europe/Amsterdam').startOf('day').toISO() }}",
+        "timeMax": "={{ $now.setZone('Europe/Amsterdam').plus({ days: 9 }).endOf('day').toISO() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -48,
+        -608
+      ],
+      "id": "e5061f88-371f-4a72-ba27-ab235f7adbf7",
+      "name": "Read Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Rk3LGxtnCxto0vft",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are Hio, a warm AI wellbeing companion. You are writing to {{ $json.name }} on Telegram.\n\nWrite in {{ $json.language }}. Tone: {{ $json.tone }}.\nWrite like a friend texting. 1 to 3 short sentences. No dashes, no lists, no headings, no emojis.\nDo not start with \"I understand\" or \"It sounds like\". End with one short question.\n\nMessage type: {{ $json.type }}\n\nIf morning: say in one line what today looks like, then one small tip. If the day is busy, suggest a short break.\nIf checkin: ask how the day went and offer to journal together.\nIf weekend: ask how the week went, and suggest one low effort thing for the weekend. Use the weather and name one real place from the list below. If the list says none found, keep the suggestion general. Never invent a place name. If there are journal entries, mention one kind, specific pattern you noticed, and never judge. If there are none, do not mention journaling.\n\nContext:\nToday: {{ $json.today_events }}\nBusy day: {{ $json.busy }}\nDeadlines: {{ $json.deadlines }}\nSupports with: {{ $json.struggles }}\nCity: {{ $json.city }}\nWeekend weather: {{ $json.weather }}\nNearby places: {{ $json.places }}\nJournal entries this week ({{ $json.journal_count }}): {{ $json.journal_week }}\n\nIf a deadline is close, mention it gently, without pressure.\nOnly use the context for the message type above. Ignore the rest.",
+        "messages": {
+          "messageValues": []
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        2192,
+        -864
+      ],
+      "id": "4ad151ff-dbbf-4061-acb5-f73ec014b9ad",
+      "name": "Write Message"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Prepare').first().json.chat_id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2768,
+        -752
+      ],
+      "id": "7c7f3ff8-17dc-4359-a8ad-14acd5f90c85",
+      "name": "Send Proactive",
+      "webhookId": "33b96f63-b089-4e3f-b4dc-66c6ccfce5dc",
+      "credentials": {
+        "telegramApi": {
+          "id": "jAVTEbWL1qN2SABm",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.open-meteo.com/v1/forecast?latitude={{ $json.lat }}&longitude={{ $json.lon }}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FAmsterdam&forecast_days=9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        400,
+        -608
+      ],
+      "id": "c5c71891-2c94-4003-8921-0601e45effbf",
+      "name": "Weather",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const base = $('Prepare').first().json;\nconst d = $input.first().json?.daily;\n\nlet weather = 'unknown';\nif (d?.temperature_2m_max) {\n  const max = Math.round(Math.max(...d.temperature_2m_max.slice(1, 8)));\n  const rain = Math.max(...(d.precipitation_probability_max || [0]).slice(1, 8));\n  weather = `up to ${max}°C, ${rain}% chance of rain`;\n}\n\nreturn [{ json: { ...base, weather, daily: d || null } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        -608
+      ],
+      "id": "d3b1e162-b2ed-47df-a8bc-f6f241d28e11",
+      "name": "Add Weather"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 934237716,
+          "mode": "list",
+          "cachedResultName": "Journal",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=934237716"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "chat_id",
+              "lookupValue": "={{ $json.chat_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        848,
+        -608
+      ],
+      "id": "c33cf4b9-d495-499b-8875-6a29e817d9fb",
+      "name": "Read Journal",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst base = $('Add Weather').first().json;\nconst cutoff = DateTime.now().setZone('Europe/Amsterdam').minus({ days: 7 });\n\nconst entries = $input.all()\n  .map(i => i.json)\n  .filter(e => e.date && DateTime.fromFormat(String(e.date), 'yyyy-MM-dd HH:mm', { zone: 'Europe/Amsterdam' }) >= cutoff)\n  .map(e => `${e.date}: ${e.answer}`);\n\nreturn [{ json: {\n  ...base,\n  journal_week: entries.join(' | ') || 'no entries this week',\n  journal_count: entries.length,\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        -608
+      ],
+      "id": "a1e923ea-4f1e-4fea-a13b-d6dd22c9e196",
+      "name": "Week Journal"
+    },
+    {
+      "parameters": {
+        "url": "https://overpass-api.de/api/interpreter",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/plain",
+        "body": "=[out:json][timeout:20];(node[\"amenity\"~\"cafe|restaurant\"][\"name\"](around:1500,{{ $json.lat }},{{ $json.lon }});node[\"leisure\"=\"park\"][\"name\"](around:2000,{{ $json.lat }},{{ $json.lon }});node[\"tourism\"~\"museum|gallery\"][\"name\"](around:3000,{{ $json.lat }},{{ $json.lon }}););out body 40;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1296,
+        -608
+      ],
+      "id": "81a0b14b-9922-46fe-9c34-873b1a1ae453",
+      "name": "Find Places",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst base = $('Week Journal').first().json;\nconst els = $input.first().json?.elements || [];\n\nconst pick = (n) => els\n  .filter(e => e.tags?.name && (e.tags.amenity === n || e.tags.leisure === n || e.tags.tourism === n))\n  .slice(0, 3)\n  .map(e => e.tags.name);\n\nconst places = [\n  ...pick('park').map(n => `${n} (park)`),\n  ...pick('cafe').map(n => `${n} (cafe)`),\n  ...pick('museum').map(n => `${n} (museum)`),\n];\n\nreturn [{ json: { ...base, places: places.join(', ') || 'none found' } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        -608
+      ],
+      "id": "04090b3f-18f9-4621-92f3-839a546f5797",
+      "name": "Add Places"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-haiku-4-5-20251001",
+          "mode": "list",
+          "cachedResultName": "Claude Haiku 4.5"
+        },
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.6,
+      "position": [
+        2496,
+        -640
+      ],
+      "id": "4a5fc9ea-bb55-4095-9398-c7872daba4f2",
+      "name": "Anthropic Chat Model4",
+      "credentials": {
+        "anthropicApi": {
+          "id": "dD0Dfc4tq3ST7p0t",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst user = $('Who To Message').first().json;\nconst tz = 'Europe/Amsterdam';\nconst now = DateTime.now().setZone(tz);\nconst today = now.toISODate();\n\nconst events = $input.all().map(i => i.json).filter(e => e.summary);\n\nconst fmt = e => {\n  const s = e.start?.dateTime ? DateTime.fromISO(e.start.dateTime).setZone(tz).toFormat('HH:mm') : 'all day';\n  return `${s} ${e.summary.trim()}`;\n};\n\nconst todayEvents = events\n  .filter(e => (e.start?.dateTime || e.start?.date || '').startsWith(today))\n  .map(fmt);\n\nconst deadlines = events\n  .filter(e => /^DEADLINE:/i.test(e.summary.trim()))\n  .map(e => {\n    const d = e.start?.dateTime || e.start?.date;\n    const days = Math.round(DateTime.fromISO(d).setZone(tz).startOf('day').diff(now.startOf('day'), 'days').days);\n    return `${e.summary.trim()} (in ${days} day(s))`;\n  });\n\nreturn [{ json: {\n  ...user,\n  today_events: todayEvents.join(', ') || 'nothing scheduled',\n  busy: todayEvents.length >= 4,\n  deadlines: deadlines.join(', ') || 'none',\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        176,
+        -608
+      ],
+      "id": "179feb46-9b4d-41db-801a-d464408a03bc",
+      "name": "Prepare"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Add an event to the user's calendar. Only use after the user said yes.",
+        "calendar": {
+          "__rl": true,
+          "value": "hiohackathon@gmail.com",
+          "mode": "list",
+          "cachedResultName": "hiohackathon@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2432,
+        400
+      ],
+      "id": "1b5018d5-bffc-4f2a-8744-0316032e4853",
+      "name": "add_to_calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Rk3LGxtnCxto0vft",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Delete a calendar event. Use read_calendar first to get its ID. Use this plus add_to_calendar to move an event.",
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "hiohackathon@gmail.com",
+          "mode": "list",
+          "cachedResultName": "hiohackathon@gmail.com"
+        },
+        "eventId": "={{ $fromAI('eventId', 'The event ID from read_calendar', 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2560,
+        400
+      ],
+      "id": "38abcd60-0809-4024-9d21-af68af8fc1f5",
+      "name": "delete_event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Rk3LGxtnCxto0vft",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Log a repeating habit they are trying to keep, like walking, sleeping early, or taking breaks. Only for habits already in their habits list. Never use this for one-off tasks or assignments.",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1213167589,
+          "mode": "list",
+          "cachedResultName": "Habit log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=1213167589"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date": "={{ $now.setZone('Europe/Amsterdam').toFormat('yyyy-MM-dd') }}",
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+            "habit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('habit', ``, 'string') }}",
+            "sources": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('sources', ``, 'string') }}",
+            "note": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('note', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "habit",
+              "displayName": "habit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sources",
+              "displayName": "sources",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "note",
+              "displayName": "note",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        2688,
+        400
+      ],
+      "id": "7e017521-379c-49a3-b345-1e032360ccac",
+      "name": "log_habit",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1213167589,
+          "mode": "list",
+          "cachedResultName": "Habit log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=1213167589"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "chat_id",
+              "lookupValue": "={{ String($json.chat_id) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1744,
+        -608
+      ],
+      "id": "16aeaf65-c40f-42d7-9bfd-d0b1b1020a38",
+      "name": "Read habits",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $('Add Places').first().json;\nconst tz = 'Europe/Amsterdam';\nconst now = DateTime.now().setZone(tz);\nconst start = now.minus({ days: 6 }).startOf('day');\nconst who = b.name || b['name '] || 'you';\n\n// habits, last 7 days\nconst logs = $input.all().map(i => i.json).filter(r => r.habit);\nconst week = logs.filter(r => DateTime.fromISO(String(r.date), { zone: tz }) >= start);\nconst pastDays = [...Array(7)].map((_, i) => start.plus({ days: i }));\nconst habits = [...new Set(week.map(r => r.habit))];\nconst grid = habits.map(h => {\n  const cells = pastDays.map(d => {\n    const hit = week.some(r => r.habit === h && String(r.date) === d.toISODate());\n    return `<td class=\"${hit ? 'on' : 'off'}\">${hit ? '✓' : ''}</td>`;\n  }).join('');\n  return `<tr><th>${h}</th>${cells}</tr>`;\n}).join('');\n\n// week ahead, monday to sunday\nconst mon = now.plus({ days: 1 }).startOf('day');\nconst ahead = [...Array(7)].map((_, i) => mon.plus({ days: i }));\n\nconst events = $('Read Calendar').all().map(i => i.json).filter(e => e.summary);\nconst wx = b.daily || {};\nconst codes = { 0:'Clear', 1:'Mostly clear', 2:'Partly cloudy', 3:'Cloudy', 45:'Fog', 48:'Fog', 51:'Drizzle', 53:'Drizzle', 55:'Drizzle', 61:'Rain', 63:'Rain', 65:'Heavy rain', 71:'Snow', 73:'Snow', 75:'Snow', 80:'Showers', 81:'Showers', 82:'Showers', 95:'Storm', 96:'Storm', 99:'Storm' };\n\nconst rows = ahead.map(d => {\n  const iso = d.toISODate();\n  const idx = (wx.time || []).indexOf(iso);\n  const sky = idx > -1 ? (codes[wx.weather_code[idx]] || '') : '';\n  const temp = idx > -1 ? `${Math.round(wx.temperature_2m_min[idx])} to ${Math.round(wx.temperature_2m_max[idx])}°` : '';\n  const rain = idx > -1 && wx.precipitation_probability_max[idx] >= 40 ? ` · ${wx.precipitation_probability_max[idx]}% rain` : '';\n\n  const day = events.filter(e => (e.start?.dateTime || e.start?.date || '').startsWith(iso));\n  const dl = day.filter(e => /^DEADLINE:/i.test(e.summary.trim()));\n  const ev = day.filter(e => !/^DEADLINE:/i.test(e.summary.trim()));\n\n  const items = [\n    ...dl.map(e => `<span class=\"dl\">${e.summary.replace(/^DEADLINE:\\s*/i, '')}</span>`),\n    ...ev.map(e => `<span class=\"ev\">${e.start?.dateTime ? DateTime.fromISO(e.start.dateTime).setZone(tz).toFormat('HH:mm') + ' ' : ''}${e.summary.trim()}</span>`),\n  ].join('');\n\n  const heavy = ev.length >= 4;\n  return `<tr class=\"${heavy ? 'heavy' : ''}\">\n    <th><div class=\"dname\">${d.toFormat('ccc')}</div><div class=\"dnum\">${d.toFormat('d LLL')}</div></th>\n    <td class=\"wx\">${sky}<div class=\"t\">${temp}${rain}</div></td>\n    <td class=\"ev-cell\">${items || '<span class=\"free\">free</span>'}</td></tr>`;\n}).join('');\n\nconst journal = (b.journal_week || '').split(' | ').filter(Boolean)\n  .map(e => `<div class=\"entry\">${e}</div>`).join('');\nconst journalEmpty = !journal;\nconst empty = habits.length === 0;\n\nconst html = `<!doctype html><html><head><meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Your week with Hio</title><style>\n*{box-sizing:border-box;margin:0;padding:0}\nbody{font:16px/1.65 -apple-system,system-ui,sans-serif;background:#f3efe6;color:#1d2b2a;padding:20px}\n.wrap{max-width:680px;margin:0 auto}\n.hero{background:#1d2b2a;color:#f3efe6;border-radius:28px;padding:40px 32px 36px;position:relative;overflow:hidden;margin-bottom:14px}\n.hero h1{font-size:32px;font-weight:600;line-height:1.2;position:relative;z-index:1}\n.hero .dates{color:#9fb0aa;margin-top:8px;font-size:15px;position:relative;z-index:1}\n.hero .line{color:#d9975b;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;position:relative;z-index:1}\n.blob{position:absolute;border-radius:50%}\n.b1{width:180px;height:180px;background:#4f7d6a;opacity:.3;right:-40px;bottom:-70px}\n.b2{width:90px;height:90px;background:#d9975b;opacity:.22;right:90px;top:-20px}\n.card{background:#fbf9f4;border-radius:24px;padding:26px 28px 28px;margin-bottom:14px;border:1px solid #e9e2d4}\n.card h2{font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:#4f7d6a;margin-bottom:18px;font-weight:600}\ntable{width:100%;border-collapse:separate;border-spacing:5px;margin-left:-5px}\n.habits th{text-align:left;font-weight:500;font-size:15px;padding-right:10px;white-space:nowrap}\n.habits td{width:34px;height:34px;text-align:center;border-radius:11px;font-size:15px;font-weight:700}\n.habits td.on{background:#4f7d6a;color:#fff}\n.habits td.off{background:#ece6d9}\n.dayrow td{background:none!important;font-size:11px;color:#9aa49f;font-weight:600;height:22px}\n.week th{text-align:left;width:74px;vertical-align:top;padding-top:10px}\n.dname{font-size:15px;font-weight:600}\n.dnum{font-size:12px;color:#9aa49f;font-weight:500}\n.week td{vertical-align:top;padding:10px 12px;background:#f3efe6;border-radius:12px}\n.week tr.heavy td{background:#f7e9d8}\n.wx{width:120px;font-size:13.5px;color:#3f6b5a}\n.wx .t{color:#9aa49f;font-size:12.5px;margin-top:2px}\n.ev-cell span{display:block;font-size:14px;margin-bottom:3px}\n.ev-cell .dl{color:#c07a2e;font-weight:600}\n.free{color:#b3bcb7;font-style:italic}\n.entry{background:#f3efe6;border-left:3px solid #d9975b;border-radius:10px;padding:14px 16px;margin-bottom:8px;font-size:15px}\n.empty{color:#8b958f;font-size:15px}\n.save{background:#1d2b2a;color:#a9b6b1;border-radius:24px;padding:24px 28px;font-size:13.5px;line-height:1.75}\n.save b{color:#f3efe6;display:block;margin-bottom:10px;font-size:13px;letter-spacing:1.2px;text-transform:uppercase}\n.save span{color:#d9975b;font-weight:600}\n.foot{text-align:center;color:#9aa49f;font-size:12.5px;margin:20px 0 6px}\n</style></head><body><div class=\"wrap\">\n\n<div class=\"hero\"><div class=\"blob b1\"></div><div class=\"blob b2\"></div>\n<div class=\"line\">Week in review</div>\n<h1>Your week, ${who}</h1>\n<div class=\"dates\">${start.toFormat('d LLLL')} to ${now.toFormat('d LLLL yyyy')}</div></div>\n\n<div class=\"card\"><h2>Habits</h2>\n${empty ? '<div class=\"empty\">Nothing logged yet. Tell Hio what you would like to keep up, and this fills itself in.</div>'\n : `<table class=\"habits\"><tr class=\"dayrow\"><th></th>${pastDays.map(d => `<td>${d.toFormat('ccc').toUpperCase()}</td>`).join('')}</tr>${grid}</table>`}</div>\n\n<div class=\"card\"><h2>What you wrote</h2>\n${journalEmpty ? '<div class=\"empty\">A quiet week on paper. That is allowed.</div>' : journal}</div>\n\n<div class=\"card\"><h2>The week ahead in ${b.city}</h2>\n<table class=\"week\">${rows}</table></div>\n\n<div class=\"save\"><b>Keep this</b>\n<span>iPhone</span> Share icon in Safari, then Print, pinch out on the preview, share again, Save to Files.<br>\n<span>Android</span> Chrome menu, then Share, then Print, then Save as PDF.</div>\n\n<div class=\"foot\">Made by Hio. Not a medical record, just your week.</div>\n</div></body></html>`;\n\nreturn [{ json: { ...b, filename: `week-${now.toISODate()}.html` }, binary: {\n  data: await this.helpers.prepareBinaryData(Buffer.from(html, 'utf8'), `week-${now.toISODate()}.html`, 'text/html')\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1968,
+        -608
+      ],
+      "id": "9880bcd7-8fcd-48f1-9977-05097ce2e194",
+      "name": "Build board"
+    },
+    {
+      "parameters": {
+        "operation": "sendDocument",
+        "chatId": "={{ $('Prepare').first().json.chat_id }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2480,
+        -464
+      ],
+      "id": "e42b1cdb-68d7-4da1-ad01-d1e5b746744d",
+      "name": "Send Board",
+      "webhookId": "b4b3b5f6-f03a-438d-9541-70761562d30f",
+      "credentials": {
+        "telegramApi": {
+          "id": "jAVTEbWL1qN2SABm",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Save or update a habit the user wants to keep. active is yes or no.",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 627911411,
+          "mode": "list",
+          "cachedResultName": "Habits",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=627911411"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+            "habit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('habit', ``, 'string') }}",
+            "why": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('why', ``, 'string') }}",
+            "active": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('active', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "habit",
+              "displayName": "habit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "why",
+              "displayName": "why",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "active",
+              "displayName": "active",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        2816,
+        400
+      ],
+      "id": "ef9f28cc-aa85-4cf2-9494-1d8e52e46153",
+      "name": "set_habits",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Users",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+            "name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('name', ``, 'string') }}",
+            "language": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('language', ``, 'string') }}",
+            "city": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('city', ``, 'string') }}",
+            "lat": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('lat', ``, 'string') }}",
+            "lon": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('lon', ``, 'string') }}",
+            "struggles": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('struggles', ``, 'string') }}",
+            "tone": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tone', ``, 'string') }}",
+            "thinkers": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('thinkers', ``, 'string') }}",
+            "checkin_frequency": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('checkin_frequency', ``, 'string') }}",
+            "checkin_moment": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('checkin_moment', ``, 'string') }}",
+            "checkin_style": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('checkin_style', ``, 'string') }}",
+            "checkin_hour": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('checkin_hour', ``, 'string') }}",
+            "morning_hour": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('morning_hour', ``, 'string') }}",
+            "onboarded": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('onboarded', ``, 'string') }}",
+            "last_seen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('last_seen', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "language",
+              "displayName": "language",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lat",
+              "displayName": "lat",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lon",
+              "displayName": "lon",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "struggles",
+              "displayName": "struggles",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tone",
+              "displayName": "tone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "thinkers",
+              "displayName": "thinkers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checkin_frequency",
+              "displayName": "checkin_frequency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checkin_moment",
+              "displayName": "checkin_moment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checkin_style",
+              "displayName": "checkin_style",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checkin_hour",
+              "displayName": "checkin_hour",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "morning_hour",
+              "displayName": "morning_hour",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "onboarded",
+              "displayName": "onboarded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_seen",
+              "displayName": "last_seen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        2944,
+        400
+      ],
+      "id": "d7dd35ab-970a-4260-82a3-4d0e952ceddf",
+      "name": "update_profile",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "task": "={{ $fromAI('list', 'Which task list: Uni & Work or Life', 'string') === 'Life' ? 'SEw5dlgxWkEzN2VIc0VLMg' : 'cjIwRGJPVHFfWDlJX2hUTg' }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        3072,
+        400
+      ],
+      "id": "c2a9f5f8-abfb-4f0d-8e8e-e37ee65f28ee",
+      "name": "read_tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "JXZaQ2nvjARpiVVF",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Add a new task to Work/school or Life.",
+        "task": "={{ $fromAI('list', 'Which task list: Uni & Work or Life', 'string') === 'Life' ? 'SEw5dlgxWkEzN2VIc0VLMg' : 'cjIwRGJPVHFfWDlJX2hUTg' }}",
+        "title": "={{ $fromAI('title', 'The task title', 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        400
+      ],
+      "id": "942753f3-af78-478b-a8cd-b317e8af9cbb",
+      "name": "add_task",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "JXZaQ2nvjARpiVVF",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Users",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+            "onboarded": "yes",
+            "joined": "={{ $now.setZone('Europe/Amsterdam').toFormat('yyyy-MM-dd') }}"
+          },
+          "matchingColumns": [
+            "chat_id"
+          ],
+          "schema": [
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "language",
+              "displayName": "language",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "lat",
+              "displayName": "lat",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "lon",
+              "displayName": "lon",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "struggles",
+              "displayName": "struggles",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tone",
+              "displayName": "tone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "thinkers",
+              "displayName": "thinkers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "checkin_frequency",
+              "displayName": "checkin_frequency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "checkin_moment",
+              "displayName": "checkin_moment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "checkin_style",
+              "displayName": "checkin_style",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "checkin_hour",
+              "displayName": "checkin_hour",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "morning_hour",
+              "displayName": "morning_hour",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "onboarded",
+              "displayName": "onboarded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_seen",
+              "displayName": "last_seen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "joined",
+              "displayName": "joined",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "test_type",
+              "displayName": "test_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1552,
+        240
+      ],
+      "id": "b8714265-d93f-43f5-866c-aa03ba011e55",
+      "name": "Create User",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "   Search the web for current facts you cannot know: opening hours, whether a place is open, events happening soon, prices. Not for anything about health or how they should feel.",
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        400
+      ],
+      "id": "d873d106-a564-4589-a08c-ac3d80319fa9",
+      "name": "web_search",
+      "credentials": {
+        "tavilyApi": {
+          "id": "ZoBmDMJ4GrGs2D2h",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "95267228-5d79-431b-8386-93e5067d69eb",
+              "leftValue": "={{ $json.message.voice ? true : false }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -176,
+        -16
+      ],
+      "id": "60e16b45-b552-435a-9fde-f800c61299c6",
+      "name": "Is Voice?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4c1f8e13-17cc-453c-8a78-aa54326d454e",
+              "leftValue": "={{ $json.message.location ? true : false }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -496,
+        16
+      ],
+      "id": "eed834b7-736c-4c5c-9371-6b3f26f6bda0",
+      "name": "Is Location?"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM",
+          "mode": "list",
+          "cachedResultName": "Hio DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Users",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f04zdqrEuOBl_5J_twG2GaII3Vp8yYCEHmSaoNbl-LM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+            "lat": "={{ $('Telegram Trigger').first().json.message.location.latitude }}",
+            "lon": "={{ $('Telegram Trigger').first().json.message.location.longitude }}"
+          },
+          "matchingColumns": [
+            "chat_id"
+          ],
+          "schema": [
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "language",
+              "displayName": "language",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lat",
+              "displayName": "lat",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lon",
+              "displayName": "lon",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "struggles",
+              "displayName": "struggles",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tone",
+              "displayName": "tone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "thinkers",
+              "displayName": "thinkers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checkin_frequency",
+              "displayName": "checkin_frequency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checkin_moment",
+              "displayName": "checkin_moment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checkin_style",
+              "displayName": "checkin_style",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checkin_hour",
+              "displayName": "checkin_hour",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "morning_hour",
+              "displayName": "morning_hour",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "onboarded",
+              "displayName": "onboarded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_seen",
+              "displayName": "last_seen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "joined",
+              "displayName": "joined",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "test_type",
+              "displayName": "test_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        32,
+        208
+      ],
+      "id": "bb33a146-5ab6-47fd-9838-9d6cd56dbe42",
+      "name": "Save Location",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qJddUTBXjuiQz3Q4",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9a03b939-c7d6-46a4-a836-edd1b383b235",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "weekend",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2160,
+        -464
+      ],
+      "id": "6896233c-086c-40ef-92a4-42ae7876ca29",
+      "name": "If1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Is Location?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Split Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find user": {
+      "main": [
+        [
+          {
+            "node": "Crisis check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Messages": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_quote": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "save_journal": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Crisis check",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crisis check": {
+      "main": [
+        [
+          {
+            "node": "Crisis?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crisis?": {
+      "main": [
+        [
+          {
+            "node": "Crisis Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Crisis Message",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crisis Message": {
+      "main": [
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "read_calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Voice File": {
+      "main": [
+        [
+          {
+            "node": "Transcribe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe": {
+      "main": [
+        [
+          {
+            "node": "Find user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Users": {
+      "main": [
+        [
+          {
+            "node": "Who To Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Who To Message": {
+      "main": [
+        [
+          {
+            "node": "Read Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Calendar": {
+      "main": [
+        [
+          {
+            "node": "Prepare",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Message": {
+      "main": [
+        [
+          {
+            "node": "Send Proactive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weather": {
+      "main": [
+        [
+          {
+            "node": "Add Weather",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Weather": {
+      "main": [
+        [
+          {
+            "node": "Read Journal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Journal": {
+      "main": [
+        [
+          {
+            "node": "Week Journal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Week Journal": {
+      "main": [
+        [
+          {
+            "node": "Find Places",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Places": {
+      "main": [
+        [
+          {
+            "node": "Add Places",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Places": {
+      "main": [
+        [
+          {
+            "node": "Read habits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Write Message",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare": {
+      "main": [
+        [
+          {
+            "node": "Weather",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_to_calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete_event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "log_habit": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read habits": {
+      "main": [
+        [
+          {
+            "node": "Build board",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build board": {
+      "main": [
+        [
+          {
+            "node": "Write Message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Proactive": {
+      "main": [
+        []
+      ]
+    },
+    "set_habits": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_profile": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "read_tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_task": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create User": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "web_search": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Voice?": {
+      "main": [
+        [
+          {
+            "node": "Get Voice File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Find user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Location?": {
+      "main": [
+        [
+          {
+            "node": "Save Location",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Voice?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Location": {
+      "main": [
+        [
+          {
+            "node": "Find user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send Board",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "69fde8c1-8063-4a60-b623-b918e881d3e3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "364c4595c1b01584d3b3037c05ba506b199d249c0c40cbf0b35a034d10bc7942"
+  },
+  "nodeGroups": [],
+  "id": "8dkttV8Aq191RtgA",
+  "tags": []
+}
