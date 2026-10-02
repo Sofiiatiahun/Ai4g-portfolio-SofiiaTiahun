@@ -23,37 +23,37 @@ _List the files, or link to them. Notebook exports, screenshots, scripts._
 > Your tool and your SDG for this hackathon are announced at the **start of Friday's class**.
 > Write them down here once you know them.
 
-**Project title:**
+**Project title:** The True Price of "New"
 
-**My pair partner:**
+**My pair partner:** Yazan
 
-**Tool we had to use:**
+**Tool we had to use:** ComfyUI
 
-**SDG we had to address:**
+**SDG we had to address:** 13
 
 **What problem does it solve, and for whom?**
-_Name a real, specific user. "Everyone" is not a user._
+It addresses the overconsumption of fast fashion by exposing the hidden environmental and human costs to Gen Z and Millennial social media users who frequently participate in rapid clothing trends.
 
 **What did you build?**
-_Two or three sentences. What can a user actually do with it?_
+We built a 30-second short film and a reproducible ComfyUI workflow. A user can load our workflow JSON and shot list to regenerate every frame of the film exactly as we designed it.
 
 **Link to the live thing (if any):**
 _Deployed URL, workflow export, video demo - whatever proves it works._
 
 **How do I run it?**
-_Short instructions so someone else can start it._
+ Open ComfyUI, load the submitted workflow JSON file, input the prompts and seeds from the provided shot list, and queue the generation.
 
 **Who did what?**
-_Be honest about the split of work between you and your partner._
+Yazan was doing all of the technical parts getting support from Sofiia by writing concept, idea and giving a feedback
 
 **Ethical reflection - what are the risks of your tool? Who could it harm?**
-_Every hackathon requires this. One honest paragraph beats three vague ones._
+Generated climate imagery is powerful but carries the risk of misleading viewers into believing AI-generated landfills or workers are real documentary photographs. To mitigate this, our film uses a clear, stylized visual metaphor rather than deceptive photorealism. Additionally, we kept image generation attempts to a minimum to ensure the energy cost of the AI was justified by the film's impact.
 
 ### Checklist
-- [ ] Prototype code (or export / workflow file) is in `hackathon/`
-- [ ] This week's slides are in `hackathon/`
-- [ ] The prototype actually runs, and I wrote down how to run it
-- [ ] Ethical reflection written above
+- [x] Prototype code (or export / workflow file) is in `hackathon/`
+- [x] This week's slides are in `hackathon/`
+- [x] The prototype actually runs, and I wrote down how to run it
+- [x] Ethical reflection written above
 
 ---
 
