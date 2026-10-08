@@ -170,10 +170,10 @@ The output is a **signal for a conversation with an adviser, not proof**: the mo
 
 
 ### Checklist
-- [ ] Prototype code (or export / workflow file) is in `hackathon/`
-- [ ] This week's slides are in `hackathon/`
-- [ ] The prototype actually runs, and I wrote down how to run it
-- [ ] Ethical reflection written above
+- [x] Prototype code (or export / workflow file) is in `hackathon/`
+- [x] This week's slides are in `hackathon/`
+- [x] The prototype actually runs, and I wrote down how to run it
+- [x] Ethical reflection written above
 
 ---
 
@@ -181,8 +181,8 @@ The output is a **signal for a conversation with an adviser, not proof**: the mo
 
 *Only fill this in for the week your group was selected to present. You need at least **one** of these across the whole term.*
 
-- [ ] My group presented in this week
-- [ ] Slides are in `presentation/`
+- [] My group presented in this week
+- [x] Slides are in `presentation/`
 - [ ] Proof of the live demo is in `presentation/` (recording, screenshots, or link)
 
 
