@@ -1,0 +1,53 @@
+id,text,ground_truth,pred_robbert,score_robbert,pred_roberta,score_roberta,pred_lexicon,robbert_match
+masto_d84be4e26ecb,STORING: overwegstoring 's-Hertogenbosch - Oss #storing #ns,negative,positive,0.992,neutral,0.953,negative,NO
+masto_83728f4a0532,Storing voorbij: defecte trein Utrecht - Amersfoort #ns,neutral,negative,0.994,neutral,0.929,negative,NO
+masto_d411eb6322ea,STORING: defecte trein Utrecht - Amersfoort #storing #ns,negative,negative,0.991,neutral,0.945,negative,YES
+masto_0373bbf644c8,STORING: overwegstoring Zwolle - Leeuwarden #storing #ns,negative,positive,0.969,neutral,0.952,negative,NO
+masto_ccaca7e1e745,Storing voorbij: defecte trein Utrecht - Rhenen #ns,neutral,negative,0.995,neutral,0.937,negative,NO
+masto_b0a599235ae7,Storing voorbij: defecte trein Arnhem - Nijmegen #ns,neutral,negative,0.994,neutral,0.933,negative,NO
+masto_dc73ee5abbc0,Storing voorbij: defecte trein Nijmegen - 's-Hertogenbosch #ns,neutral,negative,0.987,neutral,0.923,negative,NO
+masto_254c6b2e776e,STORING: defecte trein Utrecht - Rhenen #storing #ns,negative,negative,0.992,neutral,0.949,negative,YES
+masto_2103f16e0c21,STORING: defecte trein Arnhem - Nijmegen #storing #ns,negative,negative,0.991,neutral,0.949,negative,YES
+masto_7beeeb7c90ee,STORING: defecte trein Nijmegen - 's-Hertogenbosch #storing #ns,negative,negative,0.985,neutral,0.941,negative,YES
+masto_94007a0cff7e,Storing voorbij: defecte trein Arnhem - Nijmegen #ns,neutral,negative,0.994,neutral,0.933,negative,NO
+masto_2fd3d567bf4e,Storing voorbij: persoon op het spoor Utrecht - Hilversum #ns,neutral,negative,0.529,neutral,0.933,negative,NO
+masto_03b11e985c31,STORING: defecte trein Nijmegen - 's-Hertogenbosch #storing #ns,negative,negative,0.985,neutral,0.941,negative,YES
+masto_2f3a82500637,STORING: persoon op het spoor Utrecht - Hilversum #storing #ns,negative,positive,0.971,neutral,0.947,negative,NO
+masto_51df11994b7a,Storing voorbij: defecte trein Deventer - Enschede; Zwolle - Enschede #ns #nsinternational,neutral,negative,0.897,neutral,0.913,negative,NO
+masto_ab8192bd3602,"klant bij NS, heb je een probleem met je chipkaart bij een servicepunt en dan chat je met de servicedesk, dan vragen ze je tot 4 keer toe wat er mis is. Shit, en dan morgen weer opnieuw proberen.",negative,negative,0.996,neutral,0.701,neutral,YES
+masto_4fb5a47fff13,Storing voorbij: gestrande trein Dordrecht - Roosendaal #ns,neutral,negative,0.972,neutral,0.926,negative,NO
+masto_8dd2fd204103,STORING: gestrande trein Dordrecht - Roosendaal #storing #ns,negative,negative,0.986,neutral,0.948,negative,YES
+masto_94e99574d077,STORING: defecte trein Almelo - Hengelo; Zutphen - Hengelo #storing #ns,negative,negative,0.952,neutral,0.94,negative,YES
+masto_518dab44e3cd,"Vertraging - #duitsland, #groningen, #trein, #vertraging",negative,positive,0.889,neutral,0.942,negative,NO
+masto_5e3b44fe2cc7,"Een week geen treinen tussen Rotterdam en Utrecht, lelijk station ook aangepakt",negative,negative,1.0,neutral,0.834,neutral,YES
+masto_d72a642c5837,Storing voorbij: defecte trein Utrecht - Tiel #ns,neutral,negative,0.994,neutral,0.931,negative,NO
+masto_9474d04c204b,Storing voorbij: defecte trein Utrecht - Gouda; Utrecht - Leiden #ns,neutral,negative,0.997,neutral,0.929,negative,NO
+masto_2af4c2a70d13,Storing voorbij: defecte trein Haarlem - Alkmaar #ns,neutral,negative,0.997,neutral,0.925,negative,NO
+masto_6046fcc3f496,STORING: defecte trein Utrecht - Tiel #storing #ns,negative,negative,0.983,neutral,0.95,negative,YES
+masto_742d205521d7,STORING: defecte trein Utrecht - Gouda; Utrecht - Leiden #storing #ns,negative,negative,0.981,neutral,0.949,negative,YES
+masto_55236f6cdb74,STORING: defecte trein Haarlem - Alkmaar #storing #ns,negative,negative,0.99,neutral,0.948,negative,YES
+masto_46fb18286290,Storing voorbij: persoon op het spoor Den Haag - Rotterdam; Leiden - Rotterdam #ns,neutral,negative,0.573,neutral,0.927,negative,NO
+masto_84b010f007a6,STORING: persoon op het spoor Den Haag - Rotterdam #storing #ns,negative,positive,0.986,neutral,0.941,negative,NO
+masto_fa0a8827f19c,"Goedendag, u heeft contact met de virtuele AI assistent van de meldkamer NS. De melding komt nu pas bij mij binnen.",negative,positive,0.785,neutral,0.826,neutral,NO
+masto_2c3ea2a4ac8a,"#treinleven #ns Volle trein, maar mevrouw neemt op deze manier 2 plaatsen. Doet alsof ze niets door heeft, krant lezend.",negative,negative,1.0,neutral,0.806,neutral,YES
+masto_6301e018506b,STORING: defecte trein Eindhoven - Venlo #storing #ns,negative,negative,0.985,neutral,0.953,negative,YES
+masto_1522dbb0d151,STORING: defecte bovenleiding Rotterdam Centraal #storing #ns,negative,negative,0.99,neutral,0.952,negative,YES
+masto_93be78125146,"Kimberly van 11 is hulp-conducteur in historische trein, wat een prachtig initiatief!",positive,positive,1.0,positive,0.528,neutral,YES
+masto_73e7ab2ee759,Wat is dat toch voor achterlijke woordkeuze van NS communicatie?!,negative,negative,0.999,neutral,0.79,neutral,YES
+masto_c36ba5e513cf,‘Onbestaanbaar’ en weinig begrip voor mogelijk schrappen van aanpak spoorproblemen,negative,negative,1.0,neutral,0.792,neutral,YES
+masto_eed34de70b15,Reis je dit weekend naar Amsterdam? 🚆 Let dan op: op zaterdag 3 oktober werkzaamheden,neutral,positive,0.962,neutral,0.822,neutral,NO
+masto_43a222651ac3,"Geen chauffeurs, te weinig treinen en bussen: provincie trekt lijn in",negative,negative,1.0,neutral,0.888,neutral,YES
+masto_477e19791154,"morgen de hele dag geen openbaar vervoer 😟 Ze gaan staken, ik snap de woede maar reizigers zijn de dupe",negative,negative,0.997,negative,0.507,neutral,YES
+masto_463b6da81e5d,Morgen staken de NS-medewerkers weer. Werk dus een dagje thuis of geniet van de rust,neutral,positive,0.995,neutral,0.797,neutral,NO
+masto_97242d2b7189,NS en Rode Kruis verlengen fijne samenwerking bij grote treinverstoringen voor gestrande reizigers,positive,positive,0.999,neutral,0.803,neutral,YES
+masto_4b3a6e552c7b,Fietsersbond op de bres voor fietsers in de trein: meer fietsparkeerplekken nodig,neutral,positive,0.879,neutral,0.839,neutral,NO
+masto_1770640ce84a,Weinig camerabeelden van sabotageacties op spoor: hier ging het gisteren al mis,negative,negative,1.0,neutral,0.787,neutral,YES
+masto_dfa49d79a567,"Premier over storingen op spoor: Ontwrichtende sabotage, volstrekt onacceptabel",negative,negative,1.0,neutral,0.729,negative,YES
+masto_96c238842eae,"Prorail: sabotage op meerdere plekken op het spoor, geen gewonden",negative,negative,0.999,neutral,0.76,neutral,YES
+masto_ff8c0fd5fc46,Grote drukte en chaos op station Meppel door aanhoudende treinstoring en vertraging,negative,negative,0.999,neutral,0.734,negative,YES
+masto_4ceb0e5c7cd9,Hoe ziek kan iemand zijn: Op meerdere plekken op het spoor zijn materialen gedumpt,negative,negative,0.503,neutral,0.737,neutral,YES
+masto_23e86c436759,"ProRail overschrijdt limiet grote spoorstoringen opnieuw, reizigersvereniging eist maatregelen",negative,negative,0.534,neutral,0.696,neutral,YES
+masto_8736d96f4d76,Vakbond luidt opnieuw de noodklok: De maat is vol door toenemend geweld tegen conducteurs,negative,negative,0.812,neutral,0.762,neutral,YES
+masto_1a65960bf8a0,"Extra miljarden voor infrastructuur en onderhoud spoornetwerk aangekondigd door minister, goed nieuws!",positive,positive,0.992,neutral,0.709,positive,YES
+reddit_0a79cd06ca1e,"Woensdagse zeurdraad: NS treinen rijden weer eens niet door defecte wissel, sta al 40 min in de kou te wachten",negative,negative,0.999,neutral,0.847,negative,YES
+reddit_734077c6e510,"NS Conducteur hielp oudere dame met zware koffers de trein in bij Utrecht Centraal, top actie en heel vriendelijk!",positive,positive,1.0,positive,0.51,positive,YES

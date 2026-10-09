@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NS Live Pulse | Passenger Sentiment Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --ns-yellow: #FFC917;
+      --ns-blue: #003082;
+      --ns-dark: #001C4D;
+      --bg-color: #F4F6F9;
+      --card-bg: #FFFFFF;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --danger: #EF4444;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --border: #E2E8F0;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: var(--ns-blue);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      border-bottom: 4px solid var(--ns-yellow);
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .badge-ns {
+      background: var(--ns-yellow);
+      color: var(--ns-dark);
+      font-weight: 800;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+    }
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+    .brand-subtitle {
+      font-size: 0.82rem;
+      opacity: 0.85;
+      font-weight: 500;
+    }
+    .user-persona {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      background: #10B981;
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    /* Container */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Stat Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-top: 0.4rem;
+    }
+    .stat-caption {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+    .pulse-meter {
+      font-size: 2rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Decision banner */
+    .decision-banner {
+      background: #FEF3C7;
+      border-left: 5px solid var(--warning);
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .decision-banner.alert-active {
+      background: #FEE2E2;
+      border-left-color: var(--danger);
+    }
+
+    /* Chart section */
+    .chart-section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ns-dark);
+    }
+
+    /* Item Explorer */
+    .explorer-section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .filter-btn {
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s;
+    }
+    .filter-btn.active {
+      background: var(--ns-blue);
+      color: white;
+      border-color: var(--ns-blue);
+    }
+
+    .posts-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 520px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+    .post-item {
+      background: #FAFAFC;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .post-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .post-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .pill {
+      padding: 0.2rem 0.55rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    .pill-positive { background: #D1FAE5; color: #065F46; }
+    .pill-neutral { background: #E2E8F0; color: #334155; }
+    .pill-negative { background: #FEE2E2; color: #991B1B; }
+
+    .post-text {
+      font-size: 0.92rem;
+      line-height: 1.45;
+      color: #1F2937;
+    }
+
+    footer {
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-group">
+      <div class="badge-ns">NS</div>
+      <div>
+        <div class="brand-title">Live Pulse: Passenger Sentiment Radar</div>
+        <div class="brand-subtitle">SDG 9: Infrastructure & Public Transit Innovation | Real-Time Stream Engine</div>
+      </div>
+    </div>
+    <div class="user-persona">
+      <div class="live-dot"></div>
+      <div>
+        <strong>Operator:</strong> Maaike van Dijk (Lead Passenger Ops)<br>
+        <span style="opacity: 0.8;">Action threshold: Net Score &lt; -30.0</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Decision Alert Banner -->
+    <div id="decisionBanner" class="decision-banner">
+      <div>
+        <strong>Operational Advisory:</strong> <span id="advisoryText">Evaluating live passenger sentiment stream...</span>
+      </div>
+      <button onclick="refreshData()" class="filter-btn" style="background: white;">Refresh Live Feed</button>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Net Sentiment Pulse</div>
+        <div class="pulse-meter" id="netSentiment">--</div>
+        <div class="stat-caption">Scale: -100 (severe disruption) to +100 (high praise)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Posts Analyzed</div>
+        <div class="stat-value" id="totalPosts">0</div>
+        <div class="stat-caption" id="timeRange">Live stream continuous</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Negative Disruption Share</div>
+        <div class="stat-value" style="color: var(--danger);" id="negPercent">0%</div>
+        <div class="stat-caption" id="negCount">0 posts reporting issues</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Transformer Model</div>
+        <div class="stat-value" style="font-size: 1.35rem; color: var(--ns-blue);">RobBERT Dutch</div>
+        <div class="stat-caption">DTAI-KULeuven/robbert-v2-dutch-sentiment</div>
+      </div>
+    </div>
+
+    <!-- Chart: Mood Over Time -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Passenger Mood Over Time (Hourly / Daily Trend)</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+            Click on any data point to drill down into the exact commuter posts driving the sentiment dip or peak.
+          </p>
+        </div>
+      </div>
+      <div style="height: 320px;">
+        <canvas id="pulseChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Item Explorer for Drill Down -->
+    <div class="explorer-section">
+      <div class="section-header">
+        <h2 class="section-title" id="explorerTitle">Live Item Stream (Behind the Numbers)</h2>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="setFilter('all')">All Items</button>
+          <button class="filter-btn" onclick="setFilter('negative')">Negative Only (Delays/Disruptions)</button>
+          <button class="filter-btn" onclick="setFilter('positive')">Positive Only (Praise)</button>
+          <button class="filter-btn" onclick="setFilter('neutral')">Neutral Only</button>
+        </div>
+      </div>
+      <div id="postsList" class="posts-container">
+        <!-- Posts loaded dynamically -->
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    UN Sustainable Development Goal 9: Industry, Innovation & Infrastructure • Built with Hugging Face Pre-trained Transformers • Non-chatbot Live Stream Reader
+  </footer>
+
+  <script>
+    let chartInstance = null;
+    let currentFilter = 'all';
+    let allPosts = [];
+
+    async function fetchData() {
+      try {
+        const statsRes = await fetch('/api/stats');
+        const stats = await statsRes.json();
+        
+        const timelineRes = await fetch('/api/timeline');
+        const timeline = await timelineRes.json();
+        
+        const postsRes = await fetch('/api/posts?limit=150');
+        allPosts = await postsRes.json();
+
+        updateMetrics(stats);
+        updateChart(timeline);
+        renderPosts();
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    }
+
+    function updateMetrics(stats) {
+      document.getElementById('totalPosts').innerText = stats.total_posts || 0;
+      
+      const net = stats.net_sentiment || 0;
+      const netElem = document.getElementById('netSentiment');
+      netElem.innerText = (net > 0 ? '+' : '') + net;
+      netElem.style.color = net < -20 ? 'var(--danger)' : (net > 20 ? 'var(--success)' : 'var(--warning)');
+
+      const total = stats.total_posts || 1;
+      const negPct = Math.round(((stats.negative_count || 0) / total) * 100);
+      document.getElementById('negPercent').innerText = negPct + '%';
+      document.getElementById('negCount').innerText = `${stats.negative_count || 0} disruption items`;
+
+      // Advisory banner
+      const banner = document.getElementById('decisionBanner');
+      const adv = document.getElementById('advisoryText');
+      if (net < -30) {
+        banner.className = 'decision-banner alert-active';
+        adv.innerHTML = `<strong>CRITICAL DISRUPTION LEVEL (Pulse: ${net}):</strong> Passenger sentiment threshold breached. Recommend dispatching extra platform guides and publishing proactive app push notification.`;
+      } else if (net < 0) {
+        banner.className = 'decision-banner';
+        adv.innerHTML = `<strong>ELEVATED NEGATIVITY (Pulse: ${net}):</strong> Moderate delay complaints detected. Monitor Utrecht & Schiphol corridors.`;
+      } else {
+        banner.className = 'decision-banner';
+        banner.style.background = '#ECFDF5';
+        banner.style.borderLeftColor = 'var(--success)';
+        adv.innerHTML = `<strong>NORMAL OPERATIONS (Pulse: +${net}):</strong> Network sentiment stable. No immediate operational intervention required.`;
+      }
+    }
+
+    function updateChart(timeline) {
+      const ctx = document.getElementById('pulseChart').getContext('2d');
+      const labels = timeline.map(t => t.time_bucket);
+      const netSentimentData = timeline.map(t => t.net_sentiment);
+      const volumeData = timeline.map(t => t.total_count);
+
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Net Sentiment Pulse (-100 to +100)',
+              data: netSentimentData,
+              borderColor: '#003082',
+              backgroundColor: 'rgba(0, 48, 130, 0.08)',
+              borderWidth: 3,
+              fill: true,
+              tension: 0.3,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Item Volume',
+              data: volumeData,
+              type: 'bar',
+              backgroundColor: 'rgba(255, 201, 23, 0.45)',
+              borderColor: '#FFC917',
+              borderWidth: 1,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              min: -100,
+              max: 100,
+              title: { display: true, text: 'Net Sentiment Index' },
+              grid: { color: 'rgba(0,0,0,0.05)' }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              beginAtZero: true,
+              title: { display: true, text: 'Item Volume' },
+              grid: { drawOnChartArea: false }
+            }
+          },
+          onClick: (evt, elements) => {
+            if (elements.length > 0) {
+              const index = elements[0].index;
+              const selectedTime = labels[index];
+              filterByTimeBucket(selectedTime);
+            }
+          }
+        }
+      });
+    }
+
+    function filterByTimeBucket(bucket) {
+      document.getElementById('explorerTitle').innerText = `Commuter Posts from [${bucket}]`;
+      const filtered = allPosts.filter(p => p.created_at.startsWith(bucket.substring(0, 10)));
+      renderPosts(filtered);
+    }
+
+    function setFilter(sentiment) {
+      currentFilter = sentiment;
+      document.querySelectorAll('.filter-bar .filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('explorerTitle').innerText = 'Live Item Stream (Behind the Numbers)';
+      renderPosts();
+    }
+
+    function renderPosts(customList = null) {
+      const container = document.getElementById('postsList');
+      container.innerHTML = '';
+      
+      const list = customList || allPosts.filter(p => {
+        if (currentFilter === 'all') return true;
+        return p.primary_sentiment === currentFilter;
+      });
+
+      if (list.length === 0) {
+        container.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-muted);">No posts match the current selection.</div>';
+        return;
+      }
+
+      list.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'post-item';
+        
+        const pillClass = `pill-${p.primary_sentiment || 'neutral'}`;
+        const score = p.primary_score ? Math.round(p.primary_score * 100) : 50;
+        const timeStr = new Date(p.created_at).toLocaleString('nl-NL');
+
+        div.innerHTML = `
+          <div class="post-meta">
+            <span><strong>${p.source}</strong> • ${timeStr}</span>
+            <div>
+              <span class="pill ${pillClass}">${p.primary_sentiment} (${score}%)</span>
+              ${p.secondary_sentiment ? `<span style="font-size: 0.72rem; color: #64748B; margin-left: 0.4rem;">Baseline: ${p.secondary_sentiment}</span>` : ''}
+            </div>
+          </div>
+          <div class="post-text">${escapeHtml(p.text)}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.innerText = text;
+      return div.innerHTML;
+    }
+
+    function refreshData() {
+      fetchData();
+    }
+
+    // Polling interval
+    fetchData();
+    setInterval(fetchData, 30000);
+  </script>
+</body>
+</html>

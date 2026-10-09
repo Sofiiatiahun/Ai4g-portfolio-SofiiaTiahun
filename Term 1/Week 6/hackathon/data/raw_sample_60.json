@@ -1,0 +1,482 @@
+[
+  {
+    "id": "masto_ddc04808c0a7",
+    "created_at": "2026-10-09T10:01:42+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "📰 Woensdag rijden er in bijna het hele land geen bussen 🕛 11:59 | RTL Nieuws 🔸 #Fiets #Lift #Trein #Bussen #Amsterdam",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_4529d4ed77fd",
+    "created_at": "2026-10-09T08:18:08.460000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Vandaag 10 jaar geleden #zeiljachtdulce #openbaarvervoer #amsterdam #MichaelMann Zondag 09-10-2016 De dag die je wist dat zou komen - de dag van de ontscheping en het eind van het vaarseizoen 2016. Ook een dag vol verplaatsingen en een dag vol zon. Op hoeveel manieren kun je een dag benoemen? Om tien uur rijdt de vriendelijke Waldi me naar de bushalte aan de A29. Dat spaart me een halfuur lopen over de dijk. De bus brengt me rechtstreeks naar het Zuidplein in Rotterdam..",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_d84be4e26ecb",
+    "created_at": "2026-10-09T07:55:11.908000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: overwegstoring 's-Hertogenbosch - Oss #storing #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_83728f4a0532",
+    "created_at": "2026-10-09T07:53:12.017000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Utrecht - Amersfoort #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_d411eb6322ea",
+    "created_at": "2026-10-09T07:41:11.708000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Utrecht - Amersfoort #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_0373bbf644c8",
+    "created_at": "2026-10-09T04:56:11.881000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: overwegstoring Zwolle - Leeuwarden #storing #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "reddit_f04664ef8554",
+    "created_at": "2026-10-08T19:39:35+00:00",
+    "source": "reddit:r/thenetherlands",
+    "text": "Praten over je mentale problemen? Teri (28) raadt het andere jongeren aan: 'Je hebt een soort spiegel nodig'. Het taboe op praten over mentale problemen onder jongeren neemt af. Toch verliezen sommigen jongeren soms contacten als ze hier open over zijn. Teri (28) maakte dit mee en vertelt hoe belangrijk het is om het taboe te blijven doorbreken. \"Ik heb wel een periode gehad dat het altijd zware gesprekken waren en ik denk wel dat dit heeft geleid tot vrienden die het contact hebben verbroken\", vertelt Teri. En ze is niet de enige. Uit onderzoek van het EenVandaag Opiniepanel blijkt namelijk dat 1 op de 6 (16 procent) jongeren met mentale klachten één of meerdere vrienden is verloren omdat ze veel over hun problemen praatten. Mentale rollercoaster \"Ja, ik heb heel diep gezeten, zeker toen ik begin 20 was\", vertelt Teri. Ze kampte met verschillende mentale problemen zoals depressieve gevoelens en verslavingsproblematiek. Het ene probleem wakkerde het andere probleem aan en zo kwam ze terecht in een vicieuze cirkel. Ook werd ze gediagnosticeerd met autisme, wat alles alleen maar moeilijker maakte. \"Ik heb vaak geprobeerd op te krabbelen, maar dat was met vallen en opstaan.\" Toen ze de verslavingszorg inging hoopte ze dat het binnen een paar jaar voorbij zou zijn. \"Maar ik heb daar uiteindelijk wel 6 jaar ingezeten en het heeft wel 8 jaar geduurd voordat ik me weer echt goed en stabiel voelde.\" Ze omschrijft de afgelopen jaren als een rollercoaster. Nog altijd taboe Teri had fijne mensen om zich heen, wat het praten over haar problemen makkelijker maakte: \"Ik heb daar geluk mee gehad\", vertelt ze. \"Ik heb wel echt altijd in een omgeving gezeten waar ik thuis en ook in mijn vriendengroepen heel open kon praten over mijn problemen.\" Net als Teri vinden veel jongeren het steeds makkelijker om te praten over mentale klachten. Ook dat blijkt uit onderzoek van het EenVandaag Opiniepanel. Waar 5 jaar geleden nog ruim de helft (54 procent) een taboe ervoer, is dat nu gedaald naar ongeveer een derde (36 procent). Toch blijft het voor velen lastig: niet iedereen heeft een ondersteunende omgeving of weet hoe te handelen. Maar de behoefte aan ondersteuning is wel degelijk groot, maar liefst 86 procent van de jongeren geeft aan hulp te willen. Zware gesprekken Teri weet wat het met mensen kan doen als je die steun niet hebt: \"Ik heb mensen om me heen gezien die daar wel echt last van hebben en het dus moeilijk vinden om te praten over waar zij mee moeten dealen.\" Zo denkt zij ook dat het bij haarzelf soms heeft geleid tot vrienden die tijdelijk of zelfs permanent het contact hebben verbroken. \"Ik heb wel een periode gehad dat het altijd zware gesprekken waren, en mensen waren altijd op zoek naar de oplossing.\" De gesprekken die ze met naasten voerde waren hierdoor vaak niet luchtig. \"Het is best wel een zware last om te dragen als het met iemand in jouw omgeving niet goed gaat,\" gaat ze verder. Zelfbescherming Teri begrijpt daarom ook dat jongeren wel eens mensen in hun omgeving laten vallen omdat de problemen van de ander hen te veel worden. Ze ziet het als een vorm van zelfbescherming. \"Ik denk dat het ook wel logisch is dat mensen zich daar bewust of onbewust tegen willen beschermen.\" Aan de andere kant benadrukt ze wel dat het praten met andere mensen ook een positieve uitkomst kan hebben. Volgens haar heeft dat het herstelproces makkelijker gemaakt. Een luisterend oor \"Ik denk dat als je constant met jezelf in een strijd zit in je hoofd, dat je niet de beste raadgever bent voor jezelf\", gaat ze verder. Zo benoemt ze dat je anderen nodig hebt om te kunnen reflecteren op je eigen gedrag. \"Je hebt anderen nodig om je een soort spiegel voor te houden.\" Tegelijkertijd kunnen ze volgens haar dienen als een toevluchtsoord. \"Gewoon je ei kwijt kunnen, even ontladen, begrip of liefde krijgen, en weten dat je er mag zijn.\" Uit het panelonderzoek bleek ook dat meer jongeren dit gevoel delen. Hulp hebben ze het liefst in de vorm van een luisterend oor (66 procent). Steun van familie Teri heeft haar hele leven lang verschillende hulpverlening gehad, maar dat was niet haar enige vorm van steun. Ook haar familie, specifiek haar moeder, ondersteunde haar in deze periode. \"Het zijn vaak wel anderen geweest die hebben gezegd, dit gaat niet langer zo, hier ga je aan onderdoor. Je moet hulp zoeken.\" Ondanks dat dat confronterend voor haar was, heeft ze veel gehad aan die betrokkenheid van haar omgeving. Dat deed haar realiseren dat er iets moest veranderen. \"Daar ben ik altijd wel heel dankbaar voor geweest, achteraf.\" Hulp bieden Voor mensen die niet terecht kunnen bij vrienden en familie, zijn er initiatieven opgericht die hulp bieden om jongeren te helpen hun problemen bespreekbaar te maken. Jet van Waveren werkt voor zo'n initiatief: stichting Door Het Geluid. Met hun campagne 'Even inchecken' willen zij jongeren motiveren tot gesprekken die ze normaal eerder zouden vermijden. \"Ik denk dat het gewoon heel belangrijk is om te blijven inchecken. Ook al denk je dat het goed met iemand gaat\", vertelt Van Waveren. Bij elkaar 'inchecken' Ze benadrukt dat je aan de buitenkant niet altijd kan zien hoe het met iemand gaat. \"Iemand kan op een feestje staan of goede cijfers halen, maar het kan alsnog dat diegene minder goed in zijn vel zit.\" Daarom helpt het, beaamt ook Teri, juist om oprecht te vragen hoe het met iemand gaat. Tegelijkertijd blijft het voor haar een dubbel thema. \"Ik ben het er heel erg mee eens dat je open moet staan om naar anderen te luisteren omdat ik weet dat je mensen daar mee kunt helpen. Maar ik begrijp ook dat dat voor mensen niet altijd haalbaar is.\" 'Te weinig handvatten' Teri denkt dat er veel ongemak of onwetendheid zit en dat mensen niet goed weten hoe ze zo'n gesprek het beste kunnen aanpakken. \"Daar valt veel winst te behalen, denk ik.\" Ook Van Waveren wijst op het gebrek aan handvatten. Ze denkt dat veel jongeren niet weten hoe ze ermee om moeten gaan: ze zijn bijvoorbeeld bang voor reacties van anderen of weten niet goed hoe ze erover moeten beginnen. Als je Teri nu vraagt hoe het met haar gaat, antwoordt ze met een glimlach: \"Het gaat goed, nu wel.\" Dankzij steun van haar omgeving, zelfreflectie en het openlijk praten over haar problemen is ze er weer bovenop gekomen. En of ze anderen aanraadt om ook die stap te zetten? \"Ja, absoluut.\" submitted by /u/Chronicbias [link] [comments]",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_ccaca7e1e745",
+    "created_at": "2026-10-08T19:31:11.960000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Utrecht - Rhenen #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_b0a599235ae7",
+    "created_at": "2026-10-08T18:53:25.577000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Arnhem - Nijmegen #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_dc73ee5abbc0",
+    "created_at": "2026-10-08T18:53:12.692000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Nijmegen - 's-Hertogenbosch #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_254c6b2e776e",
+    "created_at": "2026-10-08T18:52:11.417000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Utrecht - Rhenen #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_2103f16e0c21",
+    "created_at": "2026-10-08T17:56:13.371000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Arnhem - Nijmegen #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_7beeeb7c90ee",
+    "created_at": "2026-10-08T17:50:34.742000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Nijmegen - 's-Hertogenbosch #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_94007a0cff7e",
+    "created_at": "2026-10-08T17:50:24.447000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Arnhem - Nijmegen #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_2fd3d567bf4e",
+    "created_at": "2026-10-08T17:50:15.141000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: persoon op het spoor Utrecht - Hilversum #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_03b11e985c31",
+    "created_at": "2026-10-08T17:46:11.589000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Nijmegen - 's-Hertogenbosch #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_2f3a82500637",
+    "created_at": "2026-10-08T17:03:12.098000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: persoon op het spoor Utrecht - Hilversum #storing #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_51df11994b7a",
+    "created_at": "2026-10-08T16:16:11.513000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Deventer - Enschede; Zwolle - Enschede #ns #nsinternational #keolis #blauwnet",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_ab8192bd3602",
+    "created_at": "2026-10-08T15:54:04.960000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "klant bij NS , heb je een probleem met je chipkaart bij een servicepunt en dan chat je met de servicedesk, dan vragen ze je tot 4 keer toe , steeds andere medewerker, wat er mis is. Terwijl je dat al 3 keer in de chat geschreven hebt. Geven ze je advies, moet je bellen met nr op de paal. Doe je dat, kom je terug bij servicedesk. Binnen 15 min. Hebben ze je chat gesloten omdat het zolang duurde. Terwijl zij ervoor een meer dan 15 min nodig hadden om te antwoorden en mij inner wacht zetten. Is dat een livechat? Nou nou nou #NS moet dat zo!? Shit, En dan morgen weer opnieuw proberen. #nsklantenservice #livechat",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_4fb5a47fff13",
+    "created_at": "2026-10-08T15:31:11.854000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: gestrande trein Dordrecht - Roosendaal #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_8dd2fd204103",
+    "created_at": "2026-10-08T14:49:11.798000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: gestrande trein Dordrecht - Roosendaal #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_94e99574d077",
+    "created_at": "2026-10-08T14:40:12.134000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Almelo - Hengelo; Zutphen - Hengelo #storing #ns #nsinternational #arriva #keolis #blauwnet",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_518dab44e3cd",
+    "created_at": "2026-10-08T12:34:36.150000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Vertraging - #duitsland, #groningen, #trein, #vertraging #gerritdejager",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_ab54a8957d0c",
+    "created_at": "2026-10-08T12:34:34+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Vertraging - #duitsland, #groningen, #trein, #vertraging #gerritdejager",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_5e3b44fe2cc7",
+    "created_at": "2026-10-08T10:35:07+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Een week geen treinen tussen Rotterdam en Utrecht, lelijk station ook aangepakt #Business #Commercial #Dutch #Nederland #Nederlanden #Nederlands #Netherlands #Nieuws #NL #trein #Zakelijk",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_d72a642c5837",
+    "created_at": "2026-10-08T09:44:21.378000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Utrecht - Tiel #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_9474d04c204b",
+    "created_at": "2026-10-08T09:44:11.518000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Utrecht - Gouda; Utrecht - Leiden #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_2af4c2a70d13",
+    "created_at": "2026-10-08T09:29:11.465000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Haarlem - Alkmaar #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_6046fcc3f496",
+    "created_at": "2026-10-08T09:22:11.691000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Utrecht - Tiel #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_742d205521d7",
+    "created_at": "2026-10-08T09:20:12.660000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Utrecht - Gouda; Utrecht - Leiden #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_55236f6cdb74",
+    "created_at": "2026-10-08T09:12:11.828000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Haarlem - Alkmaar #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_46fb18286290",
+    "created_at": "2026-10-08T08:46:12.113000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: persoon op het spoor Den Haag - Rotterdam; Leiden - Rotterdam #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "reddit_de0d44680348",
+    "created_at": "2026-10-08T08:26:48+00:00",
+    "source": "reddit:r/thenetherlands",
+    "text": "Niet opgelicht, wel verdachte webshops melden: waar precies?. In een zoektocht naar een product ben ik terechtgekomen bij een verdachte Nederlandstalige webshop: het bedrijf zou een GmbH zijn maar is niet in het Duitse bedrijvenregister te vinden, het opgegeven Nederlandse adres bestaat niet en de naam van de ’eigenaar’ is verder alleen op een tweede, bijna gelijke webshop te vinden van een ander bedrijf (ook een zogenaamde GmbH) dat op een ander maar eveneens niet-bestaand Nederlands adres gevestigd zou zijn. Ik heb anoniem gebeld naar de twee telefoonnummers op die websites, maar beide nummers zijn ‘nu niet in gebruik’. Stinkt allemaal behoorlijk, zou ik zeggen. Ik heb er natuurlijk niets gekocht, dus ik ben ook niet opgelicht. Bij alle meldpunten die ik kan vinden willen ze eigenlijk vooral een melding als het al is misgegaan. Weet iemand van een instantie die iets kan met dit soort preventieve meldingen? submitted by /u/VanEysinga [link] [comments]",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_84b010f007a6",
+    "created_at": "2026-10-08T08:06:12.038000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: persoon op het spoor Den Haag - Rotterdam #storing #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_fa0a8827f19c",
+    "created_at": "2026-10-08T07:43:48+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Goedendag, u heeft contact met de virtuele AI assistent van de meldkamer NS. De melding komt nu pas bij mij binnen. Is de ruzie nog steeds gaande? Translation button below site 👇 #NSNood #treinleven #blog #NS #AI",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_2c3ea2a4ac8a",
+    "created_at": "2026-10-08T06:23:16.128000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "#treinleven #ns #amsterdamdenhaag 8h20Volle trein, maar mevrouw neemt op deze manier 2 plaatsen. Doet alsof ze niets door heeft, krant lezend.",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_6301e018506b",
+    "created_at": "2026-10-08T06:01:11.949000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Eindhoven - Venlo #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_1522dbb0d151",
+    "created_at": "2026-10-08T05:00:11.433000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Tilburg - Eindhoven; 's-Hertogenbosch - Tilburg #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_66d22c3f343a",
+    "created_at": "2026-10-08T04:55:11.330000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: defecte trein Tilburg - Eindhoven; 's-Hertogenbosch - Tilburg #storing #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_61b50348cb55",
+    "created_at": "2026-10-08T04:40:12.097000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: stroomstoring Haarlem - Leiden #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_34f513eb9c61",
+    "created_at": "2026-10-08T04:39:33.071000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: stroomstoring Haarlem - Alkmaar #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_6c8365de7ac7",
+    "created_at": "2026-10-08T04:39:11.878000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: stroomstoring Amsterdam - Haarlem #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_8bcfabf818ea",
+    "created_at": "2026-10-08T03:19:11.941000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: stroomstoring Haarlem - Alkmaar #storing #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_a7365218058a",
+    "created_at": "2026-10-08T03:18:11.222000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: stroomstoring Haarlem - Leiden #storing #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_7267af3bd427",
+    "created_at": "2026-10-08T03:17:11.988000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "STORING: stroomstoring Amsterdam - Haarlem #storing #ns",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_cb4ba414fab3",
+    "created_at": "2026-10-07T20:21:22.656000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Utrecht - Spoorwegmuseum #ns",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_224d0032579e",
+    "created_at": "2026-10-07T20:21:12.003000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Storing voorbij: defecte trein Schiphol - Rotterdam #ns #nsinternational #thalys #eurostar",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_93be78125146",
+    "created_at": "2026-10-07T16:02:14+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Kimberly van 11 is hulp-conducteur in historische trein #BreakingNews #BreakingNews #Dutch #FeaturedNews #FeaturedNews #Headlines #Hoofdpunten #LatestNews #LatestNews #Nederland #Nederlanden #Nederlands #Netherlands #News #Nieuws #NL #TopStories #TopStories #trein #Voorpaginanieuws #Wereld #World #WorldNews #WorldNews",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_8899635fda5d",
+    "created_at": "2026-10-07T13:28:09+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "📰 Matthijs van Nieuwkerk draagt tragische dood van hond Mick nog altijd mee: 'Martelt je elke nacht' 🕞 15:24 | RTL Nieuws 🔸 #Marteling #Trein #MatthijsVanNieuwkerk #Ongeluk #Dood",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "reddit_0a79cd06ca1e",
+    "created_at": "2026-10-07T07:13:26+00:00",
+    "source": "reddit:r/thenetherlands",
+    "text": "Woensdagse zeurdraad. Zeuren maar! submitted by /u/Btreeb [link] [comments]",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_73e7ab2ee759",
+    "created_at": "2026-10-06T21:14:45+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Wat is dat toch voor achterlijke woordkeuze, [USER]?! De regio? Wat nou, \"de regio\"? Welke regio? Regio Rotterdam? Regio Eindhoven? Nee, \"de regio\" is een eufemisme voor \"achtergebleven gebied\", zoals in dit geval Zeeland. Ontwikkelingsland, boer'nlând, vooral niet te verwarren met \"de bewoonde wereld\" 😖 Noem het gewoon \"dunbevolkte gebieden\" of zo, \"buitengebied\" of desnoods \"het platteland\". Het woord regio betekent niet ... View article View summary Noem het gewoon \"dunbevolkte gebieden\" of zo, \"buitengebied\" of desnoods \"het platteland\". Het woord regio betekent niet wat jullie denken dat het betekent. #^ En dan iets meer inhoudelijk en gericht aan de regio Den Haag: als het nou al bekend is dat het zo ontzettend slecht gesteld is met het openbaar vervoer in Zeeland, trek dan niet ook nog eens gewoon de enige treinverbinding in de hele provincie (oh nee: de regio) maandenlang onderuit! 🖕 Door de proef komt het treinverkeer in 2028 of 2029 maandenlang stil te liggen. Op het plan is veel kritiek van onder meer de onderwijssector, de Zeeuwse politiek en ondernemers. #^ Als ik dan naar kantoor moet in Dordrecht, mag ik straks fijn eerst een bus zien te vinden die me naar Goes brengt, de documentaire laat zien hoe goed dat werkt. Kost me met de auto en de trein ongeveer een half uur, ik wil niet weten hoe lang die bus erover gaat doen. Vijf keer stoppen in elk dorpje tussen Vlissingen en Goes, dat wordt een wereldreis voor ik eindelijk op het station sta 🤬 Pak een spoortraject waar een alternatieve route voor is, als je zo nodig dingen wilt gaan testen! Maar nee, als we dat in \"de regio\" doen, hebben alleen de Zeeuwen daar maar last van, en die zijn al gewend aan kut-OV. Een beetje vertraging vanwege een tijdelijk andere treinroute kunnen we de mensen in de bewoonde wereld niet aandoen. Man, wat kan ik me daar kwaad om maken! 🤬 #DeRegio #buitengebied #taalergernis #OpenbaarVervoer #Zeeland #Vlissingen #Goes #treinleven",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_7951c605a525",
+    "created_at": "2026-10-06T20:13:24.422000+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "een wolkentreintjepuft over de blauwe railshemelse golfslag #haiku #wolken #trein #wolkenhemel #golven",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "reddit_734077c6e510",
+    "created_at": "2026-10-06T16:45:38+00:00",
+    "source": "reddit:r/thenetherlands",
+    "text": "Omroep Groningen: Archeologen gaan komend voorjaar een tweeduizend jaar oude wierde opgraven bij de Gerrit Krolbrug.. Onder de grond bij de Gerrit Krolbrug ligt een ongeveer tweeduizend jaar oude wierde. Archeologen verwachten er vanaf volgend jaar, voordat de bouw van de nieuwe brug begint, tienduizenden vondsten te doen. De wierde werd in 2020 al ontdekt tijdens werkzaamheden bij een flat. Een bewoner zag aardewerkscherven liggen. Die bleken tussen ongeveer tweehonderd jaar voor Christus en honderd jaar na Christus te dateren. Dankzij onderzoek door archeologisch bureau RAAP is de wierde, die ligt aan de Ommelanderzijde van de toekomstige brug bij de Ulgersmaweg, inmiddels verder in kaart gebracht. De wierde, een verhoging in het landschap waar mensen vroeger op woonden ter bescherming tegen overstromingen van de Hunze, ligt 70 tot 110 centimeter onder de grond en is niet meer zichtbaar. Nadat de plek rond het jaar 100 werd verlaten, kwam er een laag Hunzeklei overheen. Alleen de aanleg van het Van Starkenborghkanaal rond 1930 lijkt de wierde te hebben doorsneden, maar werd toen niet herkend. Zestienduizend mogelijke vondsten Archeologen verwachten op een gebied van ongeveer 150 bij 75 meter zo’n 90.000 scherven aardewerk te vinden. Ook rekenen ze op ongeveer 11.000 stukken dierlijk bot en 5000 stenen voorwerpen, zoals maalstenen en klop- en wrijfstenen. De archeologen denken dat het tijdens de bewoning van de wierde lastig was om gewassen te verbouwen. Waarschijnlijk leefden ze vooral van vee, zoals koeien en schapen. De natte kleigrond kan daarnaast organisch materiaal goed hebben bewaard. Hout, zaden en leer vergaan in de klei minder snel doordat er weinig zuurstof bij komt. ‘Wat hebben de mensen gegeten? Wat hebben ze verbouwd? Die aanwijzingen ben je op het zand altijd kwijt. Dat we dat beeld hier kunnen schetsen, is grote winst’, zegt archeologisch adviseur Michiel Huisman van Rijkswaterstaat. Op de wierde stonden vermoedelijk enkele houten huizen. Archeologen willen tijdens de opgraving onder meer onderzoeken of het om een grote wierde gaat of om meerdere kleinere wierden die later aan elkaar groeiden. Ook willen ze weten hoe lang de plek precies werd bewoond. Opgraving voor bouwstart Gerrit Krolbrug De archeologische opgraving moet volgens de planning in het voorjaar van 2027 beginnen en duurt naar verwachting vier tot zes maanden. Daarmee zijn het zo’n beetje de eerste werkzaamheden voor de bouw van de nieuwe Gerrit Krolbrug. Voor bewoners en bezoekers komt nog voor het archeologisch onderzoek een kleine vitrine met vondsten uit het vooronderzoek in Informatiepunt De Verbinding. De vondsten uit de komende opgraving worden na onderzoek bewaard in het archeologisch depot van de gemeente Groningen. Tijdens het onderzoek gebruiken archeologen onder meer graafmachines en scheppen om de bodem laag voor laag te onderzoeken. Alleen bij bijzondere of kwetsbare vondsten komen kleine kwastjes tevoorschijn. De opgraving vindt plaats aan de Ommelandzijde en daardoor blijft de overlast aan de Korreweg beperkt. Maar de hellingbaan en de fiets- en loopbrug aan de Ommelandzijde liggen precies op de plek waar wordt gegraven. Zodra de werkzaamheden daar beginnen, kunnen fietsers en wandelaars er daarom niet meer langs. Na de opgraving begint de bouw van de nieuwe brug. De Gerrit Krolbrug is daarna minimaal twee jaar niet beschikbaar. submitted by /u/BanMeOwnAccountDibbl [link] [comments]",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_36c93bc9aa6f",
+    "created_at": "2026-10-06T16:01:27+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "📰 Geen actuele reisinformatie op digitale borden treinstations door storing 🕕 17:55 | NOS Nieuws 🔸 #Storing #NS #Trein",
+    "model_robbert": "negative",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_15af5d8eb5cd",
+    "created_at": "2026-10-06T10:11:34+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "RE: Zijn er al mooie video's verschenen van treinnerds die de route filmend hebben afgelegd? #GroningenLeer #trein #treinen",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_a93c230d559a",
+    "created_at": "2026-10-06T08:21:04+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Kabinet wil ov en ander vervoer in regio koppelen #Business #Commercial #Dutch #Nederland #Nederlanden #Nederlands #Netherlands #NL #OPENBAARVERVOER #ov #regio #Zakelijk",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_a6cb6f4a9e21",
+    "created_at": "2026-10-06T07:40:40+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Joyous day tomorrow. I just booked a train ticket that includes an actual train to cross into the Netherlands from Leer! If there's a bus replacement service I might take personally find a boat and take out that bridge. edit: for real, I'm happy about this. Imperfect trains are immeasurably better than non-existing trains! #wunderline #friesenbrücke #bahn #trein",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "positive"
+  },
+  {
+    "id": "masto_96ddb17838b4",
+    "created_at": "2026-10-06T04:49:52+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Drie nieuwe lemma's over heel verschillende onderwerpen: treindienst Efteling Expres, souvenirlijn Efteling Exclusive en de wandelroute Dioramalaan. Lezen maar: #Efteling #trein #ns #souvenirs #wandelroute",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_1d8bdac9aff5",
+    "created_at": "2026-10-05T22:32:02+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Ook in Fryslân verdwijnen al jaren bushaltes: zo zit het in jouw gemeente #BreakingNews #BreakingNews #bus #BUSHALTE #Dutch #FeaturedNews #FeaturedNews #Headlines #Hoofdpunten #LatestNews #LatestNews #Nederland #Nederlanden #Nederlands #Netherlands #News #Nieuws #NL #OPENBAARVERVOER #TopStories #TopStories #Voorpaginanieuws",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  },
+  {
+    "id": "masto_474a0b3ee60f",
+    "created_at": "2026-10-05T15:26:06+00:00",
+    "source": "mastodon:mastodon.nl",
+    "text": "Jan, Faye en Thomas moeten maandenlang omreizen: 'Uurtje eerder vertrekken' – Omroep West #afsluiting #ALPHENAANDENRIJN #BODEGRAVENREEUWIJK #brug #Business #Commercial #Dutch #gouda #HELPMEVERDER #LEIDEN #LinkInBio #Nederland #Nederlanden #Nederlands #Netherlands #NL #OPENBAARVERVOER #reizigers #Spoorbrug #trein #WADDINXVEEN #Zakelijk",
+    "model_robbert": "positive",
+    "model_roberta_or_baseline": "neutral"
+  }
+]
