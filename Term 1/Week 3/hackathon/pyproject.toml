@@ -1,0 +1,8 @@
+[project]
+name = "labbridge"
+version = "0.1.0"
+description = "Equal Access Health Literacy & Diagnostic Explainer for Hackathon 3 (SDG 10)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+

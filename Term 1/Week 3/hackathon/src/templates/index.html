@@ -1,0 +1,4353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0f2942">
+    <title>LabBridge — Equal Access Health Literacy (SDG 10)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --primary: #0f2942;
+            --primary-hover: #1e3a5f;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --accent-soft: #f0f9ff;
+            --accent-border: #bae6fd;
+            --teal: #0d9488;
+            --teal-soft: #f0fdf4;
+            --teal-border: #99f6e4;
+            --indigo: #4f46e5;
+            --indigo-soft: #eef2ff;
+            --danger: #dc2626;
+            --danger-soft: #fef2f2;
+            --danger-border: #fecaca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --border-subtle: #f1f5f9;
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+            --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html {
+            -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.55;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button, a, input, select, textarea {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        button {
+            user-select: none;
+        }
+
+        /* Top Navigation Header */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 0.875rem 1.75rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.875rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(15, 41, 66, 0.12);
+        }
+
+        .brand-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .brand-title h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .brand-title p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .header-badges {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.3rem 0.7rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            color: var(--text-secondary);
+        }
+
+        .badge-pill .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .dot-green { background: var(--teal); }
+        .dot-rose { background: #be123c; }
+
+        /* Main Container */
+        main {
+            max-width: 1140px;
+            margin: 1.25rem auto 2.5rem;
+            padding: 0 1.25rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .page-intro {
+            margin-bottom: 1.25rem;
+            text-align: center;
+        }
+
+        .page-intro-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-intro-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* 2-Step Stepper Navigation */
+        .stepper-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 1.25rem auto 1.75rem;
+            max-width: 540px;
+            background: #ffffff;
+            padding: 0.375rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.125rem;
+            border-radius: 9999px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 140ms var(--ease-out), background-color 140ms var(--ease-out), color 140ms var(--ease-out);
+            user-select: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .step-btn:hover {
+                color: var(--text-main);
+                background: #f8fafc;
+            }
+        }
+
+        .step-btn:active {
+            transform: scale(0.97);
+        }
+
+        .step-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(15, 41, 66, 0.12);
+        }
+
+        .step-btn .step-circle {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.07);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .step-btn.active .step-circle {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .step-arrow-divider {
+            color: #cbd5e1;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+
+        /* Card Container */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .step-card-focused {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .card-header {
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.875rem;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .card-header-titles {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-subtitle {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .card-header-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .btn-tool {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.25rem 0.55rem;
+            cursor: pointer;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+            user-select: none;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-tool:hover {
+                color: var(--text-main);
+                border-color: #cbd5e1;
+                background: #f8fafc;
+            }
+        }
+
+        .btn-tool:active {
+            transform: scale(0.97);
+        }
+
+        #btnClear {
+            display: none;
+        }
+
+        #btnClear:hover {
+            color: var(--danger);
+            border-color: #fca5a5;
+            background: #fef2f2;
+        }
+
+        /* Drag-and-Drop Upload Dropzone */
+        .upload-dropzone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: border-color 140ms var(--ease-out), background-color 140ms var(--ease-out);
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .upload-dropzone:hover, .upload-dropzone.dragover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .dropzone-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 0.2rem;
+        }
+
+        .dropzone-prompt-main {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .dropzone-prompt-sub {
+            font-size: 0.775rem;
+            color: var(--text-muted);
+        }
+
+        .file-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.75rem;
+            background: #e0f2fe;
+            color: #0369a1;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Presets Segmented Group */
+        .preset-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .preset-section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .preset-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-preset {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.65rem 0.85rem;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 120ms var(--ease-out), background-color 120ms var(--ease-out);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-preset:hover {
+                border-color: #cbd5e1;
+                background: #f8fafc;
+            }
+        }
+
+        .btn-preset:active {
+            transform: scale(0.98);
+        }
+
+        .btn-preset.active {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+
+        .preset-name {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .preset-name-text {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .preset-tag {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            background: #f1f5f9;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+        }
+
+        .preset-urgent .preset-tag {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .preset-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Textarea Input */
+        .input-wrapper {
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 170px;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            color: var(--text-main);
+            resize: vertical;
+            transition: border-color 120ms ease, box-shadow 120ms ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background-color 140ms var(--ease-out), transform 140ms var(--ease-out);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-primary kbd {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            font-family: inherit;
+        }
+
+        /* Step 2 Header Control Bar */
+        .step2-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .btn-step-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-step-back:hover {
+                background: #f1f5f9;
+                border-color: #cbd5e1;
+            }
+        }
+
+        .btn-step-back:active {
+            transform: scale(0.97);
+        }
+
+        .step2-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Outline & Navigation Bar */
+        .report-outline-bar {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .outline-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            margin-right: 0.35rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .outline-pill {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.3rem 0.65rem;
+            text-decoration: none;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .outline-pill:hover {
+                background: var(--accent-soft);
+                border-color: var(--accent-border);
+                color: var(--accent-hover);
+            }
+        }
+
+        .outline-pill:active {
+            transform: scale(0.96);
+        }
+
+        /* Section Cards */
+        .report-section-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            animation: cardFadeIn 260ms var(--ease-out) both;
+            animation-delay: calc(var(--stagger-i, 0) * 45ms);
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .report-section-card h2,
+        .report-section-card h3 {
+            color: var(--primary);
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.85rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Executive Summary Card */
+        .summary-callout-card {
+            border-left: 4px solid var(--teal) !important;
+            background: var(--teal-soft) !important;
+            padding: 1rem 1.25rem !important;
+            border-radius: 0 8px 8px 0 !important;
+            margin: 0.75rem 0 1.25rem !important;
+            color: #115e59 !important;
+        }
+
+        .summary-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--teal);
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .summary-text {
+            font-size: 0.925rem;
+            line-height: 1.55;
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        /* Fluid Connected Dutch Canal Pipeline */
+        .canal-flow-diagram {
+            background: linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%);
+            border: 1px solid #bae6fd;
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 1.25rem 0 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canal-flow-diagram::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #0284c7, transparent);
+            animation: canalPulseLine 3.5s linear infinite;
+        }
+
+        @keyframes canalPulseLine {
+            from { transform: translateX(0); }
+            to { transform: translateX(50%); }
+        }
+
+        .canal-flow-header {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #0369a1;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .canal-flow-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.75rem;
+            align-items: stretch;
+        }
+
+        @media (max-width: 960px) {
+            .canal-flow-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .canal-flow-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .flow-step-card {
+            background: #ffffff;
+            border: 1px solid rgba(186, 230, 253, 0.8);
+            border-radius: 8px;
+            padding: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out);
+            animation: cardFadeIn 240ms var(--ease-out) both;
+            animation-delay: calc(var(--node-i, 0) * 40ms);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .flow-step-card:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-md);
+            }
+        }
+
+        .flow-step-card:active {
+            transform: scale(0.98);
+        }
+
+        .flow-step-card.flow-alert-crit {
+            border: 1.5px solid #ef4444;
+            background: #fef2f2;
+            animation: flowCritPulse 2.4s infinite;
+        }
+
+        .flow-step-card.flow-alert-attn {
+            border: 1.5px solid #f97316;
+            background: #fff7ed;
+        }
+
+        @keyframes flowCritPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 0 5px rgba(239, 68, 68, 0); }
+        }
+
+        .flow-step-top {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .flow-icon {
+            font-size: 1.35rem;
+            line-height: 1;
+        }
+
+        .flow-step-title {
+            font-size: 0.825rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .flow-step-role {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: block;
+        }
+
+        .flow-step-desc {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+            flex: 1;
+        }
+
+        .flow-status-chip {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            margin-top: 0.25rem;
+            align-self: flex-start;
+        }
+
+        .chip-crit { background: #fee2e2; color: #991b1b; }
+        .chip-attn { background: #ffedd5; color: #9a3412; }
+        .chip-normal { background: #dcfce7; color: #166534; }
+
+        /* Balanced 2x2 Organ Health Battery Matrix */
+        .organ-matrix-container {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 1.25rem 0 1.5rem;
+        }
+
+        .organ-matrix-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.85rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .organ-matrix-title {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .organ-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 680px) {
+            .organ-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .organ-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out);
+            animation: cardFadeIn 240ms var(--ease-out) both;
+            animation-delay: calc(var(--quad-i, 0) * 40ms);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .organ-card:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-md);
+            }
+        }
+
+        .organ-card:active {
+            transform: scale(0.985);
+        }
+
+        .organ-card.organ-crit {
+            border-top: 3px solid #dc2626;
+            background: #fffdfd;
+        }
+
+        .organ-card.organ-attn {
+            border-top: 3px solid #f97316;
+            background: #fffdfb;
+        }
+
+        .organ-card.organ-normal {
+            border-top: 3px solid #16a34a;
+        }
+
+        .organ-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .organ-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Health Battery Capacity Bar */
+        .vitality-battery-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            margin: 0.2rem 0;
+        }
+
+        .vitality-label-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .vitality-track {
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .vitality-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 350ms var(--ease-out);
+        }
+
+        .fill-crit { background: #dc2626; }
+        .fill-attn { background: #ea580c; }
+        .fill-normal { background: #16a34a; }
+
+        .organ-markers-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .organ-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* Scorecard KPI Strip & Filter Tabs */
+        .scorecard-kpi-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .kpi-chip {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.3rem 0.7rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .kpi-chip.kpi-total { background: #f1f5f9; color: var(--text-main); border: 1px solid var(--border); }
+        .kpi-chip.kpi-normal { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .kpi-chip.kpi-shift { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+        .kpi-chip.kpi-attn { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+        .kpi-chip.kpi-crit { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        .scorecard-filter-tabs {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 0.875rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.3rem 0.65rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+            user-select: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .filter-tab:hover {
+                background: #f8fafc;
+                color: var(--text-main);
+            }
+        }
+
+        .filter-tab:active {
+            transform: scale(0.97);
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.22rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .status-pill.pill-normal { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .status-pill.pill-shift { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+        .status-pill.pill-attn { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+        .status-pill.pill-crit { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        /* Scorecard Table */
+        .markdown-output table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0.5rem 0 1.25rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            font-size: 0.825rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            display: table;
+        }
+
+        .markdown-output thead {
+            background-color: #f8fafc;
+        }
+
+        .markdown-output th {
+            color: var(--primary);
+            font-weight: 600;
+            text-align: left;
+            padding: 0.75rem 0.85rem;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .markdown-output td {
+            padding: 0.7rem 0.85rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        .markdown-output tr:last-child td {
+            border-bottom: none;
+        }
+
+        .markdown-output tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        /* High-Fidelity Animated Spectrum Meter Gauges */
+        .spectrum-gauges-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+        .spectrum-meter-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.125rem 1.25rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .meter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .meter-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meter-biomarker-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .meter-controls-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-preview-goal {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.25rem 0.55rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--accent);
+            cursor: pointer;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            user-select: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-preview-goal:hover {
+                background: var(--accent-soft);
+                border-color: var(--accent-border);
+            }
+        }
+
+        .btn-preview-goal:active {
+            transform: scale(0.96);
+        }
+
+        .btn-preview-goal.active {
+            background: #dcfce7;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .meter-val-chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.25rem;
+            background: #f1f5f9;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .meter-val-chip.val-crit {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #991b1b;
+        }
+
+        .meter-val-chip.val-attn {
+            background: #ffedd5;
+            border-color: #fed7aa;
+            color: #9a3412;
+        }
+
+        .meter-val-chip.val-goal {
+            background: #dcfce7;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .meter-val-num {
+            font-size: 1.1rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .meter-track-container {
+            margin: 1.4rem 0 0.5rem;
+        }
+
+        .meter-track {
+            height: 18px;
+            background: #e2e8f0;
+            border-radius: 9999px;
+            position: relative;
+            overflow: visible;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
+        }
+
+        .meter-safe-zone {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #86efac 0%, #4ade80 100%);
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(22, 163, 74, 0.2);
+        }
+
+        .safe-zone-text {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #14532d;
+            text-shadow: 0 0 2px rgba(255,255,255,0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 0.5rem;
+        }
+
+        .meter-pin {
+            position: absolute;
+            top: -24px;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            transition: left 280ms var(--ease-out);
+            pointer-events: none;
+        }
+
+        .pin-bubble {
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+            white-space: nowrap;
+            transition: background-color 200ms ease;
+        }
+
+        .meter-pin.pin-crit .pin-bubble {
+            background: #dc2626;
+            animation: pulseRed 2s infinite;
+        }
+
+        .meter-pin.pin-attn .pin-bubble {
+            background: #ea580c;
+        }
+
+        .meter-pin.pin-goal .pin-bubble {
+            background: #166534;
+            animation: none;
+        }
+
+        @keyframes pulseRed {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6); }
+            50% { box-shadow: 0 0 0 5px rgba(220, 38, 38, 0); }
+        }
+
+        .pin-needle {
+            width: 2px;
+            height: 14px;
+            background: #0f172a;
+            transition: background-color 200ms ease;
+        }
+
+        .meter-pin.pin-crit .pin-needle { background: #dc2626; }
+        .meter-pin.pin-attn .pin-needle { background: #ea580c; }
+        .meter-pin.pin-goal .pin-needle { background: #166534; }
+
+        .meter-scale-markers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 0.35rem;
+        }
+
+        .meter-context-note {
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            padding: 0.55rem 0.75rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+            margin-top: 0.65rem;
+            line-height: 1.45;
+        }
+
+        /* Consultation Quest Preparedness Tracker */
+        .consultation-quest-header {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .quest-info-title {
+            font-size: 0.825rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .quest-info-sub {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .quest-progress-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #eef2ff;
+            color: var(--indigo);
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .consultation-cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+        .consultation-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--indigo);
+            border-radius: 10px;
+            padding: 1.125rem 1.25rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 140ms var(--ease-out), border-color 140ms ease;
+        }
+
+        .consultation-card.is-prepared {
+            border-left-color: var(--teal);
+            background: #fafdfb;
+        }
+
+        .consultation-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.65rem;
+        }
+
+        .consultation-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--indigo);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-quest-toggle {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            user-select: none;
+        }
+
+        .btn-quest-toggle:hover {
+            border-color: #cbd5e1;
+            color: var(--text-main);
+        }
+
+        .btn-quest-toggle:active {
+            transform: scale(0.96);
+        }
+
+        .btn-quest-toggle.checked {
+            background: #dcfce7;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .doctor-say-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            margin: 0.5rem 0 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .doctor-phrase-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--teal);
+            letter-spacing: 0.04em;
+        }
+
+        .doctor-phrase-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1.45;
+            font-style: italic;
+        }
+
+        .doctor-box-tools {
+            display: flex;
+            gap: 0.4rem;
+            align-self: flex-end;
+        }
+
+        .btn-action-small {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.25rem 0.55rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            user-select: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-action-small:hover {
+                background: #f1f5f9;
+                color: var(--text-main);
+                border-color: #cbd5e1;
+            }
+        }
+
+        .btn-action-small:active {
+            transform: scale(0.96);
+        }
+
+        .consultation-purpose {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            padding-top: 0.35rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        /* Fullscreen Pocket Card Mode for GP Consultation */
+        .pocket-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 200ms var(--ease-out);
+        }
+
+        .pocket-modal-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .pocket-card-body {
+            background: #ffffff;
+            border-radius: 16px;
+            max-width: 620px;
+            width: 100%;
+            padding: 2.25rem 1.85rem;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+            text-align: center;
+            position: relative;
+            transform: scale(0.95);
+            transform-origin: center;
+            transition: transform 220ms var(--ease-out);
+        }
+
+        .pocket-modal-overlay.is-open .pocket-card-body {
+            transform: scale(1);
+        }
+
+        .pocket-modal-tools {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .pocket-card-top-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+
+        .pocket-card-quote {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.45;
+            margin-bottom: 1.5rem;
+        }
+
+        .pocket-card-sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-pocket-close {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out);
+        }
+
+        .btn-pocket-close:active {
+            transform: scale(0.97);
+        }
+
+        /* Interactive Daily Habit Action Quests */
+        .habits-quest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .habit-quest-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.125rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: transform 140ms var(--ease-out), border-color 140ms ease;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .habit-quest-card:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-md);
+            }
+        }
+
+        .habit-quest-card.is-committed {
+            border-color: #86efac;
+            background: #f0fdf4;
+        }
+
+        .habit-quest-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .habit-icon {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .habit-title-wrap {
+            flex: 1;
+        }
+
+        .habit-category {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--teal);
+            display: block;
+        }
+
+        .habit-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .btn-habit-toggle {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            user-select: none;
+        }
+
+        .btn-habit-toggle:active {
+            transform: scale(0.96);
+        }
+
+        .btn-habit-toggle.checked {
+            background: #dcfce7;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .habit-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .thuisarts-resource-card {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .thuisarts-badge-logo {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #166534;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+        }
+
+        .btn-thuisarts-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: #ffffff;
+            color: #166534;
+            border: 1px solid #86efac;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), color 120ms var(--ease-out);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-thuisarts-pill:hover {
+                background: #166534;
+                color: #ffffff;
+            }
+        }
+
+        .btn-thuisarts-pill:active {
+            transform: scale(0.96);
+        }
+
+        /* 4-Tier Clinical Triage Grid with Active Spotlight */
+        .triage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 0.875rem;
+            margin: 0.875rem 0 0.5rem;
+        }
+
+        .triage-card {
+            border-radius: 10px;
+            padding: 1.125rem;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            position: relative;
+            transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out);
+            animation: cardFadeIn 240ms var(--ease-out) both;
+            animation-delay: calc(var(--triage-i, 0) * 40ms);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .triage-card:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-md);
+            }
+        }
+
+        .triage-card:active {
+            transform: scale(0.98);
+        }
+
+        .triage-card.triage-routine { background: #f0fdf4; border-color: #bbf7d0; border-top: 3px solid #16a34a; }
+        .triage-card.triage-daytime { background: #f0f9ff; border-color: #bae6fd; border-top: 3px solid #0284c7; }
+        .triage-card.triage-hap { background: #fffbeb; border-color: #fde68a; border-top: 3px solid #d97706; }
+        .triage-card.triage-emergency { background: #fef2f2; border-color: #fecaca; border-top: 3px solid #dc2626; }
+
+        .triage-card.triage-active-spotlight {
+            box-shadow: 0 0 0 2px #0f2942, var(--shadow-md);
+            animation: triageSpotlightPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes triageSpotlightPulse {
+            0%, 100% { box-shadow: 0 0 0 2px #0f2942, 0 4px 6px -1px rgba(0, 0, 0, 0.08); }
+            50% { box-shadow: 0 0 0 3px #dc2626, 0 6px 12px -2px rgba(220, 38, 38, 0.15); }
+        }
+
+        .triage-active-badge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.2rem 0.45rem;
+            border-radius: 4px;
+            background: #0f172a;
+            color: #ffffff;
+            display: inline-block;
+            align-self: flex-start;
+            letter-spacing: 0.04em;
+        }
+
+        .triage-title {
+            font-size: 0.825rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .triage-routine .triage-title { color: #166534; }
+        .triage-daytime .triage-title { color: #0369a1; }
+        .triage-hap .triage-title { color: #92400e; }
+        .triage-emergency .triage-title { color: #991b1b; }
+
+        .triage-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* Emergency Warning Banner */
+        .critical-emergency-banner {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-left: 4px solid #dc2626;
+            border-radius: 8px;
+            padding: 1rem 1.125rem;
+            margin-bottom: 1.5rem;
+            color: #991b1b;
+        }
+
+        .critical-emergency-banner h3 {
+            color: #991b1b !important;
+            font-size: 0.95rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem !important;
+            border-bottom: 1px solid #fecaca !important;
+            padding-bottom: 0.35rem !important;
+        }
+
+        .critical-emergency-banner ul {
+            margin-left: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #7f1d1d;
+        }
+
+        .critical-emergency-banner li {
+            margin-bottom: 0.35rem;
+            font-size: 0.85rem;
+        }
+
+        .critical-emergency-banner p {
+            font-size: 0.825rem;
+            line-height: 1.45;
+            color: #991b1b;
+        }
+
+        /* Alert Callout */
+        .alert-box {
+            background-color: var(--danger-soft);
+            border: 1px solid var(--danger-border);
+            border-left: 4px solid var(--danger);
+            border-radius: 8px;
+            padding: 1rem 1.125rem;
+            margin-bottom: 1.25rem;
+            color: #991b1b;
+        }
+
+        .alert-box h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .alert-box p {
+            font-size: 0.825rem;
+            line-height: 1.5;
+        }
+
+        /* Status Indicator Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        .status-badge.ready {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.loading {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .status-badge.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Output Action Buttons */
+        .btn-action {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            padding: 0.45rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-secondary);
+            user-select: none;
+            touch-action: manipulation;
+            transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), color 120ms var(--ease-out);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-action:hover {
+                background: #f8fafc;
+                border-color: #cbd5e1;
+                color: var(--text-main);
+            }
+        }
+
+        .btn-action:active {
+            transform: scale(0.97);
+        }
+
+        .btn-action svg {
+            width: 14px;
+            height: 14px;
+            stroke-width: 2;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3.5rem 1.5rem;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .empty-icon-wrap {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            color: var(--text-muted);
+        }
+
+        .empty-icon-wrap svg {
+            width: 26px;
+            height: 26px;
+            stroke-width: 1.8;
+        }
+
+        .empty-state h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.4rem;
+        }
+
+        .empty-state p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.75rem;
+            line-height: 1.5;
+        }
+
+        .blueprint-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            text-align: left;
+            margin-bottom: 1.75rem;
+        }
+
+        .blueprint-item {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .blueprint-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .bp-teal .blueprint-icon { background: var(--teal-soft); color: var(--teal); }
+        .bp-blue .blueprint-icon { background: var(--accent-soft); color: var(--accent); }
+        .bp-indigo .blueprint-icon { background: var(--indigo-soft); color: var(--indigo); }
+
+        .blueprint-title {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .blueprint-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .blueprint-trigger {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .blueprint-trigger:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading Spinner */
+        .spinner-wrap {
+            text-align: center;
+            padding: 4.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner-wrap p {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Toast Container with Sonner Physics */
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .toast {
+            background: #0f172a;
+            color: #ffffff;
+            padding: 0.65rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.12), 0 4px 6px -4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            pointer-events: auto;
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+            user-select: none;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .toast:active {
+            transform: scale(0.97);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .toast.closing {
+            opacity: 0;
+            transform: translateY(6px) scale(0.96);
+            transition: opacity 120ms var(--ease-out), transform 120ms var(--ease-out);
+        }
+
+        .toast-icon {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .toast-icon.icon-success { color: #34d399; }
+        .toast-icon.icon-error { color: #f87171; }
+        .toast-icon.icon-info { color: #60a5fa; }
+
+        .toast-icon svg {
+            width: 15px;
+            height: 15px;
+            stroke-width: 2.2;
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid var(--border);
+            padding: 1.125rem 1.75rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Accessibility: Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-property: opacity, color, background-color, border-color !important;
+                transform: none !important;
+            }
+            .spinner {
+                animation: none !important;
+                border-top-color: var(--accent) !important;
+            }
+            .canal-flow-diagram::after {
+                animation: none !important;
+            }
+            .meter-pin.pin-crit .pin-bubble {
+                animation: none !important;
+            }
+            .triage-card.triage-active-spotlight {
+                animation: none !important;
+            }
+        }
+
+        /* Print Stylesheet for Doctor Consultations */
+        @media print {
+            header,
+            .stepper-nav,
+            .page-intro,
+            #step1Container,
+            .step2-header,
+            .report-outline-bar,
+            .scorecard-filter-tabs,
+            .btn-preview-goal,
+            .btn-action-small,
+            .btn-quest-toggle,
+            .toast-container,
+            footer {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            main {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            #step2Container {
+                display: block !important;
+            }
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+            .report-section-card {
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+        }
+
+        /* Emil Kowalski Enhanced Micro-Interactions */
+        .canal-conduit-wrap {
+            height: 6px;
+            background: #e0f2fe;
+            border-radius: 9999px;
+            margin: 0.4rem 0 0.85rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .conduit-stream-flow {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(90deg, #0284c7 0px, #0284c7 24px, #38bdf8 24px, #38bdf8 48px);
+            background-size: 96px 100%;
+            animation: flowConduitWater 3.2s linear infinite;
+            opacity: 0.85;
+        }
+
+        @keyframes flowConduitWater {
+            from { background-position: 0 0; }
+            to { background-position: 96px 0; }
+        }
+
+        .canal-flow-diagram.sim-restored .conduit-stream-flow {
+            animation-duration: 1.4s;
+            background: repeating-linear-gradient(90deg, #16a34a 0px, #16a34a 24px, #4ade80 24px, #4ade80 48px);
+        }
+
+        .btn-canal-sim {
+            background: #ffffff;
+            border: 1px solid #bae6fd;
+            border-radius: 6px;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #0369a1;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            user-select: none;
+            transition: transform 140ms var(--ease-out), background-color 140ms var(--ease-out), border-color 140ms var(--ease-out), color 140ms var(--ease-out);
+        }
+
+        .btn-canal-sim:active { transform: scale(0.97); }
+
+        .btn-canal-sim.active {
+            background: #dcfce7;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .canal-inspector-card {
+            background: #ffffff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            margin-top: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.75rem;
+            animation: inspectorFadeIn 200ms var(--ease-out);
+        }
+
+        @keyframes inspectorFadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 5-Cell Segmented Battery Matrix */
+        .vitality-battery-cells {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+            margin: 0.25rem 0;
+        }
+
+        .vitality-cell {
+            flex: 1;
+            height: 7px;
+            border-radius: 2px;
+            background: #e2e8f0;
+            transition: background-color 260ms var(--ease-out);
+        }
+
+        .vitality-cell.cell-crit {
+            background: #dc2626;
+            animation: cellPulseCrit 2s infinite;
+        }
+
+        .vitality-cell.cell-attn {
+            background: #ea580c;
+        }
+
+        .vitality-cell.cell-normal {
+            background: #16a34a;
+        }
+
+        @keyframes cellPulseCrit {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.45; }
+        }
+
+        .btn-organ-recharge {
+            background: transparent;
+            border: none;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent);
+            cursor: pointer;
+            padding: 0;
+            margin-top: 0.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            user-select: none;
+            transition: color 120ms ease;
+        }
+
+        .btn-organ-recharge:active { transform: scale(0.97); }
+
+        .organ-recharge-drawer {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.55rem 0.75rem;
+            margin-top: 0.4rem;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            animation: drawerSlide 180ms var(--ease-out);
+        }
+
+        @keyframes drawerSlide {
+            from { opacity: 0; transform: translateY(-3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dutch Audio Speech Pronunciation Button */
+        .btn-speak-dutch {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+            color: #0d9488;
+            font-weight: 700;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-speak-dutch:hover {
+                background: #ccfbf1;
+                color: #0f766e;
+            }
+        }
+
+        .btn-speak-dutch.is-speaking {
+            animation: speakPulse 0.9s infinite alternate;
+        }
+
+        @keyframes speakPulse {
+            from { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4); }
+            to { box-shadow: 0 0 0 4px rgba(13, 148, 136, 0); }
+        }
+
+        /* Radial SVG Quest Ring */
+        .quest-ring-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .quest-ring-svg {
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg { stroke: #e2e8f0; }
+        .ring-fill {
+            stroke: var(--teal);
+            transition: stroke-dashoffset 400ms var(--ease-out);
+        }
+
+        .meter-val-num.is-animating {
+            filter: blur(1px);
+            opacity: 0.85;
+            transition: filter 180ms ease, opacity 180ms ease;
+        }
+
+        .recovery-delta-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+            margin-left: 0.35rem;
+            display: inline-block;
+            animation: deltaIn 200ms var(--ease-out);
+        }
+
+        @keyframes deltaIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .habit-shield-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: transform 160ms var(--ease-spring), background-color 200ms ease;
+        }
+
+        .habit-shield-badge.shield-full {
+            background: #16a34a;
+            color: #ffffff;
+            box-shadow: 0 0 8px rgba(22, 163, 74, 0.35);
+        }
+
+        /* Staggered Animations */
+        .flow-step-card:nth-child(1) { animation-delay: 0ms; }
+        .flow-step-card:nth-child(2) { animation-delay: 40ms; }
+        .flow-step-card:nth-child(3) { animation-delay: 80ms; }
+        .flow-step-card:nth-child(4) { animation-delay: 120ms; }
+        .flow-step-card:nth-child(5) { animation-delay: 160ms; }
+
+        .organ-card:nth-child(1) { animation-delay: 0ms; }
+        .organ-card:nth-child(2) { animation-delay: 50ms; }
+        .organ-card:nth-child(3) { animation-delay: 100ms; }
+        .organ-card:nth-child(4) { animation-delay: 150ms; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .conduit-stream-flow,
+            .flow-step-card.flow-alert-crit,
+            .meter-pin.pin-crit .pin-bubble,
+            .vitality-cell.cell-crit,
+            .triage-card.triage-active-spotlight {
+                animation: none !important;
+            }
+            .vitality-fill,
+            .meter-pin,
+            .ring-fill {
+                transition: none !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="brand">
+                <div class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+                        <path d="M8 7h6"></path>
+                        <path d="M8 11h8"></path>
+                        <path d="M8 15h4"></path>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>LabBridge</h1>
+                    <p>Equal Access Health Literacy & Diagnostic Explainer</p>
+                </div>
+            </a>
+            <div class="header-badges">
+                <span class="badge-pill">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>100% Client-side & Private</span>
+                </span>
+                <span class="badge-pill">
+                    <span class="dot dot-green"></span>
+                    <span>Free Community Tool</span>
+                </span>
+                <span class="badge-pill">
+                    <span class="dot dot-rose"></span>
+                    <span>SDG 10 · Health Equity</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-intro">
+            <h2 class="page-intro-title">Understand Your Blood Test & Prepare for Your Consultation</h2>
+            <p class="page-intro-desc">Translates complex clinical biomarkers into clear B1-level explanations with prioritized questions for your doctor or huisarts.</p>
+        </div>
+
+        <!-- 2-Step Stepper Navigation -->
+        <nav class="stepper-nav" aria-label="Workflow Steps">
+            <button class="step-btn active" id="btnStep1" onclick="switchStep(1)">
+                <span class="step-circle">1</span>
+                <span>Upload & Select Report</span>
+            </button>
+            <span class="step-arrow-divider">→</span>
+            <button class="step-btn" id="btnStep2" onclick="switchStep(2)">
+                <span class="step-circle">2</span>
+                <span id="btnStep2Text">Illustrative Patient Guide</span>
+            </button>
+        </nav>
+
+        <!-- STEP 1: Upload, Presets & Input Screen -->
+        <div id="step1Container">
+            <div class="card step-card-focused">
+                <div class="card-header">
+                    <div class="card-header-titles">
+                        <h2 class="card-title">Patient Lab Report Upload</h2>
+                        <p class="card-subtitle">Drop a file (.txt, .csv, .pdf), choose a verified clinical scenario, or paste your test numbers.</p>
+                    </div>
+                    <div class="card-header-tools">
+                        <button class="btn-tool" id="btnPaste" onclick="pasteClipboard()" title="Paste text from clipboard">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                            <span>Paste</span>
+                        </button>
+                        <button class="btn-tool" id="btnClear" onclick="clearInput()" title="Clear textarea">Clear</button>
+                    </div>
+                </div>
+
+                <!-- Drag-and-drop file upload zone -->
+                <div class="upload-dropzone" id="dropZone" onclick="document.getElementById('fileUploadInput').click()">
+                    <input type="file" id="fileUploadInput" accept=".txt,.csv,.json,.pdf,.log" style="display: none;" onchange="handleFileSelect(event)">
+                    <div class="dropzone-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <div class="dropzone-prompt-main">Click to upload report file, or drag and drop here</div>
+                    <div class="dropzone-prompt-sub">Supports TXT, CSV, or clinical export files (processed privately in your browser)</div>
+                    <div id="fileUploadStatus" style="display: none;"></div>
+                </div>
+
+                <div class="preset-section-header">
+                    <span class="preset-section-label">Or Choose Verified Test Scenario</span>
+                </div>
+                <div class="preset-grid" id="presetGrid">
+                    <button class="btn-preset" id="preset-1" onclick="selectSample('1')">
+                        <span class="preset-name">
+                            <span class="preset-name-text">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                                Diabetes & Sugar
+                            </span>
+                            <span class="preset-tag">Chronic</span>
+                        </span>
+                        <span class="preset-desc">HbA1c & Fasting Glucose</span>
+                    </button>
+                    <button class="btn-preset preset-urgent" id="preset-2" onclick="selectSample('2')">
+                        <span class="preset-name">
+                            <span class="preset-name-text">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                Critical Emergency
+                            </span>
+                            <span class="preset-tag">Urgent</span>
+                        </span>
+                        <span class="preset-desc">Potassium Alert · Cardiac Risk</span>
+                    </button>
+                    <button class="btn-preset" id="preset-3" onclick="selectSample('3')">
+                        <span class="preset-name">
+                            <span class="preset-name-text">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v6a6 6 0 0 0 12 0V2"></path><line x1="6" y1="2" x2="18" y2="2"></line><line x1="12" y1="14" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
+                                Blood Count (CBC)
+                            </span>
+                            <span class="preset-tag">Anemia</span>
+                        </span>
+                        <span class="preset-desc">Hemoglobin, RBC & Ferritin</span>
+                    </button>
+                    <button class="btn-preset" id="preset-4" onclick="selectSample('4')">
+                        <span class="preset-name">
+                            <span class="preset-name-text">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                Cholesterol & Lipids
+                            </span>
+                            <span class="preset-tag">CVRM</span>
+                        </span>
+                        <span class="preset-desc">LDL, Triglycerides & Ratio</span>
+                    </button>
+                </div>
+
+                <div class="input-wrapper">
+                    <textarea id="labInput" oninput="handleInputChange()" placeholder="Paste your blood test results here...&#10;&#10;Example:&#10;HbA1c: 58 mmol/mol (Ref: 20-42) HIGH&#10;Glucose: 7.8 mmol/L (Ref: 4.0-6.0) HIGH&#10;Total Cholesterol: 5.6 mmol/L"></textarea>
+                </div>
+
+                <button class="btn-primary" id="analyzeBtn" onclick="runAnalysis()">
+                    <span>Translate & Generate Patient Guide</span>
+                    <kbd>⌘ ↵</kbd>
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Full-Width Illustrative Patient Guide -->
+        <div id="step2Container" style="display: none;">
+            <div class="card">
+                <div class="step2-header">
+                    <button class="btn-step-back" onclick="switchStep(1)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        <span>Upload / Edit Report</span>
+                    </button>
+                    <div id="statusIndicator"></div>
+                    <div class="step2-actions" id="actionBar" style="display: none;">
+                        <button class="btn-action" onclick="copyResult()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span>Copy Summary</span>
+                        </button>
+                        <button class="btn-action" onclick="window.print()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                <rect x="6" y="14" width="12" height="8"></rect>
+                            </svg>
+                            <span>Print for Doctor Visit</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="resultsContent" class="results-container">
+                    <div class="empty-state">
+                        <div class="empty-icon-wrap" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                            </svg>
+                        </div>
+                        <h3>No Report Analyzed Yet</h3>
+                        <p>Upload a file or choose a preset in Step 1 to generate your structured patient guide:</p>
+                        
+                        <div class="blueprint-preview" aria-hidden="true">
+                            <div class="blueprint-item bp-teal">
+                                <div class="blueprint-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                </div>
+                                <div>
+                                    <div class="blueprint-title">Connected Dutch Canal Metaphor</div>
+                                    <div class="blueprint-sub">Visual system flow: waterways, cargo, locks, filtration, and central pump</div>
+                                </div>
+                            </div>
+                            <div class="blueprint-item bp-blue">
+                                <div class="blueprint-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                                </div>
+                                <div>
+                                    <div class="blueprint-title">Body Systems Overview & Spectrum Gauges</div>
+                                    <div class="blueprint-sub">Organ health matrix and calibrated safe-zone range gauges</div>
+                                </div>
+                            </div>
+                            <div class="blueprint-item bp-indigo">
+                                <div class="blueprint-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                </div>
+                                <div>
+                                    <div class="blueprint-title">10-Minute Consultation Cards & Triage</div>
+                                    <div class="blueprint-sub">Prepared Dutch phrases for your huisarts & 4-tier emergency guidance</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="blueprint-trigger" onclick="selectAndRunSample('1')">Load a sample diabetes report to preview now →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Pocket Flashcard Modal Overlay -->
+    <div id="pocketModal" class="pocket-modal-overlay" style="display: none;" onclick="closePocketModal(event)">
+        <div class="pocket-card-body" onclick="event.stopPropagation()">
+            <div class="pocket-card-top-tag">Hand this screen to your Huisarts or POH</div>
+            <div id="pocketModalQuote" class="pocket-card-quote"></div>
+            <p class="pocket-card-sub">Prepared Dutch consultation phrase · Patient using LabBridge</p>
+            <div class="pocket-modal-tools">
+                <button class="btn-action-small btn-speak-dutch" onclick="speakDutchPhrase(document.getElementById('pocketModalQuote').textContent.replace(/[“"”]/g, ''))">🔊 Speak Dutch</button>
+                <button class="btn-action-small" onclick="copySnippet(document.getElementById('pocketModalQuote').textContent.replace(/[“"”]/g, ''))">📋 Copy Phrase</button>
+                <button class="btn-pocket-close" onclick="closePocketModal()">Close Card</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sonner-Style Toast Notification Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <footer>
+        <div class="footer-content">
+            <p>LabBridge — Equal Access Health Literacy & Diagnostic Explainer</p>
+            <p>Educational tool only · Always consult a licensed healthcare provider</p>
+        </div>
+    </footer>
+
+    <script>
+        let samplesCache = null;
+        let activePresetId = null;
+        let hasReportAnalyzed = false;
+
+        // Sonner-style lightweight toast with timer pause, icons & click-to-dismiss
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+
+            let iconSvg = '';
+            let iconClass = 'icon-success';
+            if (type === 'error') {
+                iconClass = 'icon-error';
+                iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+            } else if (type === 'info') {
+                iconClass = 'icon-info';
+                iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+            } else {
+                iconClass = 'icon-success';
+                iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            }
+
+            toast.innerHTML = `
+                <span class="toast-icon ${iconClass}">
+                    ${iconSvg}
+                </span>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+
+            let dismissTimer = null;
+            let remainingTime = 2400;
+            let startTime = Date.now();
+
+            const dismissToast = () => {
+                toast.classList.remove('show');
+                toast.classList.add('closing');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 130);
+            };
+
+            const startTimer = () => {
+                startTime = Date.now();
+                dismissTimer = setTimeout(dismissToast, remainingTime);
+            };
+
+            const pauseTimer = () => {
+                if (dismissTimer) {
+                    clearTimeout(dismissTimer);
+                    dismissTimer = null;
+                    remainingTime -= (Date.now() - startTime);
+                }
+            };
+
+            toast.addEventListener('mouseenter', pauseTimer);
+            toast.addEventListener('mouseleave', () => {
+                if (remainingTime > 200) startTimer();
+                else dismissToast();
+            });
+
+            toast.addEventListener('click', () => {
+                if (dismissTimer) clearTimeout(dismissTimer);
+                dismissToast();
+            });
+
+            startTimer();
+        }
+
+        // Stepper Navigation
+        function switchStep(step) {
+            const step1 = document.getElementById('step1Container');
+            const step2 = document.getElementById('step2Container');
+            const btn1 = document.getElementById('btnStep1');
+            const btn2 = document.getElementById('btnStep2');
+
+            if (step === 2 && !hasReportAnalyzed && !document.getElementById('labInput').value.trim()) {
+                showToast('Please select or upload a lab test report first.', 'error');
+                return;
+            }
+
+            if (step === 1) {
+                step1.style.display = 'block';
+                step2.style.display = 'none';
+                btn1.classList.add('active');
+                btn2.classList.remove('active');
+            } else {
+                step1.style.display = 'none';
+                step2.style.display = 'block';
+                btn1.classList.remove('active');
+                btn2.classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function getSamples() {
+            if (samplesCache) return samplesCache;
+            try {
+                const res = await fetch('/api/samples');
+                const data = await res.json();
+                samplesCache = {};
+                for (const k in data) {
+                    samplesCache[k] = data[k].text;
+                }
+            } catch (err) {
+                console.error('Failed to load sample presets', err);
+                samplesCache = {};
+            }
+            return samplesCache;
+        }
+
+        async function selectSample(key) {
+            const samples = await getSamples();
+            if (samples[key]) {
+                const input = document.getElementById('labInput');
+                input.value = samples[key];
+                handleInputChange();
+                
+                const fileStatus = document.getElementById('fileUploadStatus');
+                if (fileStatus) fileStatus.style.display = 'none';
+
+                document.querySelectorAll('.btn-preset').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.getElementById('preset-' + key);
+                if (activeBtn) activeBtn.classList.add('active');
+                activePresetId = key;
+                showToast('Loaded clinical test scenario');
+            }
+        }
+
+        async function selectAndRunSample(key) {
+            await selectSample(key);
+            runAnalysis();
+        }
+
+        function handleInputChange() {
+            const val = document.getElementById('labInput').value;
+            const clearBtn = document.getElementById('btnClear');
+            if (val.trim().length > 0) {
+                clearBtn.style.display = 'inline-flex';
+            } else {
+                clearBtn.style.display = 'none';
+                document.querySelectorAll('.btn-preset').forEach(btn => btn.classList.remove('active'));
+                activePresetId = null;
+            }
+        }
+
+        function clearInput() {
+            const input = document.getElementById('labInput');
+            input.value = '';
+            handleInputChange();
+            const fileStatus = document.getElementById('fileUploadStatus');
+            if (fileStatus) fileStatus.style.display = 'none';
+            input.focus();
+            showToast('Input cleared');
+        }
+
+        async function pasteClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text && text.trim().length > 0) {
+                    const input = document.getElementById('labInput');
+                    input.value = text;
+                    handleInputChange();
+                    input.focus();
+                    showToast('Pasted lab results from clipboard');
+                } else {
+                    showToast('Clipboard is empty', 'error');
+                }
+            } catch (err) {
+                document.getElementById('labInput').focus();
+                showToast('Press ⌘+V to paste');
+            }
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files && event.target.files[0];
+            if (file) processUploadedFile(file);
+        }
+
+        function processUploadedFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const input = document.getElementById('labInput');
+                input.value = content;
+                handleInputChange();
+
+                const fileStatus = document.getElementById('fileUploadStatus');
+                fileStatus.style.display = 'inline-flex';
+                fileStatus.innerHTML = `
+                    <span class="file-status-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Loaded "${file.name}" (${(file.size / 1024).toFixed(1)} KB)
+                    </span>
+                `;
+                showToast(`Loaded ${file.name}`);
+            };
+            reader.onerror = function() {
+                showToast('Could not read uploaded file', 'error');
+            };
+            reader.readAsText(file);
+        }
+
+        const dropZone = document.getElementById('dropZone');
+        if (dropZone) {
+            ['dragenter', 'dragover'].forEach(name => {
+                dropZone.addEventListener(name, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.add('dragover');
+                }, false);
+            });
+            ['dragleave', 'drop'].forEach(name => {
+                dropZone.addEventListener(name, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.remove('dragover');
+                }, false);
+            });
+            dropZone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const file = dt.files && dt.files[0];
+                if (file) processUploadedFile(file);
+            }, false);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                const input = document.getElementById('labInput');
+                if (document.activeElement === input || input.value.trim().length > 0) {
+                    e.preventDefault();
+                    runAnalysis();
+                }
+            }
+        });
+
+        // Scorecard Table Filtering
+        function filterScorecardRows(category, btn) {
+            const tabs = btn.parentNode.querySelectorAll('.filter-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+
+            const table = btn.closest('.report-section-card').querySelector('table');
+            if (!table) return;
+
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cat = row.getAttribute('data-category');
+                if (category === 'all') {
+                    row.style.display = '';
+                } else if (category === 'action') {
+                    row.style.display = (cat !== 'normal') ? '' : 'none';
+                } else if (category === 'normal') {
+                    row.style.display = (cat === 'normal') ? '' : 'none';
+                }
+            });
+        }
+
+
+        // Native Dutch Speech Pronunciation (SDG 10: Equal Access Health Literacy)
+        function speakDutchPhrase(text) {
+            if (!('speechSynthesis' in window)) {
+                showToast('Speech synthesis not supported on this browser', 'error');
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const cleanText = text.replace(/^[“"']+|[”"']+$/g, '').trim();
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'nl-NL';
+            utterance.rate = 0.92;
+            utterance.pitch = 1.0;
+            
+            const activeBtn = event && event.currentTarget ? event.currentTarget : null;
+            if (activeBtn) activeBtn.classList.add('is-speaking');
+
+            utterance.onend = () => {
+                if (activeBtn) activeBtn.classList.remove('is-speaking');
+            };
+            utterance.onerror = () => {
+                if (activeBtn) activeBtn.classList.remove('is-speaking');
+            };
+
+            window.speechSynthesis.speak(utterance);
+            showToast('Playing Dutch pronunciation 🔊');
+        }
+
+        // Animated Rolling Number Counter with Emil Kowalski ease-out
+        function animateValueCounter(element, start, end, duration = 350, decimals = 1, suffix = '') {
+            const startTime = performance.now();
+            element.classList.add('is-animating');
+            
+            function update(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3);
+                const current = start + (end - start) * ease;
+                element.textContent = current.toFixed(decimals) + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = end.toFixed(decimals) + suffix;
+                    element.classList.remove('is-animating');
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        // Canal Interactive Treatment Simulator
+        let isCanalSimulated = false;
+        function toggleCanalSimulation(btn) {
+            const canal = document.querySelector('.canal-flow-diagram');
+            if (!canal) return;
+            isCanalSimulated = !isCanalSimulated;
+            
+            const inspector = document.getElementById('canalInspectorCard');
+            const sluiceChip = canal.querySelector('.flow-node-sluices .flow-status-chip');
+            const pumpChip = canal.querySelector('.flow-node-pump .flow-status-chip');
+            
+            if (isCanalSimulated) {
+                btn.classList.add('active');
+                btn.innerHTML = '⚡ Reset Real Lab Status';
+                canal.classList.add('sim-restored');
+                
+                if (sluiceChip) {
+                    sluiceChip.className = 'flow-status-chip chip-normal';
+                    sluiceChip.textContent = 'Sluices Cleared & Flushing';
+                }
+                if (pumpChip) {
+                    pumpChip.className = 'flow-status-chip chip-normal';
+                    pumpChip.textContent = 'Rhythm Stabilized';
+                }
+                if (inspector) {
+                    inspector.innerHTML = `
+                        <div style="flex:1;">
+                            <div style="font-size:0.75rem; font-weight:700; color:#166534; text-transform:uppercase;">⚡ Treatment Simulation Active</div>
+                            <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.2rem; line-height:1.45;">
+                                <strong>Sluices Opened:</strong> With medical management, excess potassium is filtered out, bringing blood levels from 6.9 down to 4.2 mmol/L. This eliminates electrical pacing strain on the cardiac muscle, restoring steady canal flow.
+                            </div>
+                        </div>
+                        <button class="btn-action-small" onclick="document.getElementById('canalInspectorCard').style.display='none'">✕</button>
+                    `;
+                    inspector.style.display = 'flex';
+                }
+                showToast('Simulating restored canal flow: sluices open & pacing stable');
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '⚡ Simulate Medical Intervention';
+                canal.classList.remove('sim-restored');
+                
+                if (sluiceChip && canal.dataset.origSluice) {
+                    sluiceChip.className = canal.dataset.origSluiceClass;
+                    sluiceChip.textContent = canal.dataset.origSluice;
+                }
+                if (pumpChip && canal.dataset.origPump) {
+                    pumpChip.className = canal.dataset.origPumpClass;
+                    pumpChip.textContent = canal.dataset.origPump;
+                }
+                if (inspector) inspector.style.display = 'none';
+                showToast('Returned to actual laboratory results');
+            }
+        }
+
+        // Canal Node Click Inspector
+        function inspectCanalNode(nodeKey) {
+            const inspector = document.getElementById('canalInspectorCard');
+            if (!inspector) return;
+            
+            const details = {
+                waterways: {
+                    title: '🌊 Waterways: Blood Circulation',
+                    body: 'Your vascular network transports essential minerals, oxygen, and electrolytes across 100,000 km of vessels. Blood volume and hydration levels maintain optimal flow pressure.'
+                },
+                cargo: {
+                    title: '🚢 Cargo: Glucose, Lipids & Mineral Electrolytes',
+                    body: 'Nutrient molecules and ions travel like cargo barges. Excessive cargo (glucose in diabetes, potassium in renal impairment) causes molecular congestion and chemical drag.'
+                },
+                locks: {
+                    title: '🔑 Lock Keys: Insulin & Cellular Receptors',
+                    body: 'Insulin operates harbor lock gates to unload glucose into muscle and liver cells. Stiff lock gates (insulin resistance) leave energy barges marooned in circulation.'
+                },
+                sluices: {
+                    title: '⚙️ Purification Sluices: Kidneys & Nephron Filters',
+                    body: 'The kidneys operate millions of microscopic filtration sluices. Reduced filtration (low eGFR or high creatinine) causes metabolic waste and potassium to pool dangerously in the bloodstream.'
+                },
+                pump: {
+                    title: '🫀 Central Pumping Station: Heart Muscle & Electrical Pacing',
+                    body: 'The heart generates hydraulic propulsion. Potassium ions control the electrical pacemaker. Hyperkalemia (potassium >= 6.0) disrupts electrical conduction, requiring immediate emergency intervention.'
+                }
+            };
+            
+            const item = details[nodeKey] || details.waterways;
+            inspector.innerHTML = `
+                <div style="flex: 1;">
+                    <div style="font-size:0.75rem; font-weight:700; color:var(--primary); text-transform:uppercase;">${item.title}</div>
+                    <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.25rem; line-height:1.45;">${item.body}</p>
+                </div>
+                <button class="btn-action-small" onclick="document.getElementById('canalInspectorCard').style.display='none'" style="align-self: flex-start;">✕</button>
+            `;
+            inspector.style.display = 'flex';
+        }
+
+        // Organ Health Accordion Recharge Drawer
+        function toggleOrganRecharge(organKey) {
+            const drawer = document.getElementById('recharge-' + organKey);
+            if (!drawer) return;
+            const isHidden = drawer.style.display === 'none' || !drawer.style.display;
+            drawer.style.display = isHidden ? 'block' : 'none';
+        }
+
+        // Toggle Goal Preview on Gauge with Rolling Number & Spring Motion
+        function toggleGoalPreview(btn, origPercent, targetPercent, origVal, targetVal) {
+            const card = btn.closest('.spectrum-meter-card');
+            const pin = card.querySelector('.meter-pin');
+            const pinBubble = card.querySelector('.pin-bubble');
+            const valNum = card.querySelector('.meter-val-num');
+            const note = card.querySelector('.meter-context-note span');
+            const chip = card.querySelector('.meter-val-chip');
+            const isGoalActive = btn.classList.contains('active');
+
+            const origNum = parseFloat(origVal) || 0;
+            const targetNum = parseFloat(targetVal) || 0;
+            const decimals = (origVal.includes('.') || targetVal.includes('.')) ? 1 : 0;
+
+            if (!isGoalActive) {
+                btn.classList.add('active');
+                btn.innerHTML = '⚡ Reset Current';
+                pin.style.left = targetPercent + '%';
+                pin.classList.add('pin-goal');
+                chip.classList.add('val-goal');
+                
+                animateValueCounter(valNum, origNum, targetNum, 350, decimals, ' (Goal)');
+                pinBubble.textContent = targetVal;
+                
+                const delta = (origNum - targetNum);
+                const deltaSign = delta > 0 ? '-' : '+';
+                const deltaBadge = `<span class="recovery-delta-badge">${deltaSign}${Math.abs(delta).toFixed(decimals)} to safe harbor</span>`;
+                
+                note.innerHTML = `<strong>Target Recovery Goal:</strong> Glides into the green safe zone with clinical intervention. ${deltaBadge}`;
+                showToast('Previewing recovery target goal: normalized in safe zone');
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '⚡ Preview Goal';
+                pin.style.left = origPercent + '%';
+                pin.classList.remove('pin-goal');
+                chip.classList.remove('val-goal');
+                
+                animateValueCounter(valNum, targetNum, origNum, 350, decimals, '');
+                pinBubble.textContent = origVal;
+                note.innerHTML = note.getAttribute('data-orig-note');
+            }
+        }
+
+        // Direct manipulation: Scrub/inspect value on spectrum meter track
+        function scrubSpectrumMeter(evt, track) {
+            const rect = track.getBoundingClientRect();
+            const clickX = evt.clientX - rect.left;
+            const percent = Math.max(4, Math.min(96, (clickX / rect.width) * 100));
+            const card = track.closest('.spectrum-meter-card');
+            const pin = card.querySelector('.meter-pin');
+            const pinBubble = card.querySelector('.pin-bubble');
+            const valNum = card.querySelector('.meter-val-num');
+            const min = parseFloat(track.getAttribute('data-min') || 0);
+            const max = parseFloat(track.getAttribute('data-max') || 100);
+            const val = (min + (percent / 100) * (max - min)).toFixed(1);
+
+            pin.style.left = percent + '%';
+            pinBubble.textContent = val;
+            valNum.textContent = val;
+            showToast(`Inspecting gauge level: ${val}`, 'info');
+        }
+
+        // Generate Visual Spectrum Meter Card for Abnormal Biomarkers
+        function generateSpectrumMeter(biomarker) {
+            const name = biomarker.name;
+            const valNum = parseFloat(biomarker.val);
+            const valStr = biomarker.val;
+            const targetStr = biomarker.target;
+            const isCrit = biomarker.category === 'critical';
+            const isAttn = biomarker.category === 'attention' || biomarker.category === 'shift';
+            
+            let scaleMin = 0;
+            let scaleMax = 100;
+            let safeMin = 20;
+            let safeMax = 40;
+            let pinPercent = 50;
+            let safeTargetVal = 'Normal';
+            let noteSentence = biomarker.summary || 'Biomarker is outside standard target range.';
+
+            const nameLow = name.toLowerCase();
+
+            // Calibrated reference geometries
+            if (nameLow.includes('potassium') || nameLow.includes('kalium')) {
+                scaleMin = 2.0;
+                scaleMax = 8.0;
+                safeMin = 3.5;
+                safeMax = 5.0;
+                safeTargetVal = '4.2';
+                pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                noteSentence = `Critically above safe limit (5.0 mmol/L) by +${Math.round(((valNum - 5.0) / 5.0) * 100)}% · Immediate cardiac pacing risk.`;
+            } else if (nameLow.includes('creatinine') || nameLow.includes('kreatinine')) {
+                scaleMin = 40;
+                scaleMax = 200;
+                safeMin = 60;
+                safeMax = 110;
+                safeTargetVal = '85';
+                pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                noteSentence = `Elevated waste accumulation indicating kidneys are filtering at a reduced rate.`;
+            } else if (nameLow.includes('egfr') || nameLow.includes('gfr')) {
+                scaleMin = 0;
+                scaleMax = 120;
+                safeMin = 60;
+                safeMax = 120;
+                safeTargetVal = '85';
+                pinPercent = (valNum / scaleMax) * 100;
+                noteSentence = `Filtration rate (${valNum} mL/min) is reduced below normal target (> 60 mL/min).`;
+            } else if (nameLow.includes('hba1c')) {
+                scaleMin = 20;
+                scaleMax = 90;
+                safeMin = 20;
+                safeMax = 42;
+                safeTargetVal = '38';
+                pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                noteSentence = `Average 3-month sugar (${valNum} mmol/mol) is above the standard target (42 mmol/mol).`;
+            } else if (nameLow.includes('glucose') || nameLow.includes('bloedsuiker')) {
+                scaleMin = 2.0;
+                scaleMax = 12.0;
+                safeMin = 4.0;
+                safeMax = 6.0;
+                safeTargetVal = '5.0';
+                pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                noteSentence = `Fasting glucose is elevated above recommended morning levels (6.0 mmol/L).`;
+            } else if (nameLow.includes('cholesterol') || nameLow.includes('ldl') || nameLow.includes('triglycerid')) {
+                scaleMin = 0.5;
+                scaleMax = 8.0;
+                safeMin = 1.0;
+                safeMax = (nameLow.includes('ldl') ? 2.6 : (nameLow.includes('trig') ? 1.7 : 5.0));
+                safeTargetVal = (nameLow.includes('ldl') ? '2.2' : '4.5');
+                pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                noteSentence = `Circulating lipid levels exceed the Dutch CVRM target threshold.`;
+            } else if (nameLow.includes('hemoglobin') || nameLow.includes('hemoglobine') || nameLow.includes('hb')) {
+                scaleMin = 4.0;
+                scaleMax = 11.0;
+                safeMin = 7.5;
+                safeMax = 10.0;
+                safeTargetVal = '8.5';
+                pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                noteSentence = `Oxygen-carrying protein is below healthy threshold (7.5 mmol/L) · Explains fatigue.`;
+            } else if (nameLow.includes('ferritin') || nameLow.includes('ferritine')) {
+                scaleMin = 0;
+                scaleMax = 160;
+                safeMin = 15;
+                safeMax = 150;
+                safeTargetVal = '65';
+                pinPercent = (valNum / scaleMax) * 100;
+                noteSentence = `Deep iron tissue stores are severely depleted (< 15 ug/L) · Lacks raw materials for red cells.`;
+            } else {
+                const nums = targetStr.match(/\d+\.?\d*/g);
+                if (nums && nums.length >= 2) {
+                    safeMin = parseFloat(nums[0]);
+                    safeMax = parseFloat(nums[1]);
+                    safeTargetVal = ((safeMin + safeMax) / 2).toFixed(1);
+                    scaleMin = Math.max(0, safeMin * 0.6);
+                    scaleMax = safeMax * 1.4;
+                    pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                } else {
+                    pinPercent = isCrit ? 85 : 70;
+                }
+            }
+
+            pinPercent = Math.max(4, Math.min(96, pinPercent));
+            const safeLeft = Math.max(0, ((safeMin - scaleMin) / (scaleMax - scaleMin)) * 100);
+            const safeWidth = Math.max(8, Math.min(100 - safeLeft, ((safeMax - safeMin) / (scaleMax - scaleMin)) * 100));
+            const safeCenterPercent = safeLeft + (safeWidth / 2);
+
+            const chipClass = isCrit ? 'val-crit' : (isAttn ? 'val-attn' : '');
+            const pinClass = isCrit ? 'pin-crit' : (isAttn ? 'pin-attn' : '');
+            const statusPillClass = isCrit ? 'pill-crit' : (isAttn ? 'pill-attn' : 'pill-shift');
+            const statusLabel = isCrit ? 'Critical Risk' : (biomarker.status || 'Attention');
+
+            return `
+                <div class="spectrum-meter-card">
+                    <div class="meter-header">
+                        <div class="meter-title-wrap">
+                            <span class="meter-biomarker-name">${name}</span>
+                            <span class="status-pill ${statusPillClass}">${statusLabel}</span>
+                        </div>
+                        <div class="meter-controls-wrap">
+                            <button class="btn-preview-goal" onclick="toggleGoalPreview(this, ${pinPercent.toFixed(1)}, ${safeCenterPercent.toFixed(1)}, '${valStr}', '${safeTargetVal}')" title="Preview normalization goal">⚡ Preview Goal</button>
+                            <div class="meter-val-chip ${chipClass}">
+                                <span class="meter-val-num">${valStr}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meter-track-container">
+                        <div class="meter-track" onclick="scrubSpectrumMeter(event, this)" data-min="${scaleMin}" data-max="${scaleMax}" data-orig="${pinPercent.toFixed(1)}" data-orig-val="${valStr}" style="cursor: pointer;" title="Click anywhere along the gauge to test reference values">
+                            <div class="meter-safe-zone" style="left: ${safeLeft}%; width: ${safeWidth}%;">
+                                <span class="safe-zone-text">Target: ${targetStr}</span>
+                            </div>
+                            <div class="meter-pin ${pinClass}" style="left: ${pinPercent}%;">
+                                <div class="pin-bubble">${valStr}</div>
+                                <div class="pin-needle"></div>
+                            </div>
+                        </div>
+                        <div class="meter-scale-markers">
+                            <span>${scaleMin} (Low)</span>
+                            <span>Target: ${targetStr}</span>
+                            <span>${scaleMax}+</span>
+                        </div>
+                    </div>
+                    <div class="meter-context-note">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span data-orig-note="${noteSentence}">${noteSentence}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate Balanced 4-Quadrant Organ Health Matrix
+                // Generate Balanced 4-Quadrant Organ Health Matrix with Segmented Battery & Recharge Levers
+        function generateOrganImpactMatrix(biomarkers) {
+            const hasPotassium = biomarkers.find(b => b.name.toLowerCase().includes('potassium') || b.name.toLowerCase().includes('kalium'));
+            const hasKidney = biomarkers.find(b => b.name.toLowerCase().includes('creatinine') || b.name.toLowerCase().includes('kreatinine') || b.name.toLowerCase().includes('egfr'));
+            const hasSugar = biomarkers.find(b => b.name.toLowerCase().includes('glucose') || b.name.toLowerCase().includes('hba1c'));
+            const hasCholesterol = biomarkers.find(b => b.name.toLowerCase().includes('cholesterol') || b.name.toLowerCase().includes('ldl') || b.name.toLowerCase().includes('triglycerid'));
+            const hasAnemia = biomarkers.find(b => b.name.toLowerCase().includes('hemoglobin') || b.name.toLowerCase().includes('ferritin') || b.name.toLowerCase().includes('hematocrit'));
+
+            // 1. Heart & Cardiovascular Stability
+            let heartStatus = 'organ-normal';
+            let heartTag = 'Normal Rhythm';
+            let heartBattery = 95;
+            let heartDesc = 'Cardiac pacing electrolytes and fluid pressures are within healthy limits.';
+            let heartMarkers = 'Electrolytes Normal';
+            let heartRecharge = 'Maintain balanced hydration and routine physical movement to support vascular tone.';
+
+            if (hasPotassium && hasPotassium.category === 'critical') {
+                heartStatus = 'organ-crit';
+                heartTag = 'Critical Cardiac Risk';
+                heartBattery = 25;
+                heartDesc = 'High potassium overcharges the heart muscle\'s electrical pacing. Immediate risk of arrhythmias.';
+                heartMarkers = `Potassium: ${hasPotassium.val}`;
+                heartRecharge = 'Immediate clinical stabilization via SEH/Huisarts to lower blood potassium back into 3.5 - 5.0 safe window.';
+            } else if (hasCholesterol && (hasCholesterol.category === 'attention' || hasCholesterol.category === 'shift')) {
+                heartStatus = 'organ-attn';
+                heartTag = 'Elevated Vascular Lipids';
+                heartBattery = 65;
+                heartDesc = 'Elevated circulating lipids contribute to vascular resistance; lifestyle and CVRM review advised.';
+                heartMarkers = `Cholesterol: ${hasCholesterol.val}`;
+                heartRecharge = 'Adopt heart-healthy Mediterranean nutrition rich in omega-3s and plant fiber to clear vascular lipids.';
+            }
+
+            // 2. Kidneys & Purification Filtration
+            let kidneyStatus = 'organ-normal';
+            let kidneyTag = 'Healthy Clearance';
+            let kidneyBattery = 90;
+            let kidneyDesc = 'Kidneys are effectively filtering blood waste and maintaining electrolyte clearance.';
+            let kidneyMarkers = 'Filtration Normal';
+            let kidneyRecharge = 'Continue steady fluid intake to support renal perfusion and cellular waste flushing.';
+
+            const egfr = biomarkers.find(b => b.name.toLowerCase().includes('egfr'));
+            const creat = biomarkers.find(b => b.name.toLowerCase().includes('creatinine') || b.name.toLowerCase().includes('kreatinine'));
+
+            if ((egfr && egfr.category !== 'normal') || (creat && creat.category !== 'normal')) {
+                kidneyStatus = (egfr && egfr.category === 'critical') ? 'organ-crit' : 'organ-attn';
+                kidneyTag = (egfr && egfr.category === 'critical') ? 'Critical Low Filtration' : 'Strained Clearance';
+                kidneyBattery = egfr ? Math.min(60, Math.round((parseFloat(egfr.val) / 60) * 60)) : 45;
+                kidneyDesc = 'Purification locks are restricted (reduced eGFR / high creatinine), causing minerals to accumulate.';
+                kidneyMarkers = `${egfr ? 'eGFR: ' + egfr.val : ''} ${creat ? '· Creat: ' + creat.val : ''}`;
+                kidneyRecharge = 'Review all current medications with your doctor and avoid NSAID painkillers that strain nephron filtration.';
+            }
+
+            // 3. Blood & Oxygen Supply
+            let bloodStatus = 'organ-normal';
+            let bloodTag = 'Healthy Blood Count';
+            let bloodBattery = 95;
+            let bloodDesc = 'Hemoglobin and iron reserves are strong and delivering oxygen effectively to organs.';
+            let bloodMarkers = 'Oxygen Supply Strong';
+            let bloodRecharge = 'Balanced dietary iron and folate maintain robust red blood cell synthesis.';
+
+            const hb = biomarkers.find(b => b.name.toLowerCase().includes('hemoglobin') || b.name.toLowerCase().includes('hb'));
+            const ferr = biomarkers.find(b => b.name.toLowerCase().includes('ferritin'));
+
+            if ((hb && hb.category !== 'normal') || (ferr && ferr.category !== 'normal')) {
+                bloodStatus = 'organ-attn';
+                bloodTag = 'Anemia & Low Iron';
+                bloodBattery = 40;
+                bloodDesc = 'Fewer oxygen-carrying red blood cells and depleted iron stores directly cause daytime fatigue.';
+                bloodMarkers = `${hb ? 'Hb: ' + hb.val : ''} ${ferr ? '· Ferritin: ' + ferr.val : ''}`;
+                bloodRecharge = 'Targeted iron supplementation paired with Vitamin C to restore bone marrow red blood cell construction.';
+            }
+
+            // 4. Metabolism & Energy Balance
+            let sugarStatus = 'organ-normal';
+            let sugarTag = 'Balanced Glucose';
+            let sugarBattery = 95;
+            let sugarDesc = 'Blood sugar and insulin lock gates are keeping cellular energy balance steady.';
+            let sugarMarkers = 'Metabolism Normal';
+            let sugarRecharge = 'Consistent meal timing and regular activity keep insulin receptors highly responsive.';
+
+            const a1c = biomarkers.find(b => b.name.toLowerCase().includes('hba1c'));
+            const glu = biomarkers.find(b => b.name.toLowerCase().includes('glucose') || b.name.toLowerCase().includes('bloedsuiker'));
+
+            if ((a1c && a1c.category !== 'normal') || (glu && glu.category !== 'normal')) {
+                sugarStatus = 'organ-attn';
+                sugarTag = 'Elevated Sugar Cargo';
+                sugarBattery = 55;
+                sugarDesc = 'Extra glucose cargo is circulating in the blood because insulin lock keys are opening cell gates more slowly.';
+                sugarMarkers = `${a1c ? 'HbA1c: ' + a1c.val : ''} ${glu ? '· Glucose: ' + glu.val : ''}`;
+                sugarRecharge = 'Switch to complex carbohydrates with post-meal 10-minute walks to sensitize insulin lock gates naturally.';
+            }
+
+            // Helper to generate 5 battery cells
+            function renderCells(battery, status) {
+                const count = Math.max(1, Math.min(5, Math.round(battery / 20)));
+                const type = status.includes('crit') ? 'cell-crit' : (status.includes('attn') ? 'cell-attn' : 'cell-normal');
+                let h = '';
+                for (let i = 0; i < 5; i++) {
+                    h += `<span class="vitality-cell ${i < count ? type : ''}"></span>`;
+                }
+                return h;
+            }
+
+            return `
+                <div class="organ-matrix-container" id="sec-organ-matrix">
+                    <div class="organ-matrix-header">
+                        <div class="organ-matrix-title">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                            <span>Body Systems at a Glance · 4-Quadrant Vitality Dashboard</span>
+                        </div>
+                        <span style="font-size: 0.72rem; color: var(--text-muted);">Segmented capacity battery based on current lab numbers</span>
+                    </div>
+                    <div class="organ-grid">
+                        <!-- 1. Heart -->
+                        <div class="organ-card ${heartStatus}" style="--quad-i: 0;">
+                            <div class="organ-card-top">
+                                <div class="organ-title-wrap"><span>🫀</span><span>Heart & Rhythm</span></div>
+                                <span class="status-pill ${heartStatus === 'organ-crit' ? 'pill-crit' : (heartStatus === 'organ-attn' ? 'pill-attn' : 'pill-normal')}">${heartTag}</span>
+                            </div>
+                            <div class="vitality-battery-wrap">
+                                <div class="vitality-label-bar"><span>Pacing Stability</span><span>${heartBattery}%</span></div>
+                                <div class="vitality-battery-cells">${renderCells(heartBattery, heartStatus)}</div>
+                            </div>
+                            <div class="organ-markers-tag">${heartMarkers}</div>
+                            <p class="organ-desc">${heartDesc}</p>
+                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('heart')">⚡ How to Recharge Battery ▾</button>
+                            <div class="organ-recharge-drawer" id="recharge-heart" style="display: none;">
+                                <strong style="color: var(--primary);">Clinical Recharge Lever:</strong>
+                                <div>${heartRecharge}</div>
+                            </div>
+                        </div>
+                        <!-- 2. Kidneys -->
+                        <div class="organ-card ${kidneyStatus}" style="--quad-i: 1;">
+                            <div class="organ-card-top">
+                                <div class="organ-title-wrap"><span>🫘</span><span>Kidneys & Filtration</span></div>
+                                <span class="status-pill ${kidneyStatus === 'organ-crit' ? 'pill-crit' : (kidneyStatus === 'organ-attn' ? 'pill-attn' : 'pill-normal')}">${kidneyTag}</span>
+                            </div>
+                            <div class="vitality-battery-wrap">
+                                <div class="vitality-label-bar"><span>Filtration Capacity</span><span>${kidneyBattery}%</span></div>
+                                <div class="vitality-battery-cells">${renderCells(kidneyBattery, kidneyStatus)}</div>
+                            </div>
+                            <div class="organ-markers-tag">${kidneyMarkers}</div>
+                            <p class="organ-desc">${kidneyDesc}</p>
+                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('kidneys')">⚡ How to Recharge Battery ▾</button>
+                            <div class="organ-recharge-drawer" id="recharge-kidneys" style="display: none;">
+                                <strong style="color: var(--primary);">Clinical Recharge Lever:</strong>
+                                <div>${kidneyRecharge}</div>
+                            </div>
+                        </div>
+                        <!-- 3. Blood -->
+                        <div class="organ-card ${bloodStatus}" style="--quad-i: 2;">
+                            <div class="organ-card-top">
+                                <div class="organ-title-wrap"><span>🩸</span><span>Blood & Oxygen</span></div>
+                                <span class="status-pill ${bloodStatus === 'organ-attn' ? 'pill-attn' : 'pill-normal'}">${bloodTag}</span>
+                            </div>
+                            <div class="vitality-battery-wrap">
+                                <div class="vitality-label-bar"><span>Oxygen Capacity</span><span>${bloodBattery}%</span></div>
+                                <div class="vitality-battery-cells">${renderCells(bloodBattery, bloodStatus)}</div>
+                            </div>
+                            <div class="organ-markers-tag">${bloodMarkers}</div>
+                            <p class="organ-desc">${bloodDesc}</p>
+                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('blood')">⚡ How to Recharge Battery ▾</button>
+                            <div class="organ-recharge-drawer" id="recharge-blood" style="display: none;">
+                                <strong style="color: var(--primary);">Clinical Recharge Lever:</strong>
+                                <div>${bloodRecharge}</div>
+                            </div>
+                        </div>
+                        <!-- 4. Metabolism -->
+                        <div class="organ-card ${sugarStatus}" style="--quad-i: 3;">
+                            <div class="organ-card-top">
+                                <div class="organ-title-wrap"><span>⚡</span><span>Metabolism & Fuel</span></div>
+                                <span class="status-pill ${sugarStatus === 'organ-attn' ? 'pill-attn' : 'pill-normal'}">${sugarTag}</span>
+                            </div>
+                            <div class="vitality-battery-wrap">
+                                <div class="vitality-label-bar"><span>Glucose Balance</span><span>${sugarBattery}%</span></div>
+                                <div class="vitality-battery-cells">${renderCells(sugarBattery, sugarStatus)}</div>
+                            </div>
+                            <div class="organ-markers-tag">${sugarMarkers}</div>
+                            <p class="organ-desc">${sugarDesc}</p>
+                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('sugar')">⚡ How to Recharge Battery ▾</button>
+                            <div class="organ-recharge-drawer" id="recharge-sugar" style="display: none;">
+                                <strong style="color: var(--primary);">Clinical Recharge Lever:</strong>
+                                <div>${sugarRecharge}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle Consultation Question Check
+        function toggleQuestionReady(btn) {
+            const card = btn.closest('.consultation-card');
+            const isChecked = btn.classList.contains('checked');
+            if (!isChecked) {
+                btn.classList.add('checked');
+                btn.innerHTML = '✓ Prepared';
+                card.classList.add('is-prepared');
+                showToast('Question marked as ready for doctor');
+            } else {
+                btn.classList.remove('checked');
+                btn.innerHTML = '○ Mark Prepared';
+                card.classList.remove('is-prepared');
+            }
+            updateQuestProgress();
+        }
+
+        function updateQuestProgress() {
+            const total = document.querySelectorAll('.consultation-card').length;
+            const checked = document.querySelectorAll('.btn-quest-toggle.checked').length;
+            const pill = document.getElementById('questProgressPill');
+            const ringFill = document.getElementById('questRingFill');
+            
+            if (pill) {
+                const percent = total > 0 ? Math.round((checked / total) * 100) : 0;
+                pill.textContent = `${checked} / ${total} Prepared (${percent}%)`;
+                if (ringFill) {
+                    const circumference = 2 * Math.PI * 18; // ~113.1
+                    const offset = circumference - (percent / 100) * circumference;
+                    ringFill.style.strokeDashoffset = offset;
+                }
+                if (checked === total && total > 0) {
+                    showToast('🎉 Excellent! You are 100% prepared for your GP appointment.');
+                }
+            }
+        }
+
+        // Pocket Mode Modal with Emil Kowalski Backdrop & Scale Motion
+        function openPocketModal(quoteText) {
+            const modal = document.getElementById('pocketModal');
+            const quoteEl = document.getElementById('pocketModalQuote');
+            if (!modal || !quoteEl) return;
+            quoteEl.textContent = `“${quoteText.replace(/^[“"']+|[”"']+$/g, '')}”`;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(() => {
+                modal.classList.add('is-open');
+            });
+        }
+
+        function closePocketModal(evt) {
+            if (evt && evt.target !== document.getElementById('pocketModal') && !evt.target.classList.contains('btn-pocket-close')) return;
+            const modal = document.getElementById('pocketModal');
+            if (!modal) return;
+            modal.classList.remove('is-open');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                if (!modal.classList.contains('is-open')) {
+                    modal.style.display = 'none';
+                }
+            }, 180);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('pocketModal');
+                if (modal && modal.classList.contains('is-open')) {
+                    closePocketModal();
+                }
+            }
+        });
+
+        // Habit Toggle Commit & Daily Shield Counter
+        function toggleHabitCommit(btn) {
+            const card = btn.closest('.habit-quest-card');
+            const isChecked = btn.classList.contains('checked');
+            if (!isChecked) {
+                btn.classList.add('checked');
+                btn.innerHTML = '✓ Committed';
+                card.classList.add('is-committed');
+                showToast('Committed to health micro-habit!');
+            } else {
+                btn.classList.remove('checked');
+                btn.innerHTML = '○ Commit';
+                card.classList.remove('is-committed');
+            }
+            updateHabitShieldProgress();
+        }
+
+        function updateHabitShieldProgress() {
+            const total = document.querySelectorAll('.habit-quest-card').length;
+            const checked = document.querySelectorAll('.btn-habit-toggle.checked').length;
+            const shieldBadge = document.getElementById('habitShieldBadge');
+            if (shieldBadge) {
+                shieldBadge.innerHTML = `🛡️ Daily Habit Shield: ${checked} / ${total} Committed`;
+                if (checked === total && total > 0) {
+                    shieldBadge.classList.add('shield-full');
+                    shieldBadge.innerHTML = `🛡️ Daily Shield Active: ${checked}/${total} Locked In! 🌱`;
+                    showToast('🌱 Daily Habit Shield complete! Excellent consistency.');
+                } else {
+                    shieldBadge.classList.remove('shield-full');
+                }
+            }
+        }
+
+        // Illustrative & Explanative Content Formatter
+        function formatIllustrativeReport(html) {
+            const container = document.createElement('div');
+            container.innerHTML = html;
+
+            // 1. Process Scorecard Table: Extract biomarkers and fix status pills
+            const table = container.querySelector('table');
+            const parsedBiomarkers = [];
+
+            if (table) {
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach(tr => {
+                    const cells = tr.querySelectorAll('td');
+                    if (cells.length >= 4) {
+                        const name = cells[0].textContent.trim();
+                        const val = cells[1].textContent.trim();
+                        const target = cells[2].textContent.trim();
+                        const statusRaw = cells[3].textContent.trim().toUpperCase();
+                        const summary = cells[4] ? cells[4].textContent.trim() : '';
+
+                        let statusClass = 'pill-normal';
+                        let statusLabel = 'Normal';
+                        let statusCategory = 'normal';
+                        let iconSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+                        if (statusRaw.includes('CRIT')) {
+                            statusClass = 'pill-crit';
+                            statusLabel = 'Critical';
+                            statusCategory = 'critical';
+                            iconSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+                        } else if (statusRaw.includes('ATTN') || statusRaw.includes('ATTENTION')) {
+                            statusClass = 'pill-attn';
+                            statusLabel = 'Attention';
+                            statusCategory = 'attention';
+                            iconSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+                        } else if (statusRaw.includes('HIGH')) {
+                            statusClass = 'pill-attn';
+                            statusLabel = 'High';
+                            statusCategory = 'attention';
+                            iconSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>';
+                        } else if (statusRaw.includes('LOW')) {
+                            statusClass = 'pill-attn';
+                            statusLabel = 'Low';
+                            statusCategory = 'attention';
+                            iconSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+                        } else if (statusRaw.includes('SHIFT') || statusRaw.includes('MILD')) {
+                            statusClass = 'pill-shift';
+                            statusLabel = 'Mild Shift';
+                            statusCategory = 'shift';
+                            iconSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+                        }
+
+                        cells[3].innerHTML = `<span class="status-pill ${statusClass}">${iconSvg} ${statusLabel}</span>`;
+                        tr.setAttribute('data-category', statusCategory);
+
+                        parsedBiomarkers.push({
+                            name: name,
+                            val: val,
+                            target: target,
+                            status: statusLabel,
+                            category: statusCategory,
+                            summary: summary
+                        });
+                    }
+                });
+            }
+
+            // Determine Overall Report Clinical Severity
+            const isEmergencyReport = parsedBiomarkers.some(b => b.category === 'critical');
+            const isAttentionReport = parsedBiomarkers.some(b => b.category === 'attention' || b.category === 'shift');
+
+            // 2. Wrap headings into structured section cards
+            const headings = Array.from(container.querySelectorAll('h2, h3'));
+            const outlineItems = [];
+
+            headings.forEach((heading, idx) => {
+                const text = heading.textContent.trim();
+                if (text.includes('CRITICAL MEDICAL SAFETY NOTICE')) return;
+
+                const secId = 'report-sec-' + (idx + 1);
+                heading.id = secId;
+
+                let iconText = '📋';
+                let shortTitle = 'Section';
+                if (text.includes('1.') || text.toLowerCase().includes('executive')) { iconText = '📌'; shortTitle = 'Overview & Canals'; }
+                else if (text.includes('2.') || text.toLowerCase().includes('scorecard')) { iconText = '📊'; shortTitle = 'Lab Scorecard'; }
+                else if (text.includes('3.') || text.toLowerCase().includes('gauge')) { iconText = '📈'; shortTitle = 'Spectrum Gauges'; }
+                else if (text.includes('4.') || text.toLowerCase().includes('consultation')) { iconText = '💬'; shortTitle = 'Doctor Cards'; }
+                else if (text.includes('5.') || text.toLowerCase().includes('lever') || text.toLowerCase().includes('micro')) { iconText = '🌱'; shortTitle = 'Daily Action Quests'; }
+                else if (text.includes('6.') || text.toLowerCase().includes('triage')) { iconText = '🚨'; shortTitle = 'Care Triage'; }
+
+                outlineItems.push({ id: secId, title: shortTitle, icon: iconText });
+
+                const sectionCard = document.createElement('div');
+                sectionCard.className = 'report-section-card';
+                sectionCard.style.setProperty('--stagger-i', idx);
+                heading.parentNode.insertBefore(sectionCard, heading);
+                sectionCard.appendChild(heading);
+
+                let sibling = sectionCard.nextSibling;
+                while (sibling && sibling.nodeName !== 'H2' && sibling.nodeName !== 'H3') {
+                    const next = sibling.nextSibling;
+                    sectionCard.appendChild(sibling);
+                    sibling = next;
+                }
+
+                // Section 1: Executive Summary & Connected Canal Metaphor Diagram
+                if (text.includes('1.') || text.toLowerCase().includes('executive summary') || text.toLowerCase().includes('living scene')) {
+                    const bq = sectionCard.querySelector('blockquote');
+                    if (bq) {
+                        bq.classList.add('summary-callout-card');
+                        bq.innerHTML = `
+                            <div class="summary-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Executive Health Summary</div>
+                            <div class="summary-text">${bq.innerHTML}</div>
+                        `;
+                    }
+
+                    // Connected Dutch Canal Metaphor Diagram with dynamic alert nodes
+                    const hasCritPotassium = parsedBiomarkers.some(b => b.name.toLowerCase().includes('potassium') && b.category === 'critical');
+                    const hasHighSugar = parsedBiomarkers.some(b => b.name.toLowerCase().includes('glucose') || b.name.toLowerCase().includes('hba1c'));
+                    const hasReducedKidney = parsedBiomarkers.some(b => (b.name.toLowerCase().includes('creatinine') || b.name.toLowerCase().includes('egfr')) && b.category !== 'normal');
+                    const hasLowAnemia = parsedBiomarkers.some(b => b.name.toLowerCase().includes('hemoglobin') && b.category !== 'normal');
+
+                    const sluiceAlert = hasReducedKidney ? 'flow-alert-crit' : '';
+                    const pumpAlert = hasCritPotassium ? 'flow-alert-crit' : '';
+                    const cargoAlert = (hasHighSugar || hasLowAnemia) ? 'flow-alert-attn' : '';
+                    const lockAlert = hasHighSugar ? 'flow-alert-attn' : '';
+
+                    const canalFlow = document.createElement('div');
+                    canalFlow.className = 'canal-flow-diagram';
+                    canalFlow.dataset.origSluice = hasReducedKidney ? 'Constricted Sluices' : 'Filtering Healthy';
+                    canalFlow.dataset.origSluiceClass = 'flow-status-chip ' + (hasReducedKidney ? 'chip-crit' : 'chip-normal');
+                    canalFlow.dataset.origPump = pumpAlert ? 'Pacing Hazard' : 'Steady Pump';
+                    canalFlow.dataset.origPumpClass = 'flow-status-chip ' + (pumpAlert ? 'chip-crit' : 'chip-normal');
+
+                    canalFlow.innerHTML = `
+                        <div class="canal-flow-header">
+                            <div style="display:flex; align-items:center; gap:0.4rem;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                                <span>Connected Bodily Canal Pipeline · Dynamic Systems Flow</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:0.5rem;">
+                                <button class="btn-canal-sim" onclick="toggleCanalSimulation(this)" title="Simulate medical treatment and restored fluid dynamics">⚡ Simulate Medical Intervention</button>
+                                <span style="font-size:0.7rem; font-weight:600; color:#0369a1;">Animated Fluid Conduit</span>
+                            </div>
+                        </div>
+
+                        <!-- Continuous Waterway Conduit Stream -->
+                        <div class="canal-conduit-wrap">
+                            <div class="conduit-stream-flow" id="conduitStreamFlow"></div>
+                        </div>
+
+                        <div class="canal-flow-grid">
+                            <!-- Node 1: Waterways -->
+                            <div class="flow-step-card" onclick="inspectCanalNode('waterways')" style="cursor: pointer; --node-i: 0;" title="Click to inspect vascular waterways">
+                                <div class="flow-step-top">
+                                    <span class="flow-icon">🌊</span>
+                                    <div>
+                                        <span class="flow-step-role">Waterways</span>
+                                        <div class="flow-step-title">Bloodstream</div>
+                                    </div>
+                                </div>
+                                <span class="flow-step-desc">Continuous circulation network delivering minerals & oxygen to organs.</span>
+                                <span class="flow-status-chip chip-normal">Circulating</span>
+                            </div>
+                            <!-- Node 2: Cargo -->
+                            <div class="flow-step-card ${cargoAlert}" onclick="inspectCanalNode('cargo')" style="cursor: pointer; --node-i: 1;" title="Click to inspect molecular cargo">
+                                <div class="flow-step-top">
+                                    <span class="flow-icon">🚢</span>
+                                    <div>
+                                        <span class="flow-step-role">Cargo</span>
+                                        <div class="flow-step-title">Glucose & Nutrients</div>
+                                    </div>
+                                </div>
+                                <span class="flow-step-desc">${hasHighSugar ? 'Extra glucose barges waiting in transit.' : (hasLowAnemia ? 'Oxygen barges constructed at low capacity.' : 'Nutrients and electrolytes carried smoothly.')}</span>
+                                <span class="flow-status-chip ${cargoAlert ? 'chip-attn' : 'chip-normal'}">${cargoAlert ? 'Attention' : 'Balanced'}</span>
+                            </div>
+                            <!-- Node 3: Locks -->
+                            <div class="flow-step-card ${lockAlert}" onclick="inspectCanalNode('locks')" style="cursor: pointer; --node-i: 2;" title="Click to inspect insulin dock locks">
+                                <div class="flow-step-top">
+                                    <span class="flow-icon">🔑</span>
+                                    <div>
+                                        <span class="flow-step-role">Lock Keys</span>
+                                        <div class="flow-step-title">Insulin & Receptors</div>
+                                    </div>
+                                </div>
+                                <span class="flow-step-desc">${hasHighSugar ? 'Lock gates opening more slowly (insulin resistance).' : 'Unlocking cell docks to absorb energy cargo.'}</span>
+                                <span class="flow-status-chip ${lockAlert ? 'chip-attn' : 'chip-normal'}">${lockAlert ? 'Resistance' : 'Normal'}</span>
+                            </div>
+                            <!-- Node 4: Sluices -->
+                            <div class="flow-step-card flow-node-sluices ${sluiceAlert}" onclick="inspectCanalNode('sluices')" style="cursor: pointer; --node-i: 3;" title="Click to inspect kidney purification sluices">
+                                <div class="flow-step-top">
+                                    <span class="flow-icon">⚙️</span>
+                                    <div>
+                                        <span class="flow-step-role">Purification Sluices</span>
+                                        <div class="flow-step-title">Kidneys & Drainage</div>
+                                    </div>
+                                </div>
+                                <span class="flow-step-desc">${hasReducedKidney ? 'Sluice gates restricted (eGFR reduced), slowing mineral drainage.' : 'Purifying water and flushing waste smoothly.'}</span>
+                                <span class="flow-status-chip ${hasReducedKidney ? 'chip-crit' : 'chip-normal'}">${hasReducedKidney ? 'Constricted Sluices' : 'Filtering Healthy'}</span>
+                            </div>
+                            <!-- Node 5: Pumping Station -->
+                            <div class="flow-step-card flow-node-pump ${pumpAlert}" onclick="inspectCanalNode('pump')" style="cursor: pointer; --node-i: 4;" title="Click to inspect heart central pump">
+                                <div class="flow-step-top">
+                                    <span class="flow-icon">🫀</span>
+                                    <div>
+                                        <span class="flow-step-role">Central Pump</span>
+                                        <div class="flow-step-title">Heart & Pacing</div>
+                                    </div>
+                                </div>
+                                <span class="flow-step-desc">${hasCritPotassium ? 'Urgent traffic jam: excess potassium current risks arrhythmia!' : 'Pumping steady rhythm throughout waterways.'}</span>
+                                <span class="flow-status-chip ${pumpAlert ? 'chip-crit' : 'chip-normal'}">${pumpAlert ? 'Pacing Hazard' : 'Steady Pump'}</span>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Canal Lock Inspector Card -->
+                        <div id="canalInspectorCard" class="canal-inspector-card" style="display:none;"></div>
+                    `;
+                    sectionCard.appendChild(canalFlow);
+
+                // Insert 4-Quadrant Organ Health Matrix right after Section 1
+                const organMatrixHtml = generateOrganImpactMatrix(parsedBiomarkers);
+                const organMatrixEl = document.createElement('div');
+                organMatrixEl.innerHTML = organMatrixHtml;
+                sectionCard.parentNode.insertBefore(organMatrixEl.firstElementChild, sectionCard.nextSibling);
+                }
+
+                // Section 2: Scorecard Table & KPI Strip with Filter Tabs
+                if (text.includes('2.') || text.toLowerCase().includes('scorecard')) {
+                    if (table) {
+                        const normals = parsedBiomarkers.filter(b => b.category === 'normal').length;
+                        const shifts = parsedBiomarkers.filter(b => b.category === 'shift').length;
+                        const attns = parsedBiomarkers.filter(b => b.category === 'attention').length;
+                        const crits = parsedBiomarkers.filter(b => b.category === 'critical').length;
+                        const total = parsedBiomarkers.length;
+
+                        const kpiBar = document.createElement('div');
+                        kpiBar.className = 'scorecard-kpi-bar';
+                        kpiBar.innerHTML = `
+                            <span class="kpi-chip kpi-total">Total: ${total} Biomarkers</span>
+                            <span class="kpi-chip kpi-normal">✓ ${normals} Normal</span>
+                            ${shifts > 0 ? `<span class="kpi-chip kpi-shift">~ ${shifts} Mild Shift</span>` : ''}
+                            ${attns > 0 ? `<span class="kpi-chip kpi-attn">▲ ${attns} Attention</span>` : ''}
+                            ${crits > 0 ? `<span class="kpi-chip kpi-crit">⚠ ${crits} Critical</span>` : ''}
+                        `;
+
+                        const filterTabs = document.createElement('div');
+                        filterTabs.className = 'scorecard-filter-tabs';
+                        filterTabs.innerHTML = `
+                            <button class="filter-tab active" onclick="filterScorecardRows('all', this)">All Biomarkers (${total})</button>
+                            <button class="filter-tab" onclick="filterScorecardRows('action', this)">Attention / Critical (${attns + crits + shifts})</button>
+                            <button class="filter-tab" onclick="filterScorecardRows('normal', this)">Normal (${normals})</button>
+                        `;
+
+                        table.parentNode.insertBefore(kpiBar, table);
+                        table.parentNode.insertBefore(filterTabs, table);
+                    }
+                }
+
+                // Section 3: High-Fidelity Visual Spectrum Range Gauges
+                if (text.includes('3.') || text.toLowerCase().includes('gauge')) {
+                    const abnormals = parsedBiomarkers.filter(b => b.category !== 'normal');
+                    const gaugesContainer = document.createElement('div');
+                    gaugesContainer.className = 'spectrum-gauges-grid';
+
+                    if (abnormals.length > 0) {
+                        abnormals.forEach(b => {
+                            gaugesContainer.innerHTML += generateSpectrumMeter(b);
+                        });
+                    } else if (parsedBiomarkers.length > 0) {
+                        gaugesContainer.innerHTML = `
+                            <div class="spectrum-meter-card" style="text-align: center; padding: 2rem;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎉</div>
+                                <h4 style="color: #166534; margin-bottom: 0.25rem;">All Biomarkers Within Healthy Target Ranges</h4>
+                                <p style="font-size: 0.8rem; color: var(--text-muted);">Every analyzed lab marker is currently sitting safely inside reference limits.</p>
+                            </div>
+                        `;
+                    }
+
+                    // Remove raw ASCII text paragraphs and pre dumps, replacing with visual gauges
+                    const children = Array.from(sectionCard.children);
+                    children.forEach(child => {
+                        if (child !== heading && child.nodeName !== 'H2' && child.nodeName !== 'H3') {
+                            sectionCard.removeChild(child);
+                        }
+                    });
+                    sectionCard.appendChild(gaugesContainer);
+                }
+
+                // Section 4: 10-Minute Consultation Cards with Clean Quote Separation & Quest Mode
+                if (text.includes('4.') || text.toLowerCase().includes('consultation')) {
+                    const list = sectionCard.querySelector('ol, ul');
+                    if (list) {
+                        const items = list.querySelectorAll('li');
+                        const cardContainer = document.createElement('div');
+                        cardContainer.className = 'consultation-cards-list';
+
+                        // Add Top Quest Progress Tracker
+                        const questHeader = document.createElement('div');
+                        questHeader.className = 'consultation-quest-header';
+                        questHeader.innerHTML = `
+                            <div>
+                                <div class="quest-info-title">Consultation Quest · 10-Minute Appointment Readiness</div>
+                                <div class="quest-info-sub">Practice these phrases and check them off to build confidence before walking into your GP practice.</div>
+                            </div>
+                            <div class="quest-ring-wrap">
+                                <svg class="quest-ring-svg" width="38" height="38" viewBox="0 0 44 44">
+                                    <circle class="ring-bg" cx="22" cy="22" r="18" fill="none" stroke="#e2e8f0" stroke-width="4"></circle>
+                                    <circle class="ring-fill" id="questRingFill" cx="22" cy="22" r="18" fill="none" stroke="var(--teal)" stroke-width="4" stroke-dasharray="113.1" stroke-dashoffset="113.1" stroke-linecap="round"></circle>
+                                </svg>
+                                <div class="quest-progress-pill" id="questProgressPill">0 / ${items.length} Prepared (0%)</div>
+                            </div>
+                        `;
+                        sectionCard.insertBefore(questHeader, list);
+
+                        let cardIdx = 1;
+                        items.forEach(li => {
+                            const liText = li.innerHTML;
+                            if (liText.toLowerCase().includes('say to doctor') || liText.toLowerCase().includes('zeg tegen')) {
+                                const card = document.createElement('div');
+                                card.className = 'consultation-card';
+                                card.style.setProperty('--card-i', cardIdx - 1);
+
+                                // Cleanly extract pure Dutch quote and purpose without bundling
+                                let sayText = '';
+                                let purpText = '';
+
+                                const quoteMatch = liText.match(/["“]([^"”]+)["”]/);
+                                if (quoteMatch) {
+                                    sayText = quoteMatch[1].trim();
+                                } else {
+                                    const sayMatch = liText.match(/say to doctor[\*:\s]+([^<*\n]+?)(?=(?:purpose|\*purpose|\n|<|$))/i);
+                                    if (sayMatch) sayText = sayMatch[1].replace(/^[“"']+|[”"']+$/g, '').trim();
+                                }
+
+                                const purpMatch = liText.match(/purpose[\*:\s]+([^<\n]+)/i);
+                                if (purpMatch) {
+                                    purpText = purpMatch[1].replace(/^[“"']+|[”"']+$/g, '').trim();
+                                }
+
+                                if (!sayText) sayText = li.textContent.trim();
+
+                                card.innerHTML = `
+                                    <div class="consultation-card-header">
+                                        <span class="consultation-num">Question ${cardIdx} for Huisarts or POH</span>
+                                        <button class="btn-quest-toggle" onclick="toggleQuestionReady(this)">○ Mark Prepared</button>
+                                    </div>
+                                    <div class="doctor-say-box">
+                                        <span class="doctor-phrase-label">Say to your doctor (in Dutch):</span>
+                                        <div class="doctor-phrase-text">“${sayText}”</div>
+                                        <div class="doctor-box-tools">
+                                            <button class="btn-action-small btn-speak-dutch" onclick="speakDutchPhrase('${sayText.replace(/'/g, "\\'")}')" title="Listen to authentic Dutch pronunciation">🔊 Listen (NL)</button>
+                                            <button class="btn-action-small" onclick="copySnippet('${sayText.replace(/'/g, "\\'")}')" title="Copy Dutch phrase">Copy Phrase</button>
+                                            <button class="btn-action-small" onclick="openPocketModal('${sayText.replace(/'/g, "\\'")}')" title="Open large pocket flashcard">Show to Doctor ↗</button>
+                                        </div>
+                                    </div>
+                                    ${purpText ? `<div class="consultation-purpose"><strong>Why ask this:</strong> ${purpText}</div>` : ''}
+                                `;
+                                cardContainer.appendChild(card);
+                                cardIdx++;
+                            }
+                        });
+
+                        if (cardContainer.children.length > 0) {
+                            list.parentNode.replaceChild(cardContainer, list);
+                        }
+                    }
+                }
+
+                // Section 5: Daily Levers into Interactive Action Quests & Thuisarts Cards
+                if (text.includes('5.') || text.toLowerCase().includes('daily lever') || text.toLowerCase().includes('micro-step')) {
+                    const list = sectionCard.querySelector('ul, ol');
+                    if (list) {
+                        const items = Array.from(list.querySelectorAll('li'));
+                        const shieldHeader = document.createElement('div');
+                        shieldHeader.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;';
+                        shieldHeader.innerHTML = `
+                            <span style="font-size:0.8rem; color:var(--text-muted);">Actionable daily levers tailored to your clinical values</span>
+                            <span class="habit-shield-badge" id="habitShieldBadge">🛡️ Daily Habit Shield: 0 / ${items.length} Committed</span>
+                        `;
+                        sectionCard.insertBefore(shieldHeader, list);
+
+                        const questGrid = document.createElement('div');
+                        questGrid.className = 'habits-quest-grid';
+
+                        let thuisartsQueries = [];
+
+                        items.forEach(li => {
+                            const raw = li.textContent.trim();
+                            if (raw.toLowerCase().includes('thuisarts')) {
+                                const queriesMatch = raw.match(/["“]([^"”]+)["”]/g);
+                                if (queriesMatch) {
+                                    queriesMatch.forEach(q => thuisartsQueries.push(q.replace(/["“”]/g, '')));
+                                } else {
+                                    thuisartsQueries.push('gezonde leefstijl');
+                                }
+                            } else {
+                                // Extract title and description
+                                let title = 'Daily Health Habit';
+                                let desc = raw;
+                                if (raw.includes(':')) {
+                                    const parts = raw.split(':', 2);
+                                    title = parts[0].replace(/^[-*•]\s*/, '').trim();
+                                    desc = parts[1].trim();
+                                }
+
+                                let icon = '🌱';
+                                const titleLow = title.toLowerCase();
+                                if (titleLow.includes('food') || titleLow.includes('carb') || titleLow.includes('diet') || titleLow.includes('fat') || titleLow.includes('voeding')) icon = '🥗';
+                                else if (titleLow.includes('medicat') || titleLow.includes('pill') || titleLow.includes('iron') || titleLow.includes('supplement')) icon = '💊';
+                                else if (titleLow.includes('walk') || titleLow.includes('move') || titleLow.includes('exercis') || titleLow.includes('beweeg')) icon = '🚶';
+                                else if (titleLow.includes('water') || titleLow.includes('hydrat') || titleLow.includes('drink')) icon = '💧';
+
+                                const card = document.createElement('div');
+                                card.className = 'habit-quest-card';
+                                card.style.setProperty('--habit-i', questGrid.children.length);
+                                card.innerHTML = `
+                                    <div class="habit-quest-header">
+                                        <span class="habit-icon">${icon}</span>
+                                        <div class="habit-title-wrap">
+                                            <span class="habit-category">Action Quest</span>
+                                            <strong class="habit-name">${title}</strong>
+                                        </div>
+                                        <button class="btn-habit-toggle" onclick="toggleHabitCommit(this)">○ Commit</button>
+                                    </div>
+                                    <p class="habit-desc">${desc}</p>
+                                `;
+                                questGrid.appendChild(card);
+                            }
+                        });
+
+                        // Replace raw list with interactive quests
+                        list.parentNode.replaceChild(questGrid, list);
+
+                        // If Thuisarts queries found, append the official guidance card
+                        if (thuisartsQueries.length > 0) {
+                            const thuisartsCard = document.createElement('div');
+                            thuisartsCard.className = 'thuisarts-resource-card';
+                            thuisartsCard.innerHTML = `
+                                <div>
+                                    <div class="thuisarts-badge-logo">Official Thuisarts.nl Clinical Resource</div>
+                                    <strong style="color:var(--primary); font-size:0.875rem;">Evidence-based self-care advice from the Dutch College of GPs (NHG)</strong>
+                                </div>
+                                <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+                                    ${thuisartsQueries.map(q => `<a href="https://www.thuisarts.nl/zoeken?q=${encodeURIComponent(q)}" target="_blank" rel="noopener" class="btn-thuisarts-pill">Search "${q}" ↗</a>`).join('')}
+                                </div>
+                            `;
+                            sectionCard.appendChild(thuisartsCard);
+                        }
+                    }
+                }
+
+                // Section 6: Clinical Triage & Safety Guidance with Active Urgency Spotlight
+                if (text.includes('6.') || text.toLowerCase().includes('triage') || text.toLowerCase().includes('safety guidance')) {
+                    const list = sectionCard.querySelector('ul, ol');
+                    if (list) {
+                        const triageItems = list.querySelectorAll('li');
+                        const triageGrid = document.createElement('div');
+                        triageGrid.className = 'triage-grid';
+
+                        triageItems.forEach((li, triageIdx) => {
+                            const raw = li.textContent;
+                            let typeClass = 'triage-routine';
+                            let icon = '🟢';
+                            let title = 'Routine Care';
+                            let isSpotlight = false;
+
+                            const rawLow = raw.toLowerCase();
+
+                            // Accurate triage tier parsing
+                            if (rawLow.includes('emergency') || rawLow.includes('112') || rawLow.includes('acute')) {
+                                typeClass = 'triage-emergency';
+                                icon = '🔴';
+                                title = 'Immediate Emergency · Call 112';
+                                if (isEmergencyReport) isSpotlight = true;
+                            } else if (rawLow.includes('evening') || rawLow.includes('weekend') || rawLow.includes('hap') || rawLow.includes('outside office hours')) {
+                                typeClass = 'triage-hap';
+                                icon = '🟡';
+                                title = 'Evenings & Weekends · HAP';
+                            } else if (rawLow.includes('urgent daytime') || rawLow.includes('huisarts') || rawLow.includes('daytime')) {
+                                typeClass = 'triage-daytime';
+                                icon = '🔵';
+                                title = 'Daytime Concerns · Huisarts';
+                                if (!isEmergencyReport && isAttentionReport) isSpotlight = true;
+                            } else {
+                                typeClass = 'triage-routine';
+                                icon = '🟢';
+                                title = 'Routine Review · POH-Somatiek';
+                                if (!isEmergencyReport && !isAttentionReport) isSpotlight = true;
+                            }
+
+                            let desc = raw.replace(/^[^:]+:\s*/, '');
+                            const card = document.createElement('div');
+                            card.className = `triage-card ${typeClass} ${isSpotlight ? 'triage-active-spotlight' : ''}`;
+                            card.style.setProperty('--triage-i', triageIdx);
+                            card.innerHTML = `
+                                ${isSpotlight ? '<span class="triage-active-badge">👉 Your Active Priority Action</span>' : ''}
+                                <div class="triage-title"><span>${icon}</span> <span>${title}</span></div>
+                                <div class="triage-desc">${desc}</div>
+                            `;
+                            triageGrid.appendChild(card);
+                        });
+
+                        if (triageGrid.children.length > 0) {
+                            list.parentNode.replaceChild(triageGrid, list);
+                        }
+                    }
+                }
+            });
+
+            // Insert Outline Navigation Bar at the top of the report
+            if (outlineItems.length > 0) {
+                const outlineBar = document.createElement('nav');
+                outlineBar.className = 'report-outline-bar';
+                outlineBar.setAttribute('aria-label', 'Report Sections');
+                let outlineHtml = '<span class="outline-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> Jump to:</span>';
+                
+                outlineHtml += `<a href="#sec-organ-matrix" class="outline-pill" onclick="smoothScrollTo('sec-organ-matrix', event)">🫀 Body Systems</a>`;
+
+                outlineItems.forEach(item => {
+                    outlineHtml += `<a href="#${item.id}" class="outline-pill" onclick="smoothScrollTo('${item.id}', event)">${item.icon} ${item.title}</a>`;
+                });
+                outlineBar.innerHTML = outlineHtml;
+                container.insertBefore(outlineBar, container.firstChild);
+            }
+
+            return container.innerHTML;
+        }
+
+        function smoothScrollTo(id, evt) {
+            if (evt) evt.preventDefault();
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function copySnippet(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copied Dutch phrase to clipboard');
+            }).catch(() => {
+                showToast('Unable to copy to clipboard');
+            });
+        }
+
+        // Run Analysis Workflow
+        async function runAnalysis() {
+            const input = document.getElementById('labInput').value.trim();
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const resultsContent = document.getElementById('resultsContent');
+            const statusIndicator = document.getElementById('statusIndicator');
+            const actionBar = document.getElementById('actionBar');
+
+            if (!input) {
+                showToast('Please paste a lab report or select a sample scenario.', 'error');
+                return;
+            }
+
+            hasReportAnalyzed = true;
+            switchStep(2);
+
+            analyzeBtn.disabled = true;
+            statusIndicator.innerHTML = '<span class="status-badge loading">Analyzing biomarkers...</span>';
+            resultsContent.innerHTML = `
+                <div class="spinner-wrap">
+                    <div class="spinner"></div>
+                    <p>Translating clinical biomarkers & preparing Dutch patient guide...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: input })
+                });
+
+                const data = await response.json();
+                analyzeBtn.disabled = false;
+
+                if (data.error) {
+                    resultsContent.innerHTML = `
+                        <div class="alert-box">
+                            <h4>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                                Clinical Safety Notice
+                            </h4>
+                            <p>${data.error}</p>
+                            <div style="margin-top: 1rem;">
+                                <button class="btn-step-back" onclick="switchStep(1)">← Return to Upload Step to Correct Input</button>
+                            </div>
+                        </div>
+                    `;
+                    statusIndicator.innerHTML = '<span class="status-badge error">Notice</span>';
+                    actionBar.style.display = 'none';
+                    return;
+                }
+
+                if (data.meta && data.meta.critical_alerts_count > 0) {
+                    statusIndicator.innerHTML = '<span class="status-badge error">Emergency Warning</span>';
+                } else if (data.meta && data.meta.status === 'api_error') {
+                    statusIndicator.innerHTML = '<span class="status-badge error">Service Notice</span>';
+                } else {
+                    statusIndicator.innerHTML = '<span class="status-badge ready">Guide Ready</span>';
+                }
+
+                let htmlResult = marked.parse(data.result);
+                if (htmlResult.includes('CRITICAL MEDICAL SAFETY NOTICE')) {
+                    htmlResult = htmlResult.replace(
+                        /<h3[^>]*>CRITICAL MEDICAL SAFETY NOTICE<\/h3>([\s\S]*?)<hr\s*\/?>/i,
+                        '<div class="critical-emergency-banner"><h3>CRITICAL MEDICAL SAFETY NOTICE</h3>$1</div>'
+                    );
+                }
+
+                const formattedHtml = formatIllustrativeReport(htmlResult);
+                resultsContent.innerHTML = `<div class="markdown-output">${formattedHtml}</div>`;
+                actionBar.style.display = 'flex';
+
+                if (data.meta && data.meta.status === 'api_error') {
+                    showToast('Safety alert generated (AI narrative temporarily delayed)', 'error');
+                } else {
+                    showToast('Patient guide generated successfully');
+                }
+
+            } catch (err) {
+                analyzeBtn.disabled = false;
+                statusIndicator.innerHTML = '<span class="status-badge error">Connection Failed</span>';
+                resultsContent.innerHTML = `
+                    <div class="alert-box">
+                        <h4>Request Error</h4>
+                        <p>${err.message}</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn-step-back" onclick="switchStep(1)">← Return to Upload Step</button>
+                        </div>
+                    </div>
+                `;
+                actionBar.style.display = 'none';
+            }
+        }
+
+        function copyResult() {
+            const resultsContent = document.getElementById('resultsContent');
+            if (!resultsContent) return;
+            navigator.clipboard.writeText(resultsContent.innerText).then(() => {
+                showToast('Copied summary & doctor questions to clipboard');
+            }).catch(() => {
+                showToast('Unable to copy to clipboard');
+            });
+        }
+
+        // Prefetch presets immediately
+        getSamples();
+    </script>
+</body>
+</html>

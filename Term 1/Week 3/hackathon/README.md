@@ -1,178 +1,200 @@
-# LabBridge 🩺 — Equal Access Health Literacy & Diagnostic Explainer
+# LabBridge Student: Healthcare Navigator and Lab Explainer
 
-> **AI for Good — Hackathon 3: Equal Access**  
-> **SDG Focus**: Goal 10 — Reduced Inequalities  
-> **Core Tool**: Google Gemini LLM API (Python Native)
+> **AI for Good: Hackathon 3 (Equal Access)**  
+> **SDG Focus**: Goal 10 (Reduced Inequalities)  
+> **Target Group**: International higher education students in the Netherlands  
+> **Core Tool**: Google Gemini API (Python native, standard library HTTP server)
 
 [![SDG 10](https://img.shields.io/badge/SDG-10%20Reduced%20Inequalities-DD1367.svg)](https://sdgs.un.org/goals/goal10)
-[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Demo Video](https://img.shields.io/badge/Demo_Video-Watch_Walkthrough-red?logo=youtube)](https://youtu.be/6bzCxFRsL50)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
-## 1. Problem Definition (Rubric: 2.0 / 2.0 Pts)
+## Project demonstration
 
-### The Inequality: The Health Literacy & Diagnostic Cost Trap
-When individuals undergo blood tests or diagnostic screening (e.g., at urgent care, free health fairs, or routine visits), they typically receive raw numerical lab reports via mail or electronic patient portals. These documents are saturated with Latinate terminology, cryptic units (`mEq/L`, `fL`, `x10^3/uL`), and alarming red "HIGH / LOW" alert flags.
+A video walkthrough of the application is available on YouTube: [Watch the 3minute project demonstration](https://youtu.be/6bzCxFRsL50).
 
-For high-income individuals with comprehensive private insurance, interpreting these numbers is as simple as scheduling a private consultation. For low-income, underinsured, or uninsured individuals, however, receiving confusing test results creates a severe dilemma:
-1. **Financial Paralysis**: An uninsured patient faces an average outpatient consultation fee of **$150 to $300** (or a prohibitive specialist co-pay of $50–$100) merely to ask what a high liver enzyme or low platelet count signifies.
-2. **Medical Jargon Alienation**: Unable to afford immediate doctor visits, patients search online forums or unverified social media, leading to extreme anxiety spirals (e.g., misinterpreting benign microcytic anemia or transient enzyme spikes as terminal cancer) or fatalistic neglect of chronic conditions (e.g., ignoring pre-diabetic fasting glucose).
-
-### Evidence & Real Data Backed by Sources
-- **88% of US Adults Lack Proficient Health Literacy**: According to the landmark study by the *U.S. Department of Health and Human Services (HHS)* and the *National Assessment of Adult Literacy (NAAL)*, only 12% of English-speaking adults possess proficient health literacy. Over **36% (approx. 80 million people)** have basic or below-basic health literacy.
-- **Socioeconomic Clustering**: Low health literacy disproportionately harms marginalized populations: individuals living below the federal poverty line are **3.2 times more likely** to have below-basic health literacy compared to those in higher income brackets (*Institute of Medicine / National Academies*).
-- **Economic Burden**: Low health literacy directly inflicts between **$106 billion and $238 billion** annually in avoidable healthcare costs in the United States alone, driven by higher rates of emergency department visits and avoidable hospital readmissions (*George Washington University Health Policy Study*).
-- **Patient Retention Deficit**: Clinical studies published in the *Journal of the Royal Society of Medicine* demonstrate that patients forget or misunderstand **40% to 80%** of medical information immediately after a consultation, with written lab slips remaining the only tangible artifact they retain.
+The recording covers:
+1. Entering a Dutch blood report showing low Vitamin D (22 nmol/L) and generating a B1-level English explanation.
+2. Generating Dutch and English phrases for speaking with a practice assistant (*doktersassistente*) to request a walk-in consultation.
+3. Reviewing official NZa *passantentarief* fees (~€31.86) and reimbursement steps under EHIC and AON Student Insurance.
+4. Testing an emergency scenario with critically elevated potassium (6.9 mmol/L) to verify deterministic 112 and *huisartsenpost* warnings.
 
 ---
 
-## 2. User Group Characterization (Rubric: 2.0 / 2.0 Pts)
+## 1. Problem definition and Dutch healthcare context (SDG 10)
 
-### Intended User Persona
-- **Who They Are**:
-  - Uninsured or underinsured working-class individuals and families with high-deductible healthcare plans.
-  - Low-income patients who had lab work ordered at a walk-in clinic or hospital charity care program and received lab slips without a follow-up consultation.
-  - Individuals with limited health literacy or non-native English speakers struggling to decode clinical vocabulary.
-- **Their Situation & Needs**:
-  - They possess their numerical lab slip (on paper or copied from a patient portal).
-  - They need to know: *Is this dangerous right now? What does this biomarker do in everyday terms? What 3 questions should I ask a clinician so I do not waste time or money during a brief 15-minute visit? Where can I access affordable follow-up care?*
-- **Conditions of Use**:
-  - Mobile phones or low-bandwidth personal computers; low technical literacy; requiring simple, fast copy-paste or preset access with zero complex setup.
+Around 120,000 international students study in the Netherlands, accounting for roughly 15% of the higher education population and up to 25% at institutions like De Haagse Hogeschool (HHS). Despite holding valid insurance, these students encounter practical barriers when they try to access medical care.
 
-### Who Is NOT the Intended User (Explicit Non-Target Audience)
-1. **Acute Medical Emergencies**: Anyone actively experiencing acute, life-threatening symptoms (e.g., crushing chest pain, symptoms of stroke, severe hemorrhaging, acute trauma). These individuals must dial 911 / emergency services immediately, not consult an AI tool.
-2. **Self-Prescription Seekers**: Patients attempting to calculate prescription medication adjustments (e.g., adjusting insulin units or blood thinners like Warfarin/Coumadin) without clinician oversight.
-3. **Medical Providers**: Clinicians seeking automated diagnostic decisions; LabBridge is strictly an educational patient literacy equalizer, not a clinical decision support system (CDSS).
+Dutch general practice (*huisartsenzorg*) relies on local patient registration and clinic-based gatekeeping. In major university cities such as The Hague, Delft, Rotterdam, and Leiden, high clinic loads create three specific obstacles:
+
+1. **Registration closures (*patiëntenstop*)**: Most primary care clinics in student areas have closed their registration lists. International students frequently move into a municipality without being able to register with a dedicated GP (*huisarts*).
+2. **Triage gatekeeping and language**: The clinic assistant (*doktersassistente*) assesses urgency over the phone and frequently recommends observation or paracetamol. Students who do not speak Dutch or who expect direct specialist referrals often struggle to explain their symptoms effectively or to request a *passantenconsult* (an incidental appointment for unregistered patients).
+3. **Dutch lab reports and cost uncertainty**: When students receive blood test results from diagnostic centers (such as Atalmedial or Reinier de Graaf) or the municipal health service (GGD), the documents use Dutch clinical terminology and flags (`VERHOOGD`, `DEFICIËNT`). Students on international student plans (AON, Swisscare) or European Health Insurance Cards (EHIC) frequently assume that booking an appointment without a regular GP will trigger high private fees, which leads them to postpone medical evaluations.
+
+### Evidence and sources
+
+* **GP registration shortages**: The Netherlands Court of Audit (*Algemene Rekenkamer*, April 2025) reported in [*Focus on Shortage of General Practitioners*](https://english.rekenkamer.nl/documents/2025/04/02/focus-on-shortage-of-general-practitioners) that roughly 60% of GP practices temporarily halted new registrations in 2024. Between 777,000 and 926,000 residents in the Netherlands (about 1 in 20 people) lack a regular GP or are trying to change doctors.
+* **Regulated walk-in tariffs**: Under the Dutch Healthcare Authority (*Nederlandse Zorgautoriteit*, NZa) [*Prestatie- en tariefbeschikking huisartsenzorg 2025*](https://www.lhv.nl/nieuws/wat-zijn-de-nza-tarieven-en-wijzigingen-voor-2025/), fees for unregistered patients (*passantenconsulten*) are legally capped: €15.93 for under 5 minutes, €31.86 for a standard consultation between 5 and 20 minutes, and €63.72 for 20 minutes or longer.
+* **Student health and service awareness**: In the national student health monitor (MMMS 2025, conducted by RIVM, the Trimbos Institute, and GGD GHOR across 27,000 students), over half of respondents reported symptoms of emotional exhaustion. Studies synthesized by [Nuffic (2025)](https://www.nuffic.nl/onderzoek-en-cijfers/onderzoeken/welzijn-van-internationale-studenten-en-studenten-met-een) confirm that international students show lower awareness of local healthcare procedures and delay seeking care due to language and administrative confusion.
+* **Insurance literacy**: In the Annual International Student Survey (AISS) organized by ISO, LSVb, and ESN, 37% of international students reported that they were uncertain about their health insurance rights and obligations in the Netherlands.
+* **Micronutrient deficiencies in northern latitudes**: Data from Dutch population cohorts, including the Lifelines study (Nature/EJCN 2025, PMC6303232), document high rates of Vitamin D deficiency (< 30 nmol/L) and low ferritin levels during Dutch winter months among young adults arriving from sunnier latitudes.
 
 ---
 
-## 3. Solution Description & Architecture (Rubric: 2.0 / 2.0 Pts)
+## 2. Target user group and boundary conditions
 
-LabBridge is a Python-native application that ingests raw lab report text, screens it through safety guardrails, queries the Google Gemini LLM API with specialized clinical communication guidelines, and returns an empathetic, structured patient guide.
+### Target persona: Elena (21, international student in The Hague)
+
+Elena is a second-year student at De Haagse Hogeschool who moved to the Netherlands from abroad. She lives in student housing in The Hague, holds an EHIC card and a private student insurance policy (AON), and has not been able to register with a local GP practice due to clinic waiting lists.
+
+During autumn exam preparation, she experiences persistent tiredness and dizziness. She orders a routine blood test through a walk-in laboratory (Atalmedial) and receives a digital report in Dutch:
+* `Vitamine D (25-OH): 22 nmol/L` (Reference: > 50, marked *deficiënt*)
+* `Hemoglobine (Hb): 7.6 mmol/L` (Reference: 7.5 to 10.0)
+* `Ferritine: 38 ug/L` (Reference: 15 to 150)
+* `TSH: 2.1 mU/L` (Reference: 0.4 to 4.0)
+
+Elena does not know how to interpret units like `nmol/L` or abbreviations like `25-OH`. Because she lacks a registered GP and assumes an unregistered consultation will be expensive, she hesitates to seek medical advice.
+
+### How the system assists this case
+
+1. **Clear B1 English explanation**: Translates Dutch terms into everyday language, explaining that low Vitamin D is common during Dutch winter months, while noting that thyroid and hemoglobin markers are within normal limits.
+2. **Consultation phrasing**: Provides exact sentences in Dutch and English for booking an appointment as an unregistered patient (*passantenconsult*).
+3. **Fee and reimbursement guidance**: Clarifies that the NZa regulates walk-in consultation fees at approximately €31.86 and explains how to submit the invoice to EHIC or AON.
+4. **Self-care information**: Points to evidence-based advice on *Thuisarts.nl* and notes that standard Vitamin D supplements can be purchased over the counter at Dutch pharmacies.
+
+### Boundary conditions: who is not the intended user
+
+* **Emergency and trauma cases**: Anyone with severe acute symptoms (such as acute chest pain, suspected poisoning, or breathing difficulty) requires immediate emergency services (112) or the nearest hospital emergency department (*spoedeisende hulp*, SEH).
+* **Pediatric patients (under 18)**: Pediatric reference ranges vary by growth stage and age, so adult diagnostic models are not applicable.
+* **Healthcare professionals seeking clinical decision support**: The application does not calculate drug dosages, formulate clinical diagnoses, or replace professional medical assessment.
+* **Users seeking to bypass medical care**: The application does not encourage unmonitored self-treatment. Outputs guide the user back to an appointment with a general practitioner.
+
+### Language selection
+
+International degree programmes in the Netherlands operate in English, while Dutch healthcare portals and practice staff operate primarily in Dutch. Presenting clinical explanations in B1 English alongside verbatim Dutch phrases allows students to understand their test results and communicate accurately with local clinic staff.
+
+---
+
+## 3. System architecture
+
+LabBridge Student uses procedural Python with standard library components, avoiding heavy agent frameworks or external databases.
 
 ```
 +-------------------------------------------------------------+
-|                      User Lab Report                        |
-|   (Complete Blood Count, Metabolic Panel, Lipid Panel, etc) |
+|                      Student Lab Report                     |
+|   (e.g., Vitamine D 22 nmol/L, Hb 7.6 mmol/L, or raw slip)  |
 +------------------------------+------------------------------+
                                |
                                v
 +-------------------------------------------------------------+
-|               Deterministic Clinical Guardrails             |
-|   - Regex bounds check for critical life-threatening values |
-|     (e.g., Potassium >= 6.0 mEq/L, Glucose <= 50 mg/dL)     |
-|   - Rejection of non-medical text or prompt injection       |
-+------------------------------+------------------------------+
-                               |
-                               +---> [CRITICAL VALUE DETECTED]
-                               |     -> Injects unmissable Emergency Alert Banner
-                               v
-+-------------------------------------------------------------+
-|                      Gemini LLM API                         |
-|   - System Prompt: 6th-grade reading level, anti-diagnostic  |
-|     framing, destigmatizing context, cost-saving focus      |
-|   - Models: gemini-2.5-flash / gemini-2.0-flash / fallback  |
+|        Step 1: Input Relevance Check (guardrails.py)        |
+|   - Regex check verifies presence of clinical biomarkers     |
+|   - Rejects non-medical text or prompt injection attempts   |
 +------------------------------+------------------------------+
                                |
                                v
 +-------------------------------------------------------------+
-|                 Output Sanitizer & Validator                |
-|   - Regex sweeps strip overconfident diagnoses              |
-|   - Enforces supportive framing & mandatory disclaimers     |
+|        Step 2: Deterministic Emergency Guardrails           |
+|   - Scans text BEFORE AI call against safety bounds         |
+|   - Potassium >= 6.0 mmol/L -> Critical 112 / HAP Alert     |
+|   - Glucose <= 2.8 mmol/L -> Severe Hypoglycemia Alert      |
+|   - Strips specimen/patient IDs & chemical prefixes (25-OH) |
+|   - Normalizes European decimal commas ('5,9' -> '5.9')     |
 +------------------------------+------------------------------+
                                |
                                v
 +-------------------------------------------------------------+
-|                 Actionable Patient Guide                    |
-|   1. Plain-English Biomarker Breakdown (what it does)       |
-|   2. 3-5 Prioritized Questions for Doctor Visit             |
-|   3. Affordable Next Steps (FQHC sliding-scale clinics,     |
-|      $4 generic medication programs)                        |
-|   4. Medical Disclaimer & Emergency Hotline Guidance        |
+|        Step 3: Google Gemini API Call (gemini_client.py)    |
+|   - Model: gemini-3.5-flash-lite / gemini-2.5-flash         |
+|   - Temperature: 0.2 (low randomness for medical accuracy)  |
+|   - System Prompt enforces B1 English + Dutch phone scripts |
+|     (doktersassistente, passantenconsult, NZa fees, 112)    |
++------------------------------+------------------------------+
+                               |
+                               v
 +-------------------------------------------------------------+
+|        Step 4: Output Sanitization (guardrails.py)          |
+|   - Softens overconfident diagnostic statements             |
+|   - Protects screening recommendations & questions          |
+|   - Converts any accidental US terms to Dutch equivalents   |
++------------------------------+------------------------------+
+                               |
+                               v
++-------------------------------------------------------------+
+|        Step 5: Delivery (Lightweight Web UI)                |
+|   - Native HTTP server on port 8080                         |
+|   - 1-click student presets, responsive mobile interface    |
++------------------------------+------------------------------+
 ```
 
-### Reproducible Step-by-Step Flow:
-1. **Input Ingestion**: Text is received via the modern web interface (`http://localhost:8080`) or CLI (`python3 app.py --cli`).
-2. **Pre-LLM Safety Screening** (`guardrails.py`): Scans raw values against hardcoded physiological thresholds (Hyperkalemia, Severe Hypoglycemia, Transfusion-level Anemia). If triggered, emergency banners are prioritized regardless of model behavior.
-3. **API Orchestration** (`gemini_client.py`): Dispatches requests to the Google Gemini REST API (`generativelanguage.googleapis.com/v1beta`) using Python's native `urllib.request`. If the network is unavailable or rate-limited, it transitions to a built-in deterministic clinical explainer engine.
-4. **Post-Processing & Sanitization**: Filters out declarative diagnostic assertions (e.g., replacing *"You have leukemia"* with *"These values warrant physician evaluation"*).
-5. **Presentation**: Delivers an interactive, printable report with one-click copy and print capabilities.
+### File breakdown
+
+* `src/app.py`: Standard library HTTP server using `http.server`. Serves the web interface and handles JSON analysis requests on port 8080.
+* `src/config.py`: Reads settings from `.env` in pure Python and ensures system SSL certificates (`/etc/ssl/cert.pem`) are configured for Google API calls.
+* `src/guardrails.py`:
+  * `scan_critical_values(text)`: Scans for life-threatening test values before invoking the language model. Filters out document headers, sample identifiers, and reference intervals, and normalizes European decimal commas.
+  * `validate_input_relevance(text)`: Checks text against clinical biomarker sets to reject non-medical input.
+  * `sanitize_ai_response(text)`: Softens definitive diagnostic assertions while preserving legitimate clinical questions and screening recommendations.
+* `src/gemini_client.py`: Calls Google's Gemini REST API via `urllib.request`. Includes verified fallback guides for sample scenarios if the API is unreachable.
+* `src/samples.py`: Contains test reports for common student presentations (seasonal Vitamin D deficiency, iron deficiency, mononucleosis, and electrolyte disturbances).
+* `test_guardrails.py`: Test suite validating critical threshold detection, comma decimal normalization, specimen ID exclusion, and output sanitization.
 
 ---
 
-## 4. Problem–Solution Fit (Rubric: 1.0 / 1.0 Pt)
+## 4. Artificial intelligence implementation
 
-### Why an LLM? Why Simpler Alternatives Fail:
-- **Static Lookup Tables Fail**: Traditional medical lab portals show fixed reference ranges (e.g., `3.5 - 5.0`). They cannot cross-correlate multiple interrelated markers (such as simultaneous low hemoglobin + low MCV + low ferritin indicating microcytic iron deficiency rather than bone marrow failure).
-- **Web Search Induces Anxiety**: Typing abnormal lab results into commercial search engines surfaces click-driven worst-case diagnoses (e.g., cancer, rare autoimmune disorders), terrifying vulnerable patients.
-- **Empathetic Synthesis & Personalization**: The LLM synthesizes disparate biomarkers into a cohesive, non-stigmatizing summary tailored to a 6th-grade reading level and generates **personalized questions** that fit the exact markers flagged in that patient's report.
-- **Overcoming the Time & Cost Gap**: Average doctor visits last just 13 to 16 minutes (*Medscape Physician Compensation Report*). By arming low-income patients with 3 targeted questions, LabBridge ensures they extract maximum diagnostic value from every dollar spent on clinic visits.
+* **Model**: Google Gemini 3.5 Flash Lite (or Gemini 2.5 Flash), selected for fast inference and reliable Markdown formatting.
+* **Generation settings**: Temperature set to 0.2 to prioritize consistent clinical explanations; maximum output set to 4096 tokens.
+* **System prompt structure**: Constrains language to B1 English and incorporates Dutch healthcare terms (*doktersassistente*, *passantenconsult*, NZa tariffs, *Thuisarts.nl*, and 112).
+* **Output format**:
+  1. Plain-language health summary using accessible physical analogies.
+  2. Structured biomarker table with clinical status flags (`[NORMAL]`, `[MILD_SHIFT]`, `[ATTENTION]`, `[CRITICAL]`).
+  3. ASCII range gauges visualizing the student's result relative to target intervals.
+  4. Scripted Dutch and English phrases for speaking with clinic staff.
+  5. Healthcare access guide summarizing NZa consultation fees and insurance claims.
+  6. Triage advice distinguishing self-care, GP consultations, out-of-hours clinics (*huisartsenpost*), and 112 emergency care.
+* **Error handling**:
+  * Critical values (such as potassium $\ge$ 6.0 mmol/L) trigger deterministic warnings before calling the API.
+  * If the network connection drops or the API is unavailable, the application returns verified offline reference guides for standard test scenarios.
 
 ---
 
-## 5. Working Prototype Demonstration (Rubric: 1.0 / 1.0 Pt)
+## 5. Running the application
 
-LabBridge is built using **Python standard libraries**—no complex dependencies, virtual environment locks, or compilation steps required.
+### Requirements
+* Python 3.10 or higher
+* `uv` or standard Python 3
 
-### Quick Start (Web Application)
+### Configuration
+Create a `.env` file in the root directory:
+```ini
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### Starting the server
 ```bash
-# 1. Start the web application
-python3 app.py
+# Using uv:
+uv run python src/app.py
 
-# 2. Open your browser to:
-http://localhost:8080
+# Or standard Python:
+python3 src/app.py
 ```
-*The web interface includes 4 instant 1-click test presets, real-time biomarker translation, an ethics tab, and an architecture overview.*
+Open `http://localhost:8080` in your web browser.
 
-### Quick Start (Command-Line Interface)
+### Running unit tests
 ```bash
-# Run interactive CLI
-python3 app.py --cli
-
-# Or run instantly against a specific preset:
-python3 app.py --cli --sample 1   # Complete Blood Count (Anemia)
-python3 app.py --cli --sample 2   # Metabolic Panel (Glucose/Liver)
-python3 app.py --cli --sample 3   # Lipid Panel (Cholesterol)
-python3 app.py --cli --sample 4   # Emergency Hyperkalemia Alert
+uv run python test_guardrails.py
 ```
-
-### Running Automated Test Suite
-```bash
-python3 test_labbridge.py
-```
-*All 5 unit test suites pass in < 0.05s, verifying bounds checkers, input validators, response sanitizers, and fallback generators.*
 
 ---
 
-## 6. Ethical Reflection (Rubric: 2.0 / 2.0 Pts — Required)
+## 6. Ethical reflection
 
-### What are the risks of your tool? Who could it harm?
-A tool designed to bridge healthcare inequalities can inadvertently introduce severe risks if improperly deployed:
+### Risks and potential harms
 
-1. **The Primary Risk: Diagnostic False Reassurance & Care Avoidance**
-   - **The Harm**: If an AI explainer oversimplifies or misinterprets a subtle but malignant lab pattern (e.g., a slightly elevated white blood cell count with atypical lymphocytes) as "just a mild cold," an economically stressed patient may decide to cancel their scheduled doctor appointment to save money. This delay could allow acute leukemia, early renal failure, or sepsis to progress unchecked.
-   - **Quantified Reality**: Diagnostic errors contribute to approximately **795,000 deaths or permanent disabilities annually** in the US alone (*BMJ Quality & Safety, 2023*). AI cannot perform physical palpation, auscultation, or comprehensive patient history taking.
-
-2. **The Secondary Risk: Algorithmic Panic & Diagnostic Anchoring**
-   - **The Harm**: Unconstrained LLMs frequently hallucinate aggressive differential diagnoses based on mild, transient lab abnormalities (e.g., linking a mildly elevated ALT liver enzyme to cirrhosis or hepatitis C, when it was simply caused by an intense workout or a dose of acetaminophen). For patients with limited health literacy, this causes acute anxiety and may drive them to spend scarce funds on unnecessary emergency room visits.
-
-3. **The Tertiary Risk: Unequal Linguistic & Cultural Reliability**
-   - **The Harm**: LLM training sets are predominantly skewed toward English clinical corpora. Providing medical explanations in Spanish, Arabic, or low-resource languages often yields subtle mistranslations of critical dosage or urgency warnings, exacerbating racial and linguistic health disparities (*JAMA Network Open*).
-
-### How LabBridge Concretely Limits and Mitigates These Risks:
-- **Deterministic Hard-Coded Pre-LLM Safety Bounds**: Clinical emergencies are handled outside the LLM. If critical physiological thresholds are detected (e.g., Potassium $\ge$ 6.0 mEq/L or Glucose $\le$ 50 mg/dL), LabBridge automatically overrides normal processing to display prominent emergency alerts instructing the user to contact emergency services immediately.
-- **Strict Anti-Diagnostic Guardrails**: The system prompt and post-generation regex sanitizers enforce non-definitive language. The model is barred from stating "You have [Condition]"; it is constrained to stating "This marker is flagged outside standard ranges, which physicians typically examine for...".
-- **The "Doctor Bridge" Paradigm**: LabBridge explicitly refuses to replace the physician. Its primary deliverable is the **Doctor Conversation Guide**, designed to empower the patient to be their own advocate during professional consultations.
-- **Equitable Community Resource Navigation**: To combat socioeconomic barriers, every report connects patients to **Federally Qualified Health Centers (FQHCs)**, which are federally mandated to provide clinical consultations on a sliding-fee discount schedule based on income, and identifies $4 generic medication access programs.
-
----
-
-## 7. Submission Checklist
-
-- [x] **Working Product**: Python 3 application (`app.py`, `gemini_client.py`, `guardrails.py`, `config.py`)
-- [x] **Live Gemini LLM API Integration**: Support for `gemini-2.5-flash`, `gemini-2.0-flash`, `gemini-1.5-flash`, and configurable keys
-- [x] **Edge Case & Failure Handling**: Deterministic fallback engine for offline/network failure, critical alert bounds checking, input validation
-- [x] **SDG 10 Relevance**: Reduced Inequalities (Health Literacy & Diagnostic Cost Barrier)
-- [x] **Rubric Compliance**: Detailed problem definition with citations, explicit user personas + excluded groups, reproducible architecture, and evidence-backed ethical reflection
+1. **Financial uncertainty and delayed care**: International students living on tight budgets often worry that visiting a doctor in the Netherlands will result in large unexpected bills. If an informational tool leaves costs ambiguous, a student might delay seeking care for treatable conditions such as severe anemia. To mitigate this, LabBridge explicitly cites the regulated NZa *passantentarief* (~€31.86) and clarifies how student insurance policies (such as AON or EHIC) handle consultation claims.
+2. **False reassurance**: If an automated tool oversimplifies an abnormal test result, a user might decide not to consult a physician. To limit this risk, the system uses advisory language rather than definitive medical diagnoses. Outputs emphasize that the tool prepares the student for a doctor's appointment rather than replacing one.
+3. **Emergency misclassification**: If a language model generates a casual summary for an acute, life-threatening lab result (such as severe hyperkalemia with potassium $\ge$ 6.0 mmol/L), the patient could face cardiac arrest while reading the explanation. To address this, emergency detection runs deterministically outside the AI pipeline. Life-threatening values immediately generate a prominent warning instructing the student to contact 112 or emergency services.
+4. **Data privacy**: International students are often cautious about entering personal data into external platforms. The application requires no user accounts, sets no tracking cookies, and processes report text in memory without storing patient records.
