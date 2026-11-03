@@ -1,0 +1,10 @@
+{
+  "name": "LearnBridge",
+  "short_name": "LearnBridge",
+  "description": "Learn online and offline",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f766e",
+  "icons": []
+}
