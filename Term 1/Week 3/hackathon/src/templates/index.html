@@ -167,6 +167,230 @@
         .dot-green { background: var(--teal); }
         .dot-rose { background: #be123c; }
 
+        /* Gemini Live Status & Animations */
+        .badge-gemini {
+            border-color: #c7d2fe;
+            background: #faf5ff;
+            color: #4338ca;
+            transition: all 0.25s var(--ease-out);
+            font-weight: 600;
+        }
+
+        .gemini-pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse-gemini-ready 2.5s infinite;
+        }
+
+        .badge-gemini.thinking {
+            background: linear-gradient(135deg, #eef2ff 0%, #fdf4ff 100%);
+            border-color: #818cf8;
+            color: #312e81;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+        }
+
+        .badge-gemini.thinking .gemini-pulse-dot {
+            background: #6366f1;
+            animation: pulse-gemini-thinking 0.9s infinite;
+        }
+
+        @keyframes pulse-gemini-ready {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        @keyframes pulse-gemini-thinking {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.8); }
+            50% { transform: scale(1.3); box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+
+        /* Multimodal Attached File Badge */
+        .attached-file-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #ffffff;
+            border: 1px solid #c7d2fe;
+            border-radius: 12px;
+            padding: 0.6rem 0.85rem;
+            margin-top: 0.75rem;
+            box-shadow: 0 2px 6px rgba(99, 102, 241, 0.08);
+            animation: fadeIn 0.25s var(--ease-out);
+            text-align: left;
+        }
+
+        .preview-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #e2e8f0;
+        }
+
+        .pdf-thumb-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: #fef2f2;
+            color: #dc2626;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid #fecaca;
+        }
+
+        .attached-meta {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .attached-meta strong {
+            font-size: 0.8125rem;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .attached-meta span {
+            font-size: 0.7rem;
+            color: #4f46e5;
+            font-weight: 500;
+        }
+
+        .btn-remove-attached {
+            border: none;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: all 0.15s ease;
+        }
+
+        .btn-remove-attached:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* Gemini Thinking Animation Card */
+        .gemini-thinking-card {
+            background: #ffffff;
+            border: 1px solid #e0e7ff;
+            border-radius: 16px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.08);
+            max-width: 540px;
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gemini-sparkle-halo {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.25rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.35);
+            animation: halo-rotate 3s linear infinite;
+        }
+
+        .gemini-orb {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: orb-pulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes halo-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes orb-pulse {
+            0% { transform: scale(0.92); }
+            100% { transform: scale(1.05); }
+        }
+
+        .gemini-model-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #4f46e5;
+            background: #eef2ff;
+            padding: 0.2rem 0.65rem;
+            border-radius: 9999px;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .gemini-thinking-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.01em;
+        }
+
+        .gemini-thinking-sub {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            min-height: 1.3rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .gemini-pulse-bar {
+            width: 100%;
+            height: 4px;
+            background: #f1f5f9;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gemini-pulse-progress {
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+            border-radius: 9999px;
+            position: absolute;
+            animation: pulse-slide 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse-slide {
+            0% { left: -40%; }
+            100% { left: 100%; }
+        }
+
         /* Main Container */
         main {
             max-width: 1140px;
@@ -2543,9 +2767,9 @@
                 </div>
             </a>
             <div class="header-badges">
-                <span class="badge-pill">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    <span>100% Client-side & Private</span>
+                <span class="badge-pill badge-gemini" id="geminiHeaderBadge" title="Backend: Python http.server connected to Google Gemini 3.5 Flash Lite">
+                    <span class="gemini-pulse-dot" id="geminiPulseDot"></span>
+                    <span id="geminiBadgeText">Python Backend · Live Gemini API</span>
                 </span>
                 <span class="badge-pill">
                     <span class="dot dot-green"></span>
@@ -2597,16 +2821,16 @@
 
                 <!-- Drag-and-drop file upload zone -->
                 <div class="upload-dropzone" id="dropZone" onclick="document.getElementById('fileUploadInput').click()">
-                    <input type="file" id="fileUploadInput" accept=".txt,.csv,.json,.pdf,.log" style="display: none;" onchange="handleFileSelect(event)">
+                    <input type="file" id="fileUploadInput" accept=".png,.jpg,.jpeg,.webp,.pdf,.txt,.csv,.json,.log" style="display: none;" onchange="handleFileSelect(event)">
                     <div class="dropzone-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                             <polyline points="17 8 12 3 7 8"></polyline>
                             <line x1="12" y1="3" x2="12" y2="15"></line>
                         </svg>
                     </div>
-                    <div class="dropzone-prompt-main">Click to upload report file, or drag and drop here</div>
-                    <div class="dropzone-prompt-sub">Supports TXT, CSV, or clinical export files (processed privately in your browser)</div>
+                    <div class="dropzone-prompt-main">Drop lab report image or PDF, or click to browse</div>
+                    <div class="dropzone-prompt-sub">Supports <strong>Images (PNG, JPG, WebP), PDF scans</strong>, TXT & CSV · Powered by Gemini 3.5 Flash Lite Multimodal Vision</div>
                     <div id="fileUploadStatus" style="display: none;"></div>
                 </div>
 
@@ -2715,7 +2939,7 @@
                                 </div>
                                 <div>
                                     <div class="blueprint-title">Connected Dutch Canal Metaphor</div>
-                                    <div class="blueprint-sub">Visual system flow: waterways, cargo, locks, filtration, and central pump</div>
+                                    <div class="blueprint-sub">Visual system flow: circulation, nutrients, cellular uptake, filtration, and heart</div>
                                 </div>
                             </div>
                             <div class="blueprint-item bp-blue">
@@ -2924,14 +3148,41 @@
             }
         }
 
+        let attachedFile = null;
+
         function clearInput() {
             const input = document.getElementById('labInput');
             input.value = '';
+            attachedFile = null;
+            document.getElementById('fileUploadInput').value = '';
             handleInputChange();
             const fileStatus = document.getElementById('fileUploadStatus');
-            if (fileStatus) fileStatus.style.display = 'none';
+            if (fileStatus) {
+                fileStatus.style.display = 'none';
+                fileStatus.innerHTML = '';
+            }
             input.focus();
             showToast('Input cleared');
+        }
+
+        function removeAttachedFile(e) {
+            if (e) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            attachedFile = null;
+            document.getElementById('fileUploadInput').value = '';
+            const fileStatus = document.getElementById('fileUploadStatus');
+            if (fileStatus) {
+                fileStatus.style.display = 'none';
+                fileStatus.innerHTML = '';
+            }
+            const input = document.getElementById('labInput');
+            if (input.value.includes('[Uploaded Multimodal Report:')) {
+                input.value = '';
+                handleInputChange();
+            }
+            showToast('Attached file removed');
         }
 
         async function pasteClipboard() {
@@ -2958,27 +3209,67 @@
         }
 
         function processUploadedFile(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const content = e.target.result;
-                const input = document.getElementById('labInput');
-                input.value = content;
-                handleInputChange();
+            const isImage = file.type.startsWith('image/');
+            const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
 
-                const fileStatus = document.getElementById('fileUploadStatus');
-                fileStatus.style.display = 'inline-flex';
-                fileStatus.innerHTML = `
-                    <span class="file-status-pill">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Loaded "${file.name}" (${(file.size / 1024).toFixed(1)} KB)
-                    </span>
-                `;
-                showToast(`Loaded ${file.name}`);
-            };
-            reader.onerror = function() {
-                showToast('Could not read uploaded file', 'error');
-            };
-            reader.readAsText(file);
+            if (isImage || isPdf) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    attachedFile = {
+                        name: file.name,
+                        mime_type: file.type || (isPdf ? 'application/pdf' : 'image/jpeg'),
+                        data: dataUrl
+                    };
+
+                    const fileStatus = document.getElementById('fileUploadStatus');
+                    fileStatus.style.display = 'block';
+
+                    const iconHtml = isImage
+                        ? `<img src="${dataUrl}" class="preview-thumb" alt="Report Scan" />`
+                        : `<div class="pdf-thumb-icon">📄 PDF</div>`;
+
+                    fileStatus.innerHTML = `
+                        <div class="attached-file-badge">
+                            ${iconHtml}
+                            <div class="attached-meta">
+                                <strong>${file.name}</strong>
+                                <span>${(file.size / 1024).toFixed(1)} KB · Gemini 3.5 Flash Lite Multimodal Ready</span>
+                            </div>
+                            <button type="button" class="btn-remove-attached" onclick="removeAttachedFile(event)" title="Remove file">✕</button>
+                        </div>
+                    `;
+
+                    const input = document.getElementById('labInput');
+                    if (!input.value.trim() || input.value.includes('[Uploaded Multimodal Report:')) {
+                        input.value = `[Uploaded Multimodal Report: ${file.name}]\nGemini 3.5 Flash Lite Vision will directly extract, correlate, and explain all lab biomarkers and reference intervals from this document.`;
+                    }
+                    handleInputChange();
+                    showToast(`Attached ${file.name} for Multimodal Vision`, 'success');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Text, CSV, or clinical report export
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    attachedFile = null;
+                    const content = e.target.result;
+                    const input = document.getElementById('labInput');
+                    input.value = content;
+                    handleInputChange();
+
+                    const fileStatus = document.getElementById('fileUploadStatus');
+                    fileStatus.style.display = 'inline-flex';
+                    fileStatus.innerHTML = `
+                        <span class="file-status-pill">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Loaded "${file.name}" (${(file.size / 1024).toFixed(1)} KB)
+                        </span>
+                    `;
+                    showToast(`Loaded ${file.name}`);
+                };
+                reader.readAsText(file);
+            }
         }
 
         const dropZone = document.getElementById('dropZone');
@@ -3152,12 +3443,12 @@
                     body: 'Your vascular network transports essential minerals, oxygen, and electrolytes across 100,000 km of vessels. Blood volume and hydration levels maintain optimal flow pressure.'
                 },
                 cargo: {
-                    title: '🚢 Cargo: Glucose, Lipids & Mineral Electrolytes',
-                    body: 'Nutrient molecules and ions travel like cargo barges. Excessive cargo (glucose in diabetes, potassium in renal impairment) causes molecular congestion and chemical drag.'
+                    title: '🩸 Transport: Blood Sugar, Lipids & Electrolytes',
+                    body: 'Nutrients and minerals travel through your bloodstream to fuel your body. High levels (such as extra glucose or potassium) make it harder for your body to process them smoothly.'
                 },
                 locks: {
-                    title: '🔑 Lock Keys: Insulin & Cellular Receptors',
-                    body: 'Insulin operates harbor lock gates to unload glucose into muscle and liver cells. Stiff lock gates (insulin resistance) leave energy barges marooned in circulation.'
+                    title: '🔑 Cell Doors: Insulin & Sugar Uptake',
+                    body: 'Insulin acts like a key opening cell doors so glucose can enter and provide energy. When cells respond slowly (insulin resistance), extra sugar remains in circulation.'
                 },
                 sluices: {
                     title: '⚙️ Purification Sluices: Kidneys & Nephron Filters',
@@ -3253,7 +3544,8 @@
         // Generate Visual Spectrum Meter Card for Abnormal Biomarkers
         function generateSpectrumMeter(biomarker) {
             const name = biomarker.name;
-            const valNum = parseFloat(biomarker.val);
+            const numMatch = (biomarker.val || '').replace(',', '.').match(/\d+\.?\d*/);
+            const valNum = numMatch ? parseFloat(numMatch[0]) : parseFloat(biomarker.val);
             const valStr = biomarker.val;
             const targetStr = biomarker.target;
             const isCrit = biomarker.category === 'critical';
@@ -3334,6 +3626,14 @@
                 safeTargetVal = '65';
                 pinPercent = (valNum / scaleMax) * 100;
                 noteSentence = `Deep iron tissue stores are severely depleted (< 15 ug/L) · Lacks raw materials for red cells.`;
+            } else if (nameLow.includes('vitamin') || nameLow.includes('vitamine')) {
+                scaleMin = 0;
+                scaleMax = 120;
+                safeMin = 50;
+                safeMax = 120;
+                safeTargetVal = '75';
+                pinPercent = (valNum / scaleMax) * 100;
+                noteSentence = `Vitamin D (${valNum} nmol/L) is deficient below normal target (> 50 nmol/L) · Common in Dutch winter light.`;
             } else {
                 const nums = targetStr.match(/\d+\.?\d*/g);
                 if (nums && nums.length >= 2) {
@@ -3343,6 +3643,25 @@
                     scaleMin = Math.max(0, safeMin * 0.6);
                     scaleMax = safeMax * 1.4;
                     pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                } else if (nums && nums.length === 1) {
+                    const threshold = parseFloat(nums[0]);
+                    if (targetStr.includes('>') || targetStr.includes('≥')) {
+                        scaleMin = 0;
+                        scaleMax = Math.max(threshold * 2, valNum * 1.5, 100);
+                        safeMin = threshold;
+                        safeMax = scaleMax;
+                        safeTargetVal = ((safeMin + safeMax) / 2).toFixed(1);
+                        pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                    } else if (targetStr.includes('<') || targetStr.includes('≤')) {
+                        scaleMin = 0;
+                        scaleMax = Math.max(threshold * 2.5, valNum * 1.5, 50);
+                        safeMin = 0;
+                        safeMax = threshold;
+                        safeTargetVal = (threshold * 0.5).toFixed(1);
+                        pinPercent = ((valNum - scaleMin) / (scaleMax - scaleMin)) * 100;
+                    } else {
+                        pinPercent = isCrit ? 85 : 70;
+                    }
                 } else {
                     pinPercent = isCrit ? 85 : 70;
                 }
@@ -3397,7 +3716,7 @@
         }
 
         // Generate Balanced 4-Quadrant Organ Health Matrix
-                // Generate Balanced 4-Quadrant Organ Health Matrix with Segmented Battery & Recharge Levers
+                // Generate Balanced 4-Quadrant Organ Health Matrix with Segmented Battery & Recommended Actions
         function generateOrganImpactMatrix(biomarkers) {
             const hasPotassium = biomarkers.find(b => b.name.toLowerCase().includes('potassium') || b.name.toLowerCase().includes('kalium'));
             const hasKidney = biomarkers.find(b => b.name.toLowerCase().includes('creatinine') || b.name.toLowerCase().includes('kreatinine') || b.name.toLowerCase().includes('egfr'));
@@ -3482,11 +3801,11 @@
 
             if ((a1c && a1c.category !== 'normal') || (glu && glu.category !== 'normal')) {
                 sugarStatus = 'organ-attn';
-                sugarTag = 'Elevated Sugar Cargo';
+                sugarTag = 'Elevated Blood Sugar';
                 sugarBattery = 55;
-                sugarDesc = 'Extra glucose cargo is circulating in the blood because insulin lock keys are opening cell gates more slowly.';
+                sugarDesc = 'Extra sugar is in your blood because your cells are absorbing glucose more slowly.';
                 sugarMarkers = `${a1c ? 'HbA1c: ' + a1c.val : ''} ${glu ? '· Glucose: ' + glu.val : ''}`;
-                sugarRecharge = 'Switch to complex carbohydrates with post-meal 10-minute walks to sensitize insulin lock gates naturally.';
+                sugarRecharge = 'Choose whole grains and take a 10-minute walk after meals to help your cells absorb sugar naturally.';
             }
 
             // Helper to generate 5 battery cells
@@ -3522,9 +3841,9 @@
                             </div>
                             <div class="organ-markers-tag">${heartMarkers}</div>
                             <p class="organ-desc">${heartDesc}</p>
-                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('heart')">⚡ How to Recharge Battery ▾</button>
+                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('heart')">⚡ Recommended Steps ▾</button>
                             <div class="organ-recharge-drawer" id="recharge-heart" style="display: none;">
-                                <strong style="color: var(--primary);">Clinical Recharge Lever:</strong>
+                                <strong style="color: var(--primary);">Recommended Action:</strong>
                                 <div>${heartRecharge}</div>
                             </div>
                         </div>
@@ -3540,9 +3859,9 @@
                             </div>
                             <div class="organ-markers-tag">${kidneyMarkers}</div>
                             <p class="organ-desc">${kidneyDesc}</p>
-                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('kidneys')">⚡ How to Recharge Battery ▾</button>
+                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('kidneys')">⚡ Recommended Steps ▾</button>
                             <div class="organ-recharge-drawer" id="recharge-kidneys" style="display: none;">
-                                <strong style="color: var(--primary);">Clinical Recharge Lever:</strong>
+                                <strong style="color: var(--primary);">Recommended Action:</strong>
                                 <div>${kidneyRecharge}</div>
                             </div>
                         </div>
@@ -3558,9 +3877,9 @@
                             </div>
                             <div class="organ-markers-tag">${bloodMarkers}</div>
                             <p class="organ-desc">${bloodDesc}</p>
-                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('blood')">⚡ How to Recharge Battery ▾</button>
+                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('blood')">⚡ Recommended Steps ▾</button>
                             <div class="organ-recharge-drawer" id="recharge-blood" style="display: none;">
-                                <strong style="color: var(--primary);">Clinical Recharge Lever:</strong>
+                                <strong style="color: var(--primary);">Recommended Action:</strong>
                                 <div>${bloodRecharge}</div>
                             </div>
                         </div>
@@ -3576,9 +3895,9 @@
                             </div>
                             <div class="organ-markers-tag">${sugarMarkers}</div>
                             <p class="organ-desc">${sugarDesc}</p>
-                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('sugar')">⚡ How to Recharge Battery ▾</button>
+                            <button class="btn-organ-recharge" onclick="toggleOrganRecharge('sugar')">⚡ Recommended Steps ▾</button>
                             <div class="organ-recharge-drawer" id="recharge-sugar" style="display: none;">
-                                <strong style="color: var(--primary);">Clinical Recharge Lever:</strong>
+                                <strong style="color: var(--primary);">Recommended Action:</strong>
                                 <div>${sugarRecharge}</div>
                             </div>
                         </div>
@@ -3857,28 +4176,28 @@
                                 <span class="flow-step-desc">Continuous circulation network delivering minerals & oxygen to organs.</span>
                                 <span class="flow-status-chip chip-normal">Circulating</span>
                             </div>
-                            <!-- Node 2: Cargo -->
-                            <div class="flow-step-card ${cargoAlert}" onclick="inspectCanalNode('cargo')" style="cursor: pointer; --node-i: 1;" title="Click to inspect molecular cargo">
+                            <!-- Node 2: Nutrients -->
+                            <div class="flow-step-card ${cargoAlert}" onclick="inspectCanalNode('cargo')" style="cursor: pointer; --node-i: 1;" title="Click to inspect circulating nutrients">
                                 <div class="flow-step-top">
-                                    <span class="flow-icon">🚢</span>
+                                    <span class="flow-icon">🩸</span>
                                     <div>
-                                        <span class="flow-step-role">Cargo</span>
-                                        <div class="flow-step-title">Glucose & Nutrients</div>
+                                        <span class="flow-step-role">Nutrients</span>
+                                        <div class="flow-step-title">Sugar & Minerals</div>
                                     </div>
                                 </div>
-                                <span class="flow-step-desc">${hasHighSugar ? 'Extra glucose barges waiting in transit.' : (hasLowAnemia ? 'Oxygen barges constructed at low capacity.' : 'Nutrients and electrolytes carried smoothly.')}</span>
+                                <span class="flow-step-desc">${hasHighSugar ? 'Extra sugar circulating in the blood.' : (hasLowAnemia ? 'Lower red blood cell count carrying less oxygen.' : 'Nutrients and electrolytes carried smoothly.')}</span>
                                 <span class="flow-status-chip ${cargoAlert ? 'chip-attn' : 'chip-normal'}">${cargoAlert ? 'Attention' : 'Balanced'}</span>
                             </div>
-                            <!-- Node 3: Locks -->
-                            <div class="flow-step-card ${lockAlert}" onclick="inspectCanalNode('locks')" style="cursor: pointer; --node-i: 2;" title="Click to inspect insulin dock locks">
+                            <!-- Node 3: Insulin Keys -->
+                            <div class="flow-step-card ${lockAlert}" onclick="inspectCanalNode('locks')" style="cursor: pointer; --node-i: 2;" title="Click to inspect insulin uptake">
                                 <div class="flow-step-top">
                                     <span class="flow-icon">🔑</span>
                                     <div>
-                                        <span class="flow-step-role">Lock Keys</span>
-                                        <div class="flow-step-title">Insulin & Receptors</div>
+                                        <span class="flow-step-role">Insulin Keys</span>
+                                        <div class="flow-step-title">Insulin & Cells</div>
                                     </div>
                                 </div>
-                                <span class="flow-step-desc">${hasHighSugar ? 'Lock gates opening more slowly (insulin resistance).' : 'Unlocking cell docks to absorb energy cargo.'}</span>
+                                <span class="flow-step-desc">${hasHighSugar ? 'Cells absorbing sugar more slowly.' : 'Unlocking cells to absorb energy.'}</span>
                                 <span class="flow-status-chip ${lockAlert ? 'chip-attn' : 'chip-normal'}">${lockAlert ? 'Resistance' : 'Normal'}</span>
                             </div>
                             <!-- Node 4: Sluices -->
@@ -4061,16 +4380,17 @@
                     }
                 }
 
-                // Section 5: Daily Levers into Interactive Action Quests & Thuisarts Cards
-                if (text.includes('5.') || text.toLowerCase().includes('daily lever') || text.toLowerCase().includes('micro-step')) {
+                // Section 5: Healthcare Access, Insurance & Costs into Interactive Cards
+                if (text.includes('5.') || text.toLowerCase().includes('healthcare access') || text.toLowerCase().includes('insurance') || text.toLowerCase().includes('daily lever') || text.toLowerCase().includes('micro-step')) {
                     const list = sectionCard.querySelector('ul, ol');
                     if (list) {
-                        const items = Array.from(list.querySelectorAll('li'));
+                        // Filter out parent <li> items that have nested <ul> or <ol> to prevent empty duplicate cards
+                        const items = Array.from(list.querySelectorAll('li')).filter(li => !li.querySelector('ul, ol'));
                         const shieldHeader = document.createElement('div');
                         shieldHeader.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;';
                         shieldHeader.innerHTML = `
-                            <span style="font-size:0.8rem; color:var(--text-muted);">Actionable daily levers tailored to your clinical values</span>
-                            <span class="habit-shield-badge" id="habitShieldBadge">🛡️ Daily Habit Shield: 0 / ${items.length} Committed</span>
+                            <span style="font-size:0.8rem; color:var(--text-muted);">Healthcare access guidance & practical steps</span>
+                            <span class="habit-shield-badge" id="habitShieldBadge">🛡️ Checklist: 0 / ${items.length} Completed</span>
                         `;
                         sectionCard.insertBefore(shieldHeader, list);
 
@@ -4090,20 +4410,23 @@
                                 }
                             } else {
                                 // Extract title and description
-                                let title = 'Daily Health Habit';
+                                let title = 'Health Guidance';
                                 let desc = raw;
                                 if (raw.includes(':')) {
-                                    const parts = raw.split(':', 2);
-                                    title = parts[0].replace(/^[-*•]\s*/, '').trim();
-                                    desc = parts[1].trim();
+                                    title = raw.substring(0, raw.indexOf(':')).replace(/^[-*•]\s*/, '').trim();
+                                    desc = raw.substring(raw.indexOf(':') + 1).trim();
                                 }
 
                                 let icon = '🌱';
                                 const titleLow = title.toLowerCase();
-                                if (titleLow.includes('food') || titleLow.includes('carb') || titleLow.includes('diet') || titleLow.includes('fat') || titleLow.includes('voeding')) icon = '🥗';
-                                else if (titleLow.includes('medicat') || titleLow.includes('pill') || titleLow.includes('iron') || titleLow.includes('supplement')) icon = '💊';
+                                const isInsuranceOrCost = titleLow.includes('insurance') || titleLow.includes('ehic') || titleLow.includes('aon') || titleLow.includes('swisscare') || titleLow.includes('basisverzekering') || titleLow.includes('cost') || titleLow.includes('consultation') || titleLow.includes('tarief');
+                                if (isInsuranceOrCost) icon = '💳';
+                                else if (titleLow.includes('food') || titleLow.includes('carb') || titleLow.includes('diet') || titleLow.includes('fat') || titleLow.includes('voeding')) icon = '🥗';
+                                else if (titleLow.includes('medicat') || titleLow.includes('pill') || titleLow.includes('iron') || titleLow.includes('supplement') || titleLow.includes('vitamin')) icon = '💊';
                                 else if (titleLow.includes('walk') || titleLow.includes('move') || titleLow.includes('exercis') || titleLow.includes('beweeg')) icon = '🚶';
                                 else if (titleLow.includes('water') || titleLow.includes('hydrat') || titleLow.includes('drink')) icon = '💧';
+
+                                const categoryLabel = isInsuranceOrCost ? 'Insurance & Access' : 'Action Step';
 
                                 const card = document.createElement('div');
                                 card.className = 'habit-quest-card';
@@ -4112,10 +4435,10 @@
                                     <div class="habit-quest-header">
                                         <span class="habit-icon">${icon}</span>
                                         <div class="habit-title-wrap">
-                                            <span class="habit-category">Action Quest</span>
+                                            <span class="habit-category">${categoryLabel}</span>
                                             <strong class="habit-name">${title}</strong>
                                         </div>
-                                        <button class="btn-habit-toggle" onclick="toggleHabitCommit(this)">○ Commit</button>
+                                        <button class="btn-habit-toggle" onclick="toggleHabitCommit(this)">○ Save</button>
                                     </div>
                                     <p class="habit-desc">${desc}</p>
                                 `;
@@ -4123,7 +4446,7 @@
                             }
                         });
 
-                        // Replace raw list with interactive quests
+                        // Replace raw list with interactive cards
                         list.parentNode.replaceChild(questGrid, list);
 
                         // If Thuisarts queries found, append the official guidance card
@@ -4161,16 +4484,16 @@
 
                             const rawLow = raw.toLowerCase();
 
-                            // Accurate triage tier parsing
-                            if (rawLow.includes('emergency') || rawLow.includes('112') || rawLow.includes('acute')) {
+                            // Accurate triage tier parsing: Check HAP / out of hours before 112/emergency
+                            if (rawLow.includes('evening') || rawLow.includes('weekend') || rawLow.includes('hap') || rawLow.includes('huisartsenpost') || rawLow.includes('outside office hours')) {
+                                typeClass = 'triage-hap';
+                                icon = '🟡';
+                                title = 'Out of hours · HAP';
+                            } else if (rawLow.includes('112') || rawLow.includes('emergency') || rawLow.includes('seh') || rawLow.includes('spoedeisende')) {
                                 typeClass = 'triage-emergency';
                                 icon = '🔴';
                                 title = 'Immediate Emergency · Call 112';
                                 if (isEmergencyReport) isSpotlight = true;
-                            } else if (rawLow.includes('evening') || rawLow.includes('weekend') || rawLow.includes('hap') || rawLow.includes('outside office hours')) {
-                                typeClass = 'triage-hap';
-                                icon = '🟡';
-                                title = 'Evenings & Weekends · HAP';
                             } else if (rawLow.includes('urgent daytime') || rawLow.includes('huisarts') || rawLow.includes('daytime')) {
                                 typeClass = 'triage-daytime';
                                 icon = '🔵';
@@ -4179,7 +4502,7 @@
                             } else {
                                 typeClass = 'triage-routine';
                                 icon = '🟢';
-                                title = 'Routine Review · POH-Somatiek';
+                                title = 'Routine Review · Huisarts / POH';
                                 if (!isEmergencyReport && !isAttentionReport) isSpotlight = true;
                             }
 
@@ -4244,9 +4567,11 @@
             const resultsContent = document.getElementById('resultsContent');
             const statusIndicator = document.getElementById('statusIndicator');
             const actionBar = document.getElementById('actionBar');
+            const headerBadge = document.getElementById('geminiHeaderBadge');
+            const badgeText = document.getElementById('geminiBadgeText');
 
-            if (!input) {
-                showToast('Please paste a lab report or select a sample scenario.', 'error');
+            if (!input && !attachedFile) {
+                showToast('Please paste a lab report, attach an image/PDF, or select a sample scenario.', 'error');
                 return;
             }
 
@@ -4254,23 +4579,50 @@
             switchStep(2);
 
             analyzeBtn.disabled = true;
-            statusIndicator.innerHTML = '<span class="status-badge loading">Analyzing biomarkers...</span>';
+            statusIndicator.innerHTML = '<span class="status-badge loading">Gemini Reasoning...</span>';
+
+            // Trigger dynamic Gemini Thinking state on header badge
+            if (headerBadge) headerBadge.classList.add('thinking');
+            if (badgeText) badgeText.textContent = 'Gemini 3.5 Flash Lite · Reasoning...';
+
+            // Render high-fidelity animated thinking card
             resultsContent.innerHTML = `
-                <div class="spinner-wrap">
-                    <div class="spinner"></div>
-                    <p>Translating clinical biomarkers & preparing Dutch patient guide...</p>
+                <div class="gemini-thinking-card">
+                    <div class="gemini-sparkle-halo">
+                        <div class="gemini-orb">✨</div>
+                    </div>
+                    <div class="gemini-model-tag">Gemini 3.5 Flash Lite · Multimodal Engine</div>
+                    <h3 class="gemini-thinking-title" id="thinkingTitle">Reasoning over lab values...</h3>
+                    <p class="gemini-thinking-sub" id="thinkingSub">Scanning biomarker units, ranges, and clinical indicators...</p>
+                    <div class="gemini-pulse-bar"><div class="gemini-pulse-progress"></div></div>
                 </div>
             `;
+
+            const thinkingPhrases = [
+                "Scanning biomarker units, ranges, and clinical indicators...",
+                "Evaluating physiological safety thresholds & organ matrices...",
+                "Formulating B1 plain English guidance & doctor consultation script..."
+            ];
+            let phraseIdx = 0;
+            const thinkInterval = setInterval(() => {
+                phraseIdx = (phraseIdx + 1) % thinkingPhrases.length;
+                const subEl = document.getElementById('thinkingSub');
+                if (subEl) subEl.textContent = thinkingPhrases[phraseIdx];
+            }, 1300);
 
             try {
                 const response = await fetch('/api/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: input })
+                    body: JSON.stringify({ text: input, file: attachedFile })
                 });
 
                 const data = await response.json();
                 analyzeBtn.disabled = false;
+                clearInterval(thinkInterval);
+
+                if (headerBadge) headerBadge.classList.remove('thinking');
+                if (badgeText) badgeText.textContent = 'Python Backend · Live Gemini API';
 
                 if (data.error) {
                     resultsContent.innerHTML = `
@@ -4321,6 +4673,10 @@
                 }
 
             } catch (err) {
+                clearInterval(thinkInterval);
+                if (headerBadge) headerBadge.classList.remove('thinking');
+                if (badgeText) badgeText.textContent = 'Python Backend · Live Gemini API';
+
                 analyzeBtn.disabled = false;
                 statusIndicator.innerHTML = '<span class="status-badge error">Connection Failed</span>';
                 resultsContent.innerHTML = `

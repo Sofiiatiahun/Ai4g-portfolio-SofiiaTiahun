@@ -16,9 +16,9 @@ if "SSL_CERT_FILE" not in os.environ and os.path.exists("/etc/ssl/cert.pem"):
 # gemini api credentials
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
-# default llm model: gemini-2.5-flash
-# fast sub-second to low-latency generation, reliable formatting
-DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+# default llm model: gemini-3.5-flash-lite
+# fast sub-second to low-latency multimodal generation, reliable formatting
+DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
 
 # google generative ai rest api endpoint
 API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"

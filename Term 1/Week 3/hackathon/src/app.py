@@ -53,22 +53,42 @@ class LabBridgeHandler(BaseHTTPRequestHandler):
         try:
             payload = json.loads(body)
             text = payload.get("text", "")
+            file_data = payload.get("file")
             model = payload.get("model", DEFAULT_MODEL)
             api_key = payload.get("api_key", GEMINI_API_KEY)
 
-            result_text, meta = call_gemini_api(text, api_key=api_key, model_name=model)
+            file_desc = f", attached {file_data.get('mime_type')}: '{file_data.get('name')}'" if file_data else ""
+            print(f"\n[LabBridge Server] Handling POST /api/analyze ({len(text)} chars{file_desc})")
+            result_text, meta = call_gemini_api(text, api_key=api_key, model_name=model, file_data=file_data)
             if meta.get("status") in ("validation_error", "configuration_error"):
+                print(f"[LabBridge Server] Responding 400 Bad Request ({meta.get('status')})")
                 self._send_json(400, {"error": result_text})
             else:
+                print(f"[LabBridge Server] Responding 200 OK (source: {meta.get('source')}, model: {meta.get('model_used')})")
                 self._send_json(200, {"result": result_text, "meta": meta})
         except Exception as e:
+            print(f"[LabBridge Server] Internal Server Error: {e}")
             self._send_json(500, {"error": str(e)})
 
 def main():
     HTTPServer.allow_reuse_address = True
-    server_address = ("0.0.0.0", PORT)
-    httpd = HTTPServer(server_address, LabBridgeHandler)
-    print(f"LabBridge Student running at http://localhost:{PORT} (Ctrl+C to stop)")
+    port = int(os.environ.get("PORT", PORT))
+    httpd = None
+    for attempt in range(10):
+        try:
+            server_address = ("0.0.0.0", port)
+            httpd = HTTPServer(server_address, LabBridgeHandler)
+            break
+        except OSError as e:
+            if e.errno == 48:
+                print(f"Port {port} in use, trying port {port + 1}...")
+                port += 1
+            else:
+                raise
+    if not httpd:
+        raise RuntimeError("No available port found.")
+
+    print(f"LabBridge Student running at http://localhost:{port} (Ctrl+C to stop)")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

@@ -7,13 +7,13 @@
 
 [![SDG 10](https://img.shields.io/badge/SDG-10%20Reduced%20Inequalities-DD1367.svg)](https://sdgs.un.org/goals/goal10)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Demo Video](https://img.shields.io/badge/Demo_Video-Watch_Walkthrough-red?logo=youtube)](https://youtu.be/6bzCxFRsL50)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Demo Video](https://img.shields.io/badge/Demo_Video-Watch_Walkthrough-red?logo=youtube)](https://youtu.be/gy9omRDuFRA)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
 ## Project demonstration
 
-A video walkthrough of the application is available on YouTube: [Watch the 3minute project demonstration](https://youtu.be/6bzCxFRsL50).
+A video walkthrough of the application is available on YouTube: [Watch the project demonstration](https://youtu.be/gy9omRDuFRA).
 
 The recording covers:
 1. Entering a Dutch blood report showing low Vitamin D (22 nmol/L) and generating a B1-level English explanation.
@@ -107,7 +107,7 @@ LabBridge Student uses procedural Python with standard library components, avoid
                                v
 +-------------------------------------------------------------+
 |        Step 3: Google Gemini API Call (gemini_client.py)    |
-|   - Model: gemini-3.5-flash-lite / gemini-2.5-flash         |
+|   - Model: gemini-3.5-flash-lite                            |
 |   - Temperature: 0.2 (low randomness for medical accuracy)  |
 |   - System Prompt enforces B1 English + Dutch phone scripts |
 |     (doktersassistente, passantenconsult, NZa fees, 112)    |
@@ -145,7 +145,7 @@ LabBridge Student uses procedural Python with standard library components, avoid
 
 ## 4. Artificial intelligence implementation
 
-* **Model**: Google Gemini 3.5 Flash Lite (or Gemini 2.5 Flash), selected for fast inference and reliable Markdown formatting.
+* **Model**: Google Gemini 3.5 Flash Lite, selected for fast inference, reliable Markdown formatting, and multimodal vision capabilities (image and PDF lab report understanding).
 * **Generation settings**: Temperature set to 0.2 to prioritize consistent clinical explanations; maximum output set to 4096 tokens.
 * **System prompt structure**: Constrains language to B1 English and incorporates Dutch healthcare terms (*doktersassistente*, *passantenconsult*, NZa tariffs, *Thuisarts.nl*, and 112).
 * **Output format**:

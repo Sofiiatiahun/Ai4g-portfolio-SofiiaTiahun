@@ -98,13 +98,14 @@ Ferritin: [ 15 === Target === 150 ] * (38) [NORMAL]
 
 ### 4. Doctor Phone Script (Getting Past the Doktersassistente Gatekeeper)
 1. **Requesting a Passantenconsult (If Not Registered with a GP)**
-- *Say in Dutch*: "Goedemorgen, ik ben een internationale student en ik sta nog niet ingeschreven bij een huisarts. Mijn bloedtest toont een vitamine D-tekort (22 nmol/L). Kan ik een afspraak maken als passant voor advies over een receptdosering?"
-- *Say in English*: "Good morning, I am an international student not yet registered with a GP. My blood work shows a Vitamin D deficiency (22 nmol/L). Can I book an appointment as a passant for advice on prescription dosage?"
+- *Say in Dutch*: "Goedemorgen, ik ben een internationale student en ik sta nog niet ingeschreven bij een huisarts. Mijn bloedtest toont een vitamine D-tekort (22 nmol/L). Kan ik een afspraak maken als passant voor advies over de behandeling?"
+- *Say in English*: "Good morning, I am an international student not yet registered with a GP. My blood work shows a Vitamin D deficiency (22 nmol/L). Can I book an appointment as a passant for advice on treatment?"
 - *Purpose*: Uses the magic term **passant** so the assistant knows you need incidental care under the NZa walk-in rate.
 
-2. **Dosage & Follow-Up Question**
-- *Say to doctor*: "Mijn vitamine D is 22 nmol/L. Heeft een wekelijkse stootkuur (bijv. cholecalciferol drank of capsules) de voorkeur boven een dagelijkse drogisterijdosering?"
-- *Purpose*: Asks if a high-dose loading prescription is needed or standard daily pharmacy drops (d3).
+2. **Dosage & Treatment Question**
+- *Say to doctor*: "Mijn vitamine D is 22 nmol/L. Welke behandeling of dosering adviseert u om dit weer op peil te krijgen?"
+- *Say in English*: "My vitamin D is 22 nmol/L. What treatment or dosage do you recommend to restore normal levels?"
+- *Purpose*: Asks the doctor for their professional treatment recommendation and appropriate dosage without self-prescribing.
 
 ### 5. Healthcare Access, Insurance & Costs (NZa & Student Insurance)
 - **Consultation Cost (NZa Passantentarief)**: Under Dutch Healthcare Authority regulations (NZa 2025), a standard walk-in GP consultation (< 20 min) for an unregistered patient costs approximately **€31.86** (or ~€15.93 for < 5 min). You pay by pin at the practice counter.
@@ -156,7 +157,7 @@ eGFR: * (38) <-------- [ 60 === Target === 120 ] [CRITICAL]
     "3": """### 1. Plain-English Health Picture & Student Context
 > **Overview**: Your blood test confirms iron deficiency anemia with low hemoglobin (5.8 mmol/L) and severely depleted iron stores (ferritin 7 ug/L), explaining your chronic fatigue and breathlessness on campus.
 
-In your bloodstream, red blood cells and hemoglobin act as transport barges that carry oxygen to your brain and muscles. Iron (ferritin) is the essential construction material used to build these oxygen-carrying barges.
+In your bloodstream, red blood cells and hemoglobin carry oxygen to your brain and muscles. Iron (ferritin) is the essential building block your body needs to make these red blood cells.
 
 With ferritin at 7 ug/L and hemoglobin at 5.8 mmol/L, your body has run out of iron reserves. As a result, fewer red cells are produced, and they are smaller than normal (low MCV 71 fl). Your muscles and brain are receiving less oxygen, leading to persistent fatigue and dizziness when climbing university stairs. White blood cells (6.4) and platelets (280) are normal, meaning your immune and clotting systems are healthy.
 
