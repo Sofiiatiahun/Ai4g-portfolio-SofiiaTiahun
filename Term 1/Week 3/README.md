@@ -47,7 +47,10 @@ _Short instructions so someone else can start it._
 _Be honest about the split of work between you and your partner._
 
 **Ethical reflection - what are the risks of your tool? Who could it harm?**
-_Every hackathon requires this. One honest paragraph beats three vague ones._
+
+The biggest risk of LabBridge is that it gives a wrong explanation to someone who can’t check it. Our users are exactly the people who don’t understand lab results, so if the AI or the app makes a mistake, they will probably believe it. We saw this in our own demo: the Vitamin D bar showed 22 nmol/L on the wrong side of the target zone, so the picture looked better than the real number. Someone could think they are fine and not go to the doctor. A second risk is that the tool works best in English and Dutch, so students who speak other languages get worse help, which is the opposite of what we want for SDG 10. A third risk is medical advice: our first version suggested a question about vitamin D dosage, which is a decision for the doctor, not for an app.
+To limit this, the app always says it’s for education only and points to a huisarts, the HAP or 112. It links to Thuisarts.nl, which is checked by Dutch GPs (NHG). Next we want to fix the gauge, remove dosage advice, and test the output on more example reports before anyone uses it. This matters because many students can’t just ask their own GP: in 2024 about 60% of GP practices in the Netherlands stopped taking new patients, and an estimated 45,000 to 194,000 people have no GP at all (Algemene Rekenkamer, Focus on Shortage of General Practitioners, 2025: https://english.rekenkamer.nl/documents/2025/04/02/focus-on-shortage-of-general-practitioners).
+
 
 ### Checklist
 - [ ] Prototype code (or export / workflow file) is in `hackathon/`
