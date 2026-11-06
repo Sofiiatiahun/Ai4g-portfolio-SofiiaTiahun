@@ -1,0 +1,7 @@
+Model,Best hyperparameters,Training rows,Train ROC-AUC,CV ROC-AUC (mean ± sd),Test ROC-AUC,Test precision,Test recall,Test F1
+Baseline: most frequent class,-,20000,0.5,0.500 ± 0.000,0.5,0.0,0.0,0.0
+Single threshold (depth-1 tree),-,20000,0.585,0.583 ± 0.006,0.589,0.554,0.834,0.666
+KNN,n_neighbors=101,20000,0.685,0.663 ± 0.003,0.664,0.6,0.676,0.636
+Logistic regression,C=0.1,20000,0.668,0.649 ± 0.006,0.649,0.611,0.592,0.601
+HistGradientBoosting,"learning_rate=0.05, max_leaf_nodes=31",20000,0.76,0.689 ± 0.007,0.696,0.635,0.641,0.638
+"HistGradientBoosting, 200k rows","learning_rate=0.05, max_leaf_nodes=31",200000,0.735,0.716 (validation),0.717,0.648,0.668,0.658
